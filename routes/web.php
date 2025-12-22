@@ -29,12 +29,18 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
 
     // ADMIN & MODERATOR ONLY
     Route::middleware(['role:admin,moderator'])->group(function () {
+        
+        // Page Creation
         Route::post('/pages/store', [DashboardController::class, 'store'])->name('pages.store');
-        Route::delete('/pages/{id}', [DashboardController::class, 'destroy'])->name('pages.destroy');
     });
 
     // ADMIN ONLY
     Route::middleware(['role:admin'])->group(function () {
+
+        // Page Deletion
+        Route::delete('/pages/{id}', [DashboardController::class, 'destroy'])->name('pages.destroy');
+
+        // User Management
         Route::get('/users', [UserController::class, 'index'])->name('admin.users.index');
         Route::get('/users/create', [UserController::class, 'create'])->name('admin.users.create');
         Route::post('/users', [UserController::class, 'store'])->name('admin.users.store');
