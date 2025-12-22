@@ -24,11 +24,13 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
     Route::get('/editor/{id}', [DashboardController::class, 'editor'])->name('admin.editor');
     Route::post('/editor/{id}/save', [DashboardController::class, 'saveEditor'])->name('admin.editor.save');
 
+    // Landing Page Edit
+    Route::get('/landing-page', [DashboardController::class, 'landingEdit'])->name('admin.landing-page');
+
     // ADMIN & MODERATOR ONLY
     Route::middleware(['role:admin,moderator'])->group(function () {
         Route::post('/pages/store', [DashboardController::class, 'store'])->name('pages.store');
         Route::delete('/pages/{id}', [DashboardController::class, 'destroy'])->name('pages.destroy');
-        Route::get('/landing-page', [DashboardController::class, 'landingEdit'])->name('admin.landing-page');
     });
 
     // ADMIN ONLY
