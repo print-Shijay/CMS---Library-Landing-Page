@@ -1,29 +1,46 @@
 <section class="hero-section">
-    <div class="container position-relative" style="z-index: 1;">
+    <div class="container">
         <div class="row align-items-center">
-            <!-- Text left -->
-            <div class="col-lg-6">
-                <span class="section-tag mb-3 d-block">{{ $subtitle ?? 'Welcome' }}</span>
-                <h1 class="display-3 fw-bold mb-4">{{ $title ?? 'Default Title' }}</h1>
-                <p class="lead text-muted mb-5">{{ $description ?? 'Default description text goes here.' }}</p>
-                <div class="d-flex gap-3">
-                    <button class="btn btn-modern">{{ $button ?? 'Get Started' }}</button>
-                    <button class="btn btn-link text-dark fw-semibold text-decoration-none">Learn More <i class="bi bi-arrow-right"></i></button>
+            <!-- Left Column -->
+            <div class="col-lg-6 mb-4 mb-lg-0 text-center text-lg-start">
+                <span class="section-tag">{{ $left_tag ?? 'Next Generation Platform' }}</span>
+                <h1 class="display-3 mb-4">{{ $left_title ?? 'Build something that truly matters' }}</h1>
+                <p class="lead text-muted mb-5" style="line-height: 1.6;">
+                    {{ $left_description ?? 'Our platform provides the tools you need to build, scale, and manage your vision efficiently.' }}
+                </p>
+                <div class="d-flex gap-3 justify-content-center justify-content-lg-start align-items-center">
+                    <button class="btn btn-modern">{{ $left_button ?? 'Start Building' }}</button>
+                    <button class="btn btn-link text-dark fw-bold text-decoration-none px-4">
+                        View Demo <i class="bi bi-play-circle-fill ms-2"></i>
+                    </button>
                 </div>
             </div>
 
-            <!-- Image right -->
-            <div class="col-lg-6 d-none d-lg-block">
-                <div class="floating-image">
-                    <div class="hero-img-container">
-                        @if(!empty($image))
-                            <img src="{{ asset('storage/' . $image) }}" alt="Hero Image">
-                        @else
-                            <div style="background: var(--primary-gradient); height: 100%; display: flex; align-items: center; justify-content: center;">
-                                <i class="bi bi-rocket-takeoff text-white" style="font-size: 10rem; opacity: 0.2;"></i>
-                            </div>
-                        @endif
-                    </div>
+            <!-- Right Column -->
+            <div class="col-lg-6 text-center text-lg-start">
+                <span class="section-tag">{{ $right_tag ?? 'Your Vision, Your Way' }}</span>
+                <h1 class="display-3 mb-4">{{ $right_title ?? 'Collaborate and Create' }}</h1>
+                <p class="lead text-muted mb-5" style="line-height: 1.6;">
+                    {{ $right_description ?? 'Collaborate seamlessly and achieve your goals with our powerful tools and ecosystem.' }}
+                </p>
+                <div class="d-flex gap-3 justify-content-center justify-content-lg-start align-items-center">
+                    <button class="btn btn-modern">{{ $right_button ?? 'Learn More' }}</button>
+                    <button class="btn btn-link text-dark fw-bold text-decoration-none px-4">
+                        Explore <i class="bi bi-play-circle-fill ms-2"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Optional Floating Image -->
+            <div class="col-12 mt-4">
+                <div class="hero-img-container mx-auto" style="max-width: 900px;">
+                    @if(!empty($image))
+                        <img src="{{ asset('storage/' . $image) }}" class="w-100 rounded" alt="Hero">
+                    @else
+                        <div style="background: var(--primary-gradient); height: 540px; display: flex; align-items: center; justify-content: center; border-radius: 32px;">
+                            <i class="bi bi-layers-half text-white" style="font-size: 10rem; opacity: 0.15;"></i>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -34,24 +51,24 @@
     <div class="container">
         <div class="row g-4">
             <div class="col-md-6">
-                <div class="card-feature shadow-sm">
-                    <div class="icon-box bg-primary bg-opacity-10 text-primary">
-                        <i class="bi bi-lightning-charge-fill fs-4"></i>
+                <div class="card-feature">
+                    <div class="icon-box bg-indigo-50 text-primary" style="background: #eef2ff;">
+                        <i class="bi bi-lightning-charge"></i>
                     </div>
-                    <h3 class="fw-bold">Our Mission</h3>
-                    <p class="text-muted leading-relaxed">
-                        {{ $mission ?? 'We aim to redefine the industry standards through innovation.' }}
+                    <h3 class="fw-bold h4">Our Mission</h3>
+                    <p class="text-muted mb-0">
+                        {{ $mission ?? 'We aim to redefine industry standards by providing high-performance tools for modern creators.' }}
                     </p>
                 </div>
             </div>
             <div class="col-md-6">
-                <div class="card-feature shadow-sm">
-                    <div class="icon-box bg-success bg-opacity-10 text-success">
-                        <i class="bi bi-eye-fill fs-4"></i>
+                <div class="card-feature">
+                    <div class="icon-box bg-emerald-50 text-success" style="background: #ecfdf5;">
+                        <i class="bi bi-command"></i>
                     </div>
-                    <h3 class="fw-bold">Our Vision</h3>
-                    <p class="text-muted leading-relaxed">
-                        {{ $vision ?? 'To be the global leader in sustainable solutions.' }}
+                    <h3 class="fw-bold h4">Our Vision</h3>
+                    <p class="text-muted mb-0">
+                        {{ $vision ?? 'Empowering every individual to turn their ideas into reality with zero technical friction.' }}
                     </p>
                 </div>
             </div>
@@ -61,55 +78,65 @@
 
 <section class="goals-section">
     <div class="container">
-        <div class="row align-items-center">
-            <div class="col-lg-4">
-                <span class="section-tag mb-2 d-block">Strategy</span>
-                <h2 class="display-6 fw-bold mb-4">Strategic Goals</h2>
-            </div>
-            <div class="col-lg-8">
-                <p class="fs-5 opacity-75">
-                    {{ $goals ?? 'Operational Excellence, Customer Intimacy, and Product Leadership.' }}
+        <div class="row justify-content-center">
+            <div class="col-lg-7 text-center">
+                <h2 class="display-5 fw-bold mb-4">Strategic Goals</h2>
+                <p class="fs-5 text-white-50">
+                    {{ $goals ?? 'We focus on operational excellence, customer intimacy, and relentless product leadership to stay ahead of the curve.' }}
                 </p>
             </div>
         </div>
     </div>
 </section>
 
-<section class="py-5 bg-white">
+<section class="py-5">
     <div class="container">
-        <div class="d-flex align-items-center justify-content-between mb-4">
-            <h2 class="fw-bold m-0">Related Resources</h2>
-            <span class="badge bg-light text-dark border">External Links</span>
+        <div class="d-flex justify-content-between align-items-end mb-5">
+            <div>
+                <h2 class="fw-bold mb-0">Resources</h2>
+                <p class="text-muted mb-0">Everything you need to get started.</p>
+            </div>
+            <a href="#" class="btn btn-outline-secondary btn-sm rounded-pill">View All</a>
         </div>
 
         <div class="row g-4">
-            {{-- Handle both arrays (API) and JSON strings (Direct DB) --}}
             @php
-                $links = is_array($related_links ?? []) ? ($related_links ?? []) : json_decode($related_links, true);
+                $links = is_array($related_links ?? []) ? $related_links : json_decode($related_links ?? '[]', true);
             @endphp
 
-            @forelse($links ?? [] as $link)
+            @forelse($links ?? ['Documentation', 'API Reference', 'Community'] as $link)
                 <div class="col-lg-4 col-md-6">
                     <a href="#" class="link-preview-card">
                         <div class="link-thumbnail">
-                            <i class="bi bi-link-45deg"></i>
+                            <i class="bi bi-arrow-up-right"></i>
                         </div>
-                        <div class="link-content">
+                        <div>
                             <span class="link-title">{{ $link }}</span>
-                            <span class="link-description">Explore resources regarding {{ $link }}.</span>
-                            <span class="link-url">https://resource.link/{{ Str::slug($link) }}</span>
+                            <p class="small text-muted mb-2">Deep dive into our ecosystem and master the workflow.</p>
+                            <span class="link-url">docs.brand.io/{{ Str::slug($link) }}</span>
                         </div>
                     </a>
                 </div>
             @empty
-                <div class="col-12 text-center text-muted">No related resources available.</div>
+                <div class="col-12 text-center text-muted">No resources available.</div>
             @endforelse
         </div>
     </div>
 </section>
 
-<footer class="py-4 border-top">
-    <div class="container text-center text-muted small">
-        &copy; 2025 Your Modern Site. All rights reserved.
+<footer class="py-5 mt-5">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-md-6 text-center text-md-start">
+                <p class="text-muted small mb-0">&copy; 2025 BRAND Inc. Crafted with precision.</p>
+            </div>
+            <div class="col-md-6 text-center text-md-end">
+                <div class="d-flex gap-4 justify-content-center justify-content-md-end mt-3 mt-md-0">
+                    <a href="#" class="text-muted"><i class="bi bi-twitter"></i></a>
+                    <a href="#" class="text-muted"><i class="bi bi-github"></i></a>
+                    <a href="#" class="text-muted"><i class="bi bi-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
     </div>
 </footer>
