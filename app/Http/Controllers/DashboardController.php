@@ -79,7 +79,7 @@ class DashboardController extends Controller
         $users = User::all();
 
         // We pass a 'page' object or null to satisfy your layout variables
-        return view('admin.staff', compact('users'));
+        return view('admin.staff-page', compact('users'));
     }
 
     public function updateUser(Request $request)
