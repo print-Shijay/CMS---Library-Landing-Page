@@ -19,6 +19,7 @@ class AdminSeeder extends Seeder
             'email' => 'admin@localhost',
             'password' => bcrypt('admin@admin123'), // Securely hash the password
             'role' => 'admin',
+            'email_verified_at' => now(), // Mark as verified
         ]);
     }
 }
