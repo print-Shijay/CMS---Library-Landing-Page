@@ -161,6 +161,12 @@
                         <i class="bi bi-pencil-square edit-badge"></i>
                     </a>
                 </li>
+                <li class="{{ request()->routeIs('admin.profile.edit') ? 'active' : '' }}">
+                    <a href="{{ route('admin.profile.edit') }}">
+                        <span><i class="bi bi-person-circle nav-icon"></i> Profile Settings</span>
+                        <i class="bi bi-pencil-square edit-badge"></i>
+                    </a>
+                </li>
             </ul>
         </nav>
 
