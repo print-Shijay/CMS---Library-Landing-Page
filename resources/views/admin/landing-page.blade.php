@@ -45,8 +45,19 @@
                                 </option>
                                 <option value="hero-center" {{ $page->template == 'hero-center' ? 'selected' : '' }}>Hero
                                     Center</option>
+                                <option value="glass-morphic" {{ $page->template == 'glass-morphic' ? 'selected' : '' }}>Glass Morphic
+                                </option>
+                                <option value="hero-minimal" {{ $page->template == 'hero-minimal' ? 'selected' : '' }}>Hero Minimal
+                                </option>
                                 <option value="split" {{ $page->template == 'split' ? 'selected' : '' }}>Split Layout
                                 </option>
+                                <option value="stacked" {{ $page->template == 'stacked' ? 'selected' : '' }}>Stacked Layout
+                                </option>
+                                <option value="cards-grid" {{ $page->template == 'cards-grid' ? 'selected' : '' }}>Cards Grid
+                                </option>
+                                <option value="bento-layout" {{ $page->template == 'bento-layout' ? 'selected' : '' }}>Bento Layout
+                                </option>
+                                
                             </select>
                         </div>
 
@@ -136,11 +147,11 @@
             const div = document.createElement('div');
             div.className = 'input-group mb-2';
             div.innerHTML = `
-                                <input type="text" class="form-control related-link" placeholder="e.g. E-Library" value="${value}">
-                                <button class="btn btn-outline-danger" type="button" onclick="this.parentElement.remove(); updatePreview();">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            `;
+                                            <input type="text" class="form-control related-link" placeholder="e.g. E-Library" value="${value}">
+                                            <button class="btn btn-outline-danger" type="button" onclick="this.parentElement.remove(); updatePreview();">
+                                                <i class="bi bi-trash"></i>
+                                            </button>
+                                        `;
             relatedLinksWrapper.appendChild(div);
             div.querySelector('input').addEventListener('input', updatePreview);
             updatePreview();
