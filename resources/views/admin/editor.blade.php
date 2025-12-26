@@ -153,11 +153,7 @@
       </section>`
                     },
 
-<<<<<<< HEAD
 
-=======
-
->>>>>>> 09288dac1af318cfb9b03b9a77790f5ea32619ae
 {
   id: 'features-3',
   label: '3 Features',
@@ -905,7 +901,6 @@
 
 
 /* =========================
-<<<<<<< HEAD
    TESTIMONIALS
 ========================== */
 {
@@ -1325,54 +1320,9 @@
 </section>`
 },
 
-{
-  id: 'features-icon-grid',
-  label: 'Features – Icon Grid',
-  category: 'Sections',
-  content: `
-<section class="py-5 bg-light">
-  <div class="container">
-    <div class="text-center mb-5">
-      <h2 class="fw-bold">Powerful Features</h2>
-      <p class="text-muted">Lorem ipsum dolor sit amet consectetur adipiscing elit</p>
-    </div>
-
-    <div class="row g-4">
-      <div class="col-md-4 text-center">
-        <div class="p-4 rounded-4 shadow-sm h-100">
-          <div class="fs-1 mb-3 text-primary">⚡</div>
-          <h5 class="fw-bold">Fast Performance</h5>
-          <p class="text-muted">Lorem ipsum dolor sit amet consectetur adipiscing elit.</p>
-        </div>
-      </div>
-
-      <div class="col-md-4 text-center">
-        <div class="p-4 rounded-4 shadow-sm h-100">
-          <div class="fs-1 mb-3 text-primary">🔒</div>
-          <h5 class="fw-bold">Secure System</h5>
-          <p class="text-muted">Sed do eiusmod tempor incididunt ut labore.</p>
-        </div>
-      </div>
-
-      <div class="col-md-4 text-center">
-        <div class="p-4 rounded-4 shadow-sm h-100">
-          <div class="fs-1 mb-3 text-primary">🎨</div>
-          <h5 class="fw-bold">Custom Design</h5>
-          <p class="text-muted">Ut enim ad minim veniam quis nostrud.</p>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>`
-},
-
                     /* =========================
                        Pricing Section
                      ========================== */
-=======
-                       Pricing Section
-                    ========================== */
->>>>>>> 09288dac1af318cfb9b03b9a77790f5ea32619ae
 {
   id: 'pricing-circle',
   label: 'Pricing - Circular Cards',
@@ -1585,6 +1535,7 @@
   </div>
 </section>`
 },
+
                     /* =========================
                        FOOTERS
                     ========================== */
