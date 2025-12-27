@@ -1536,6 +1536,152 @@
 </section>`
 },
 
+
+
+
+
+{
+  id: 'pricing-neon',
+  label: 'Pricing - Neon Glow',
+  category: 'Pricing Layout',
+  content: `
+<style>
+.neon-card {
+  padding: 40px 20px;
+  border-radius: 15px;
+  text-align: center;
+  background: #000;
+  color: white;
+  border: 2px solid #0d6efd;
+  box-shadow: 0 0 15px #0d6efd;
+  transition: .3s;
+}
+.neon-card:hover {
+  box-shadow: 0 0 35px #0dcaf0;
+  border-color: #0dcaf0;
+}
+.price-neon {
+  font-size: 3rem;
+  font-weight: bold;
+  text-shadow: 0 0 30px cyan;
+}
+</style>
+
+<section class="py-5 bg-dark">
+  <div class="container text-center">
+    <h2 class="fw-bold text-light mb-5">Neon Pricing</h2>
+    <div class="row justify-content-center g-4">
+      <div class="col-md-3">
+        <div class="neon-card">
+          <h4>Starter</h4>
+          <div class="price-neon">$10</div>
+          <p>Good for small users</p>
+          <a class="btn btn-primary mt-2">Select</a>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="neon-card">
+          <h4>Ultimate</h4>
+          <div class="price-neon">$79</div>
+          <p>For power users</p>
+          <a class="btn btn-primary mt-2">Select</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>`
+},
+
+
+{
+  id: 'pricing-horizontal',
+  label: 'Pricing - Horizontal',
+  category: 'Pricing Layout',
+  content: `
+<style>
+.h-price {
+  background: white;
+  padding: 25px;
+  border-radius: 15px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+  box-shadow: 0 10px 25px rgba(0,0,0,.1);
+}
+.h-price h2 { color:#0d6efd; }
+</style>
+
+<section class="py-5">
+  <div class="container">
+    <h2 class="fw-bold text-center mb-4">Horizontal Pricing</h2>
+    <div class="h-price mb-3">
+      <h2>$25</h2>
+      <div>
+        <h4>Basic Plan</h4>
+        <p>Perfect intro package</p>
+      </div>
+      <a class="btn btn-primary ms-auto">Choose</a>
+    </div>
+    <div class="h-price">
+      <h2>$89</h2>
+      <div>
+        <h4>Business Plan</h4>
+        <p>For serious users</p>
+      </div>
+      <a class="btn btn-primary ms-auto">Choose</a>
+    </div>
+  </div>
+</section>`
+},
+
+
+{
+  id: 'pricing-minimal',
+  label: 'Pricing - Minimal Clean',
+  category: 'Pricing Layout',
+  content: `
+<style>
+.min-card {
+  padding: 40px 20px;
+  border-radius: 15px;
+  border: 2px dashed #0d6efd;
+  text-align: center;
+  transition:.3s;
+}
+.min-card:hover {
+  background:#0d6efd;
+  color:white;
+}
+</style>
+
+<section class="py-5 bg-white">
+  <div class="container text-center">
+    <h2 class="fw-bold mb-4">Minimal Pricing</h2>
+    <div class="row justify-content-center g-4">
+      <div class="col-md-3">
+        <div class="min-card">
+          <h4>Lite</h4>
+          <h2>$9</h2>
+          <p>Simple plan</p>
+          <a class="btn btn-outline-primary">Select</a>
+        </div>
+      </div>
+      <div class="col-md-3">
+        <div class="min-card">
+          <h4>Max</h4>
+          <h2>$99</h2>
+          <p>Full features</p>
+          <a class="btn btn-outline-primary">Select</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>`
+},
+
+
+
+
                     /* =========================
                        FOOTERS
                     ========================== */
