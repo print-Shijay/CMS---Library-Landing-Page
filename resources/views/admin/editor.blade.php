@@ -1649,57 +1649,7 @@
 
 
 
-{
-  id: 'pricing-neon',
-  label: 'Pricing - Neon Glow',
-  category: 'Pricing Layout',
-  content: `
-<style>
-.neon-card {
-  padding: 40px 20px;
-  border-radius: 15px;
-  text-align: center;
-  background: #000;
-  color: white;
-  border: 2px solid #0d6efd;
-  box-shadow: 0 0 15px #0d6efd;
-  transition: .3s;
-}
-.neon-card:hover {
-  box-shadow: 0 0 35px #0dcaf0;
-  border-color: #0dcaf0;
-}
-.price-neon {
-  font-size: 3rem;
-  font-weight: bold;
-  text-shadow: 0 0 30px cyan;
-}
-</style>
 
-<section class="py-5 bg-dark">
-  <div class="container text-center">
-    <h2 class="fw-bold text-light mb-5">Neon Pricing</h2>
-    <div class="row justify-content-center g-4">
-      <div class="col-md-3">
-        <div class="neon-card">
-          <h4>Starter</h4>
-          <div class="price-neon">$10</div>
-          <p>Good for small users</p>
-          <a class="btn btn-primary mt-2">Select</a>
-        </div>
-      </div>
-      <div class="col-md-3">
-        <div class="neon-card">
-          <h4>Ultimate</h4>
-          <div class="price-neon">$79</div>
-          <p>For power users</p>
-          <a class="btn btn-primary mt-2">Select</a>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>`
-},
 
 
 {
