@@ -16,9 +16,8 @@
                 @if(!empty($image))
                 <div class="main-card">
                     <img src="{{ asset('storage/' . $image) }}" alt="{{ $title ?? 'Library' }}" class="card-image">
-                    <div class="card-body">
-                        <h4 class="fw-bold mb-2">Featured Resource</h4>
-                        <p class="text-muted">Access premium content and exclusive materials</p>
+                    <div>
+                        
                     </div>
                 </div>
                 @else
@@ -26,10 +25,7 @@
                     <div class="card-image d-flex align-items-center justify-content-center bg-light">
                         <i class="bi bi-image text-muted" style="font-size: 4rem; opacity: 0.3;"></i>
                     </div>
-                    <div class="card-body">
-                        <h4 class="fw-bold mb-2">Featured Resource</h4>
-                        <p class="text-muted">Upload an image to showcase featured content</p>
-                    </div>
+                    
                 </div>
                 @endif
             </div>

@@ -115,7 +115,7 @@
 
         .card-image {
             width: 100%;
-            height: 300px;
+            height: 600px;
             object-fit: cover;
             border-bottom: 1px solid var(--border-color);
         }

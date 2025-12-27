@@ -5,7 +5,7 @@
             <div class="col-lg-6">
                 <div class="mb-5">
                     <span class="hero-badge floating">
-                        <i class="bi bi-stars me-2"></i>PREMIUM ACCESS
+                        <i class="bi bi-stars me-2"></i>Library Content
                     </span>
                     <h1 class="hero-title">{{ $title ?? 'Digital Library Hub' }}</h1>
                     <p class="lead text-secondary mb-5" style="font-size: 1.25rem;">
@@ -121,8 +121,8 @@
 <section class="py-5">
     <div class="container">
         <div class="mb-5">
-            <h2 class="display-5 fw-bold mb-3">Featured Resources</h2>
-            <p class="lead text-secondary">Access premium digital resources in our glass-morphic interface</p>
+            <h2 class="display-5 fw-bold mb-3">Related Links</h2>
+            <p class="lead text-secondary">Quick access to resources</p>
         </div>
 
         <div class="links-grid">
@@ -139,7 +139,7 @@
                 </div>
                 <div class="flex-grow-1">
                     <h5 class="fw-bold mb-1">{{ $link }}</h5>
-                    <p class="text-secondary small mb-0">Premium access to {{ strtolower($link) }} resources</p>
+                    <p class="text-secondary small mb-0">Related {{ strtolower($link) }} links</p>
                 </div>
                 <div class="ms-auto">
                     <i class="bi bi-chevron-right text-primary"></i>
@@ -152,7 +152,7 @@
                         <i class="bi bi-folder-plus"></i>
                     </div>
                     <h4 class="fw-bold mb-3">Add Resources</h4>
-                    <p class="text-secondary mb-0">Start adding resources to display them in this beautiful glass interface</p>
+                    <p class="text-secondary mb-0">Quick access to resources</p>
                 </div>
             </div>
             @endforelse
@@ -166,7 +166,7 @@
         <div class="row align-items-center">
             <div class="col-md-6 mb-4 mb-md-0">
                 <div class="glass-light p-4 rounded-3">
-                    <h5 class="fw-bold mb-3">Glass Library</h5>
+                    <h5 class="fw-bold mb-3">Library</h5>
                     <p class="text-secondary small mb-0">Where knowledge meets design. Experience the future of digital learning.</p>
                 </div>
             </div>
@@ -190,7 +190,7 @@
             </div>
         </div>
         <div class="mt-5 pt-5 text-center">
-            <p class="text-secondary small mb-0">© 2025 Glass Library. All visual elements are part of our glass morphic design system.</p>
+            <p class="text-secondary small mb-0">© 2025 Library Management.</p>
         </div>
     </div>
 </footer>

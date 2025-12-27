@@ -18,7 +18,7 @@
         </p>
         
         @if(!empty($button))
-        <button class="btn btn-primary px-4 py-2 rounded-pill fw-semibold">
+        <button class="btn btn-primary px-4 py-2 rounded-pill fw-semibold mt-auto">
             {{ $button }}
         </button>
         @endif
@@ -29,44 +29,27 @@
         <div class="image-container rounded overflow-hidden" style="height: 100%; min-height: 300px;">
             @if(!empty($image))
                 @php
-                    // Try different image paths
-                    $imageFound = false;
-                    $imagePaths = [
-                        $image, // Direct path
-                        'storage/' . $image, // Storage path
-                        'public/storage/' . $image, // Public storage
-                        'uploads/' . $image, // Uploads folder
-                    ];
+                    // Check if it's a full URL
+                    if (Str::startsWith($image, ['http://', 'https://'])) {
+                        $imageSrc = $image;
+                    } else {
+                        // For storage paths, use the storage URL helper
+                        if (Str::startsWith($image, 'landing/')) {
+                            // This is likely from storage
+                            $imageSrc = asset('storage/' . $image);
+                        } else {
+                            // Try various common patterns
+                            $imageSrc = asset($image);
+                        }
+                    }
                 @endphp
                 
-                @foreach($imagePaths as $imgPath)
-                    @if(file_exists(public_path($imgPath)) || Str::startsWith($image, ['http://', 'https://']))
-                        <img src="{{ Str::startsWith($image, ['http://', 'https://']) ? $image : asset($imgPath) }}" 
-                             alt="{{ $title ?? 'Library' }}" 
-                             class="img-fluid w-100 h-100" 
-                             style="object-fit: cover;"
-                             onerror="this.style.display='none'; document.getElementById('image-fallback').style.display='flex';">
-                        @php $imageFound = true; @endphp
-                        @break
-                    @endif
-                @endforeach
+                <img src="{{ $imageSrc }}" 
+                     alt="{{ $title ?? 'Library' }}" 
+                     class="img-fluid w-100 h-100" 
+                     style="object-fit: cover;"
+                     onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
                 
-                @if(!$imageFound)
-                    <div id="image-fallback" class="h-100 w-100 d-flex align-items-center justify-content-center bg-dark bg-opacity-25">
-                        <div class="text-center">
-                            <i class="bi bi-image text-primary mb-3" style="font-size: 3rem; opacity: 0.5;"></i>
-                            <p class="text-muted mb-0">Image: {{ $image }}</p>
-                            <small class="text-muted">(Image path not found)</small>
-                        </div>
-                    </div>
-                @else
-                    <div id="image-fallback" class="h-100 w-100 d-flex align-items-center justify-content-center bg-dark bg-opacity-25" style="display: none;">
-                        <div class="text-center">
-                            <i class="bi bi-image text-primary mb-3" style="font-size: 3rem; opacity: 0.5;"></i>
-                            <p class="text-muted">Image failed to load</p>
-                        </div>
-                    </div>
-                @endif
             @else
                 <div class="h-100 w-100 d-flex align-items-center justify-content-center bg-primary bg-opacity-10">
                     <div class="text-center">
@@ -82,29 +65,33 @@
 {{-- MISSION & VISION --}}
 <div class="bento-grid">
     <!-- Mission -->
-    <div class="bento-item bento-medium">
+    <div class="bento-item bento-medium d-flex flex-column">
         <div class="d-flex align-items-center mb-4">
             <div class="rounded-circle bg-primary bg-opacity-10 p-3 me-3">
                 <i class="bi bi-compass text-primary fs-4"></i>
             </div>
             <h2 class="fw-bold mb-0">Mission</h2>
         </div>
-        <p class="mb-0" style="color: #cbd5e1;">
-            {{ $mission ?? 'To provide accessible and innovative library services that support learning and research.' }}
-        </p>
+        <div class="flex-grow-1 d-flex align-items-center">
+            <p class="mb-0" style="color: #cbd5e1;">
+                {{ $mission ?? 'To provide accessible and innovative library services that support learning and research.' }}
+            </p>
+        </div>
     </div>
 
     <!-- Vision -->
-    <div class="bento-item bento-medium">
+    <div class="bento-item bento-medium d-flex flex-column">
         <div class="d-flex align-items-center mb-4">
             <div class="rounded-circle bg-success bg-opacity-10 p-3 me-3">
                 <i class="bi bi-eye text-success fs-4"></i>
             </div>
             <h2 class="fw-bold mb-0">Vision</h2>
         </div>
-        <p class="mb-0" style="color: #cbd5e1;">
-            {{ $vision ?? 'To be the leading center for knowledge and learning in our community.' }}
-        </p>
+        <div class="flex-grow-1 d-flex align-items-center">
+            <p class="mb-0" style="color: #cbd5e1;">
+                {{ $vision ?? 'To be the leading center for knowledge and learning in our community.' }}
+            </p>
+        </div>
     </div>
 </div>
 
@@ -221,7 +208,99 @@
         transform: translateY(-2px);
     }
     
+    /* Mission & Vision alignment */
+    .bento-medium {
+        min-height: 200px; /* Ensure equal height */
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .bento-medium .flex-grow-1 {
+        display: flex;
+        align-items: center;
+    }
+    
+    /* Bento Grid improvements */
+    .bento-grid {
+        display: grid;
+        gap: 1.25rem;
+        grid-template-columns: repeat(12, 1fr);
+        grid-auto-rows: minmax(auto, 1fr); /* Allow rows to grow equally */
+        align-items: stretch; /* Stretch items to fill row height */
+    }
+    
+    .bento-item {
+        background: var(--bento-card);
+        border: 2px solid var(--bento-border);
+        border-radius: 0.75rem;
+        padding: 1.5rem;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.2s ease;
+        height: 100%; /* Fill grid cell */
+    }
+    
+    .bento-item:hover {
+        border-color: var(--bento-accent);
+        transform: translateY(-2px);
+    }
+    
+    .bento-large { 
+        grid-column: span 8; 
+        min-height: 300px; /* Match image height */
+    }
+    
+    .bento-medium { 
+        grid-column: span 6; 
+    }
+    
+    .bento-small { 
+        grid-column: span 4; 
+        min-height: 300px; /* Fixed height for image */
+    }
+    
+    .bento-xsmall { 
+        grid-column: span 3; 
+    }
+    
+    .bento-full { 
+        grid-column: 1 / -1; 
+    }
+    
+    /* Make sure image fills container */
+    .bento-small .image-container {
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+    }
+    
+    .bento-small .image-container img {
+        flex: 1;
+    }
+    
     /* Responsive tweaks */
+    @media (max-width: 992px) {
+        .bento-large { 
+            grid-column: span 12; 
+            min-height: auto;
+        }
+        
+        .bento-medium { 
+            grid-column: span 12; 
+            min-height: auto;
+            margin-bottom: 1rem;
+        }
+        
+        .bento-small { 
+            grid-column: span 12; 
+            min-height: 300px;
+        }
+        
+        .bento-xsmall { 
+            grid-column: span 6; 
+        }
+    }
+    
     @media (max-width: 768px) {
         .display-4 {
             font-size: 2.5rem;
@@ -230,24 +309,31 @@
         .image-container {
             min-height: 250px;
         }
+        
+        .bento-small,
+        .bento-xsmall {
+            grid-column: span 12;
+        }
+        
+        .bento-medium {
+            min-height: 180px;
+        }
     }
 </style>
 
 <script>
     // Debug image paths
     document.addEventListener('DOMContentLoaded', function() {
-        console.log('Image path from CMS:', "{{ $image ?? 'No image' }}");
+        console.log('Raw image path from CMS:', "{{ $image ?? 'No image' }}");
+        console.log('Processed image path:', "{{ $imageSrc ?? 'Not processed' }}");
         
-        // Check all image elements
-        document.querySelectorAll('img').forEach(img => {
-            img.addEventListener('load', function() {
-                console.log('Image loaded:', this.src);
+        // Log all image sources on page load
+        setTimeout(() => {
+            document.querySelectorAll('img').forEach(img => {
+                console.log('Image element src:', img.src);
+                console.log('Image natural dimensions:', img.naturalWidth, 'x', img.naturalHeight);
             });
-            
-            img.addEventListener('error', function() {
-                console.log('Image failed to load:', this.src);
-            });
-        });
+        }, 500);
     });
 </script>
 
