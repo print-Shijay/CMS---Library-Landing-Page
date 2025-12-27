@@ -100,9 +100,13 @@
     /* Social Links Styling */
     .staff-social-links {
         display: flex;
+        flex-wrap: wrap;
+        /* Allows wrapping if there are many icons */
         justify-content: center;
-        gap: 10px;
-        margin-top: 1rem;
+        gap: 8px;
+        /* Consistent spacing between icons */
+        min-height: 40px;
+        /* Prevents card height jumping if icons are missing */
     }
 
     .social-icon-link {
@@ -194,22 +198,32 @@
                         <p class="text-muted small mb-4">Driving innovation through expertise and commitment to quality.</p>
 
                         <div class="staff-social-links">
-                            @if($staff->social_media)
-                                @foreach($staff->social_media as $platform => $url)
-                                    @if(!empty($url))
+                            @php
+                                // 1. Ensure we have an array even if casting is weird or data is null
+                                $socialData = $staff->social_media;
+                                if (is_string($socialData)) {
+                                    $socialData = json_decode($socialData, true);
+                                }
+
+                                $iconMap = [
+                                    'facebook' => ['icon' => 'fab fa-facebook-f', 'class' => 'link-facebook'],
+                                    'twitter' => ['icon' => 'fab fa-x-twitter', 'class' => 'link-twitter'],
+                                    'instagram' => ['icon' => 'fab fa-instagram', 'class' => 'link-instagram'],
+                                    'github' => ['icon' => 'fab fa-github', 'class' => 'link-github'],
+                                    'linkedin' => ['icon' => 'fab fa-linkedin-in', 'class' => 'link-linkedin']
+                                ];
+                            @endphp
+
+                            @if(!empty($socialData) && is_array($socialData))
+                                @foreach($socialData as $platform => $url)
+                                    {{-- This check handles: null, empty strings, or "null" as a string --}}
+                                    @if(!empty($url) && $url !== 'null' && filter_var($url, FILTER_VALIDATE_URL))
                                         @php
-                                            $icons = [
-                                                'facebook' => ['icon' => 'fab fa-facebook-f', 'class' => 'link-facebook'],
-                                                'twitter' => ['icon' => 'fab fa-x-twitter', 'class' => 'link-twitter'],
-                                                'instagram' => ['icon' => 'fab fa-instagram', 'class' => 'link-instagram'],
-                                                'github' => ['icon' => 'fab fa-github', 'class' => 'link-github'],
-                                                'linkedin' => ['icon' => 'fab fa-linkedin-in', 'class' => 'link-linkedin']
-                                            ];
-                                            $config = $icons[$platform] ?? ['icon' => 'fas fa-link', 'class' => 'link-default'];
+                                            $config = $iconMap[$platform] ?? ['icon' => 'fas fa-link', 'class' => 'link-default'];
                                         @endphp
 
                                         <a href="{{ $url }}" target="_blank" class="social-icon-link {{ $config['class'] }}"
-                                            title="{{ ucfirst($platform) }}">
+                                            title="{{ ucfirst($platform) }}" rel="noopener noreferrer">
                                             <i class="{{ $config['icon'] }}"></i>
                                         </a>
                                     @endif
