@@ -89,28 +89,38 @@
                             SECTIONS
                     ========================== */
 
-                   {
-  id: 'hero-left-image',
-  label: 'Hero – Image Right',
-  category: 'Sections',
-  content: `
-    <section class="py-5 bg-light">
-      <div class="container">
-        <div class="row align-items-center">
-          <div class="col-md-6">
-            <h1 class="fw-bold">Lorem ipsum dolor sit amet</h1>
-            <p class="lead">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-              Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
-            </p>
-            <a href="#" class="btn btn-primary">Lorem Ipsum</a>
-          </div>
-          <div class="col-md-6 text-center">
-            <img src="https://via.placeholder.com/500x350" class="img-fluid rounded">
+{
+    id: 'hero-with-floating-card',
+    label: 'Hero + Floating Card',
+    category: 'Hero Sections',
+    content: `
+      <section class="position-relative" style="background: linear-gradient(135deg, #1C54E4 0%, #1B3B85 100%); padding-top: 100px; padding-bottom: 200px;">
+        <div class="container">
+          <div class="row">
+            <div class="col-lg-8 mx-auto text-center text-white">
+              <h1 class="fw-bold display-3 mb-4">Lorem Ipsum Dolor Sit Amet</h1>
+              <p class="lead mb-4 opacity-75">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+              <a href="#" class="btn btn-light btn-lg px-5" style="color: #1C54E4; font-weight: 600;">Lorem Ipsum</a>
+            </div>
           </div>
         </div>
-      </div>
-    </section>`
+      </section>
+
+      <section class="position-relative" style="margin-top: -150px; z-index: 10;">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-3 col-md-4 col-sm-6">
+              <div class="rounded-4 shadow-lg p-3" style="background: linear-gradient(135deg, #BCD8FF 0%, #A5C9FF 100%);">
+                <div class="mb-3" style="border: 2px dashed #1C54E4; border-radius: 12px; padding: 10px;">
+                  <img data-gjs-type="image" src="https://via.placeholder.com/250x180/E0F2FE/1C54E4?text=UPLOAD" class="img-fluid rounded-3 w-100" style="object-fit: cover; height: 180px;">
+                  <p class="text-center mt-2 mb-0" style="color: #1C54E4; font-size: 0.75rem;">📷 Click to upload</p>
+                </div>
+                <h5 class="fw-bold mt-2" style="color: #1B3B85;">Track your expenses</h5>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>`
 },
 
  {
@@ -351,7 +361,7 @@
             <div class="col-lg-6 col-md-12">
               <div class="bg-white rounded-4 shadow-lg p-3" style="border: 3px dashed #1C54E4;">
                 <img data-gjs-type="image" src="https://via.placeholder.com/600x450/E0F2FE/1C54E4?text=HERO+IMAGE" class="img-fluid rounded-3 w-100">
-                <p class="text-center mt-2 mb-0" style="color: #1C54E4; font-size: 0.9rem;"> Click to upload hero image</p>
+                <p class="text-center mt-2 mb-0" style="color: #1C54E4; font-size: 0.9rem;">📷 Click to upload hero image</p>
               </div>
             </div>
           </div>
@@ -731,197 +741,320 @@
                     /* =========================
                        image section
                     ========================== */
- // 1. Image Grid Showcase
+ // 1. Three Column Floating Cards
 {
-    id: 'image-grid-showcase',
-    label: 'Image Grid Showcase',
+    id: 'image-section-floating-3col',
+    label: 'Image Section – 3 Floating Cards',
     category: 'Image Sections',
     content: `
-      <section class="py-5" style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);">
+      <section class="position-relative" style="background: linear-gradient(135deg, #1C54E4 0%, #1B3B85 100%); padding-top: 100px; padding-bottom: 200px;">
         <div class="container">
-          <div class="text-center mb-5">
-            <h2 class="fw-bold" style="color: #1C54E4;">Our Gallery</h2>
-            <p class="text-muted">Explore our stunning collection</p>
+          <div class="text-center text-white mb-5">
+            <h2 class="fw-bold display-5 mb-3">Lorem Ipsum Dolor</h2>
+            <p class="lead opacity-75">Consectetur adipiscing elit sed do eiusmod</p>
           </div>
+        </div>
+      </section>
+
+      <section class="position-relative" style="margin-top: -150px; z-index: 10;">
+        <div class="container">
           <div class="row g-4">
             <div class="col-md-4">
-              <div class="bg-white rounded-4 shadow-sm p-3" style="border: 2px dashed #1C54E4;">
-                <img data-gjs-type="image" src="https://via.placeholder.com/400x300/E0F2FE/1C54E4?text=UPLOAD+IMAGE+1" class="img-fluid rounded-3 w-100">
-                <p class="text-center mt-2 mb-0" style="color: #1C54E4; font-size: 0.9rem;">📷 Click to upload</p>
+              <div class="bg-white rounded-4 shadow-lg p-3">
+                <div style="border: 2px dashed #1C54E4; border-radius: 12px; padding: 10px;">
+                  <img data-gjs-type="image" src="https://via.placeholder.com/350x250/E0F2FE/1C54E4?text=IMAGE+1" class="img-fluid rounded-3 w-100" style="object-fit: cover; height: 250px;">
+                  <p class="text-center mt-2 mb-0" style="color: #1C54E4; font-size: 0.8rem;">📷 Click to upload</p>
+                </div>
+                <h5 class="fw-bold mt-3 mb-2" style="color: #1C54E4;">Lorem Ipsum</h5>
+                <p class="text-muted small mb-0">Consectetur adipiscing elit sed do eiusmod.</p>
               </div>
             </div>
             <div class="col-md-4">
-              <div class="bg-white rounded-4 shadow-sm p-3" style="border: 2px dashed #1C54E4;">
-                <img data-gjs-type="image" src="https://via.placeholder.com/400x300/E0F2FE/1C54E4?text=UPLOAD+IMAGE+2" class="img-fluid rounded-3 w-100">
-                <p class="text-center mt-2 mb-0" style="color: #1C54E4; font-size: 0.9rem;">📷 Click to upload</p>
+              <div class="bg-white rounded-4 shadow-lg p-3">
+                <div style="border: 2px dashed #1C54E4; border-radius: 12px; padding: 10px;">
+                  <img data-gjs-type="image" src="https://via.placeholder.com/350x250/E0F2FE/1C54E4?text=IMAGE+2" class="img-fluid rounded-3 w-100" style="object-fit: cover; height: 250px;">
+                  <p class="text-center mt-2 mb-0" style="color: #1C54E4; font-size: 0.8rem;">📷 Click to upload</p>
+                </div>
+                <h5 class="fw-bold mt-3 mb-2" style="color: #1C54E4;">Dolor Sit</h5>
+                <p class="text-muted small mb-0">Ut enim ad minim veniam quis nostrud.</p>
               </div>
             </div>
             <div class="col-md-4">
-              <div class="bg-white rounded-4 shadow-sm p-3" style="border: 2px dashed #1C54E4;">
-                <img data-gjs-type="image" src="https://via.placeholder.com/400x300/E0F2FE/1C54E4?text=UPLOAD+IMAGE+3" class="img-fluid rounded-3 w-100">
-                <p class="text-center mt-2 mb-0" style="color: #1C54E4; font-size: 0.9rem;">📷 Click to upload</p>
+              <div class="bg-white rounded-4 shadow-lg p-3">
+                <div style="border: 2px dashed #1C54E4; border-radius: 12px; padding: 10px;">
+                  <img data-gjs-type="image" src="https://via.placeholder.com/350x250/E0F2FE/1C54E4?text=IMAGE+3" class="img-fluid rounded-3 w-100" style="object-fit: cover; height: 250px;">
+                  <p class="text-center mt-2 mb-0" style="color: #1C54E4; font-size: 0.8rem;">📷 Click to upload</p>
+                </div>
+                <h5 class="fw-bold mt-3 mb-2" style="color: #1C54E4;">Amet Consectetur</h5>
+                <p class="text-muted small mb-0">Duis aute irure dolor in reprehenderit.</p>
               </div>
             </div>
           </div>
         </div>
-      </section>`
-},
+      </section>
 
-// 2. Full Width Image Banner
-{
-    id: 'image-full-banner',
-    label: 'Full Width Banner',
-    category: 'Image Sections',
-    content: `
-      <section class="py-0 position-relative" style="min-height: 500px; overflow: hidden;">
-        <div style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(rgba(28, 84, 228, 0.7), rgba(27, 59, 133, 0.8));">
-          <img data-gjs-type="image" src="https://via.placeholder.com/1920x500/1C54E4/FFFFFF?text=FULL+WIDTH+BANNER+IMAGE" class="w-100 h-100" style="object-fit: cover; opacity: 0.3;">
-        </div>
-        <div class="container position-relative text-white text-center" style="padding: 150px 0;">
-          <h2 class="fw-bold display-4 mb-3">Your Banner Title Here</h2>
-          <p class="lead">Click the background to upload your banner image</p>
-          <a href="#" class="btn btn-light btn-lg mt-3" style="color: #1C54E4; font-weight: 600;">Learn More</a>
-        </div>
-      </section>`
-},
-
-// 3. Image with Floating Card
-{
-    id: 'image-floating-card',
-    label: 'Image + Floating Card',
-    category: 'Image Sections',
-    content: `
-      <section class="py-5 bg-white">
+      <section class="py-5 bg-white" style="padding-top: 100px !important;">
         <div class="container">
-          <div class="row align-items-center g-5">
-            <div class="col-md-7">
-              <div class="position-relative">
-                <div class="bg-white rounded-4 shadow-lg p-3" style="border: 2px dashed #1C54E4;">
-                  <img data-gjs-type="image" src="https://via.placeholder.com/700x500/E0F2FE/1C54E4?text=MAIN+IMAGE" class="img-fluid rounded-3 w-100">
-                  <p class="text-center mt-2 mb-0" style="color: #1C54E4; font-size: 0.9rem;">📷 Click to upload main image</p>
+          <!-- Additional content -->
+        </div>
+      </section>`
+},
+
+// 2. Two Column Large Floating Cards
+{
+    id: 'image-section-floating-2col',
+    label: 'Image Section – 2 Large Floating Cards',
+    category: 'Image Sections',
+    content: `
+      <section class="position-relative" style="background: linear-gradient(135deg, #1C54E4 0%, #2A71FE 100%); padding-top: 100px; padding-bottom: 250px;">
+        <div class="container">
+          <div class="text-center text-white mb-5">
+            <h2 class="fw-bold display-4 mb-3">Lorem Ipsum Dolor Sit</h2>
+            <p class="lead opacity-75 mx-auto" style="max-width: 700px;">Consectetur adipiscing elit sed do eiusmod tempor incididunt ut labore</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="position-relative" style="margin-top: -200px; z-index: 10;">
+        <div class="container">
+          <div class="row g-4">
+            <div class="col-md-6">
+              <div class="bg-white rounded-4 shadow-lg p-4">
+                <div style="border: 2px dashed #1C54E4; border-radius: 12px; padding: 10px;">
+                  <img data-gjs-type="image" src="https://via.placeholder.com/500x350/E0F2FE/1C54E4?text=LARGE+IMAGE+1" class="img-fluid rounded-3 w-100" style="object-fit: cover; height: 350px;">
+                  <p class="text-center mt-2 mb-0" style="color: #1C54E4; font-size: 0.85rem;">📷 Click to upload</p>
+                </div>
+                <h4 class="fw-bold mt-4 mb-3" style="color: #1C54E4;">Lorem Ipsum Dolor</h4>
+                <p class="text-muted mb-0">Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="bg-white rounded-4 shadow-lg p-4">
+                <div style="border: 2px dashed #1C54E4; border-radius: 12px; padding: 10px;">
+                  <img data-gjs-type="image" src="https://via.placeholder.com/500x350/E0F2FE/1C54E4?text=LARGE+IMAGE+2" class="img-fluid rounded-3 w-100" style="object-fit: cover; height: 350px;">
+                  <p class="text-center mt-2 mb-0" style="color: #1C54E4; font-size: 0.85rem;">📷 Click to upload</p>
+                </div>
+                <h4 class="fw-bold mt-4 mb-3" style="color: #1C54E4;">Sit Amet Consectetur</h4>
+                <p class="text-muted mb-0">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="py-5 bg-white" style="padding-top: 100px !important;">
+        <div class="container">
+          <!-- Additional content -->
+        </div>
+      </section>`
+},
+
+// 3. Four Column Small Floating Cards
+{
+    id: 'image-section-floating-4col',
+    label: 'Image Section – 4 Small Floating Cards',
+    category: 'Image Sections',
+    content: `
+      <section class="position-relative" style="background: linear-gradient(135deg, #1B3B85 0%, #1C54E4 100%); padding-top: 100px; padding-bottom: 180px;">
+        <div class="container">
+          <div class="text-center text-white">
+            <h2 class="fw-bold display-5 mb-3">Lorem Ipsum Gallery</h2>
+            <p class="lead opacity-75">Consectetur adipiscing elit</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="position-relative" style="margin-top: -130px; z-index: 10;">
+        <div class="container">
+          <div class="row g-3">
+            <div class="col-lg-3 col-md-6">
+              <div class="bg-white rounded-4 shadow-lg p-2">
+                <div style="border: 2px dashed #1C54E4; border-radius: 10px; padding: 8px;">
+                  <img data-gjs-type="image" src="https://via.placeholder.com/250x200/E0F2FE/1C54E4?text=IMG+1" class="img-fluid rounded-3 w-100" style="object-fit: cover; height: 200px;">
+                  <p class="text-center mt-1 mb-0" style="color: #1C54E4; font-size: 0.7rem;">📷 Upload</p>
                 </div>
               </div>
             </div>
-            <div class="col-md-5">
-              <div class="p-4 rounded-4 shadow-lg" style="background: linear-gradient(135deg, #1C54E4, #1B3B85);">
-                <h3 class="fw-bold text-white mb-3">Featured Content</h3>
-                <p class="text-white opacity-75 mb-4">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt.</p>
-                <a href="#" class="btn btn-light" style="color: #1C54E4; font-weight: 600;">Discover More</a>
+            <div class="col-lg-3 col-md-6">
+              <div class="bg-white rounded-4 shadow-lg p-2">
+                <div style="border: 2px dashed #1C54E4; border-radius: 10px; padding: 8px;">
+                  <img data-gjs-type="image" src="https://via.placeholder.com/250x200/E0F2FE/1C54E4?text=IMG+2" class="img-fluid rounded-3 w-100" style="object-fit: cover; height: 200px;">
+                  <p class="text-center mt-1 mb-0" style="color: #1C54E4; font-size: 0.7rem;">📷 Upload</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="bg-white rounded-4 shadow-lg p-2">
+                <div style="border: 2px dashed #1C54E4; border-radius: 10px; padding: 8px;">
+                  <img data-gjs-type="image" src="https://via.placeholder.com/250x200/E0F2FE/1C54E4?text=IMG+3" class="img-fluid rounded-3 w-100" style="object-fit: cover; height: 200px;">
+                  <p class="text-center mt-1 mb-0" style="color: #1C54E4; font-size: 0.7rem;">📷 Upload</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-lg-3 col-md-6">
+              <div class="bg-white rounded-4 shadow-lg p-2">
+                <div style="border: 2px dashed #1C54E4; border-radius: 10px; padding: 8px;">
+                  <img data-gjs-type="image" src="https://via.placeholder.com/250x200/E0F2FE/1C54E4?text=IMG+4" class="img-fluid rounded-3 w-100" style="object-fit: cover; height: 200px;">
+                  <p class="text-center mt-1 mb-0" style="color: #1C54E4; font-size: 0.7rem;">📷 Upload</p>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </section>`
-},
+      </section>
 
-// 4. Split Screen Image
-{
-    id: 'image-split-screen',
-    label: 'Split Screen Layout',
-    category: 'Image Sections',
-    content: `
-      <section class="py-5" style="background: #f8fafc;">
+      <section class="py-5" style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); padding-top: 80px !important;">
         <div class="container">
-          <div class="row g-4">
-            <div class="col-md-6">
-              <div class="bg-white rounded-4 shadow-sm p-4 h-100" style="border: 2px dashed #1C54E4;">
-                <img data-gjs-type="image" src="https://via.placeholder.com/600x400/E0F2FE/1C54E4?text=LEFT+IMAGE" class="img-fluid rounded-3 w-100 mb-3">
-                <p class="text-center mb-0" style="color: #1C54E4; font-size: 0.9rem;">📷 Click to upload</p>
-                <h4 class="fw-bold mt-3" style="color: #1C54E4;">Left Section Title</h4>
-                <p class="text-muted">Description for your left section content goes here.</p>
-              </div>
-            </div>
-            <div class="col-md-6">
-              <div class="bg-white rounded-4 shadow-sm p-4 h-100" style="border: 2px dashed #1C54E4;">
-                <img data-gjs-type="image" src="https://via.placeholder.com/600x400/E0F2FE/1C54E4?text=RIGHT+IMAGE" class="img-fluid rounded-3 w-100 mb-3">
-                <p class="text-center mb-0" style="color: #1C54E4; font-size: 0.9rem;">📷 Click to upload</p>
-                <h4 class="fw-bold mt-3" style="color: #1C54E4;">Right Section Title</h4>
-                <p class="text-muted">Description for your right section content goes here.</p>
-              </div>
-            </div>
-          </div>
+          <!-- Additional content -->
         </div>
       </section>`
 },
 
-// 5. Image Carousel Style
+// 4. Masonry Style Floating Cards
 {
-    id: 'image-carousel-style',
-    label: 'Image Carousel Layout',
+    id: 'image-section-floating-masonry',
+    label: 'Image Section – Masonry Floating',
     category: 'Image Sections',
     content: `
-      <section class="py-5" style="background: linear-gradient(135deg, #1C54E4 0%, #1B3B85 100%);">
+      <section class="position-relative" style="background: linear-gradient(135deg, #1C54E4 0%, #1B3B85 100%); padding-top: 100px; padding-bottom: 250px;">
         <div class="container">
-          <div class="text-center text-white mb-5">
-            <h2 class="fw-bold">Featured Images</h2>
-            <p class="opacity-75">Showcase your best moments</p>
-          </div>
-          <div class="row g-4 justify-content-center">
-            <div class="col-md-3 col-sm-6">
-              <div class="bg-white rounded-4 p-2 shadow-lg" style="border: 2px dashed #60a5fa;">
-                <img data-gjs-type="image" src="https://via.placeholder.com/300x300/E0F2FE/1C54E4?text=IMAGE+1" class="img-fluid rounded-3 w-100">
-                <p class="text-center mt-2 mb-0" style="color: #1C54E4; font-size: 0.8rem;">📷 Upload</p>
-              </div>
-            </div>
-            <div class="col-md-3 col-sm-6">
-              <div class="bg-white rounded-4 p-2 shadow-lg" style="border: 2px dashed #60a5fa;">
-                <img data-gjs-type="image" src="https://via.placeholder.com/300x300/E0F2FE/1C54E4?text=IMAGE+2" class="img-fluid rounded-3 w-100">
-                <p class="text-center mt-2 mb-0" style="color: #1C54E4; font-size: 0.8rem;">📷 Upload</p>
-              </div>
-            </div>
-            <div class="col-md-3 col-sm-6">
-              <div class="bg-white rounded-4 p-2 shadow-lg" style="border: 2px dashed #60a5fa;">
-                <img data-gjs-type="image" src="https://via.placeholder.com/300x300/E0F2FE/1C54E4?text=IMAGE+3" class="img-fluid rounded-3 w-100">
-                <p class="text-center mt-2 mb-0" style="color: #1C54E4; font-size: 0.8rem;">📷 Upload</p>
-              </div>
-            </div>
-            <div class="col-md-3 col-sm-6">
-              <div class="bg-white rounded-4 p-2 shadow-lg" style="border: 2px dashed #60a5fa;">
-                <img data-gjs-type="image" src="https://via.placeholder.com/300x300/E0F2FE/1C54E4?text=IMAGE+4" class="img-fluid rounded-3 w-100">
-                <p class="text-center mt-2 mb-0" style="color: #1C54E4; font-size: 0.8rem;">📷 Upload</p>
-              </div>
-            </div>
+          <div class="text-center text-white">
+            <h2 class="fw-bold display-4 mb-3">Lorem Ipsum Portfolio</h2>
+            <p class="lead opacity-75">Consectetur adipiscing elit sed do eiusmod tempor</p>
           </div>
         </div>
-      </section>`
-},
+      </section>
 
-// 6. Magazine Style Layout
-{
-    id: 'image-magazine-layout',
-    label: 'Magazine Style',
-    category: 'Image Sections',
-    content: `
-      <section class="py-5 bg-white">
+      <section class="position-relative" style="margin-top: -200px; z-index: 10;">
         <div class="container">
           <div class="row g-4">
             <div class="col-md-8">
-              <div class="bg-white rounded-4 shadow-sm p-3 h-100" style="border: 2px dashed #1C54E4;">
-                <img data-gjs-type="image" src="https://via.placeholder.com/800x500/E0F2FE/1C54E4?text=FEATURED+IMAGE" class="img-fluid rounded-3 w-100 mb-3">
-                <p class="text-center mb-0" style="color: #1C54E4; font-size: 0.9rem;">📷 Click to upload featured image</p>
-                <h3 class="fw-bold mt-3" style="color: #1C54E4;">Main Story Title</h3>
-                <p class="text-muted">Your main story description goes here with compelling content.</p>
+              <div class="bg-white rounded-4 shadow-lg p-3 h-100">
+                <div style="border: 2px dashed #1C54E4; border-radius: 12px; padding: 10px;">
+                  <img data-gjs-type="image" src="https://via.placeholder.com/700x400/E0F2FE/1C54E4?text=LARGE+IMAGE" class="img-fluid rounded-3 w-100" style="object-fit: cover; height: 400px;">
+                  <p class="text-center mt-2 mb-0" style="color: #1C54E4; font-size: 0.85rem;">📷 Click to upload large image</p>
+                </div>
               </div>
             </div>
             <div class="col-md-4">
-              <div class="bg-white rounded-4 shadow-sm p-3 mb-4" style="border: 2px dashed #1C54E4;">
-                <img data-gjs-type="image" src="https://via.placeholder.com/400x250/E0F2FE/1C54E4?text=IMAGE+2" class="img-fluid rounded-3 w-100 mb-2">
-                <p class="text-center mb-0" style="color: #1C54E4; font-size: 0.8rem;">📷 Upload</p>
-                <h5 class="fw-bold mt-2" style="color: #1C54E4;">Side Story 1</h5>
-                <p class="text-muted small mb-0">Brief description here.</p>
+              <div class="bg-white rounded-4 shadow-lg p-3 mb-4">
+                <div style="border: 2px dashed #1C54E4; border-radius: 12px; padding: 10px;">
+                  <img data-gjs-type="image" src="https://via.placeholder.com/350x180/E0F2FE/1C54E4?text=SMALL+1" class="img-fluid rounded-3 w-100" style="object-fit: cover; height: 180px;">
+                  <p class="text-center mt-2 mb-0" style="color: #1C54E4; font-size: 0.75rem;">📷 Upload</p>
+                </div>
               </div>
-              <div class="bg-white rounded-4 shadow-sm p-3" style="border: 2px dashed #1C54E4;">
-                <img data-gjs-type="image" src="https://via.placeholder.com/400x250/E0F2FE/1C54E4?text=IMAGE+3" class="img-fluid rounded-3 w-100 mb-2">
-                <p class="text-center mb-0" style="color: #1C54E4; font-size: 0.8rem;">📷 Upload</p>
-                <h5 class="fw-bold mt-2" style="color: #1C54E4;">Side Story 2</h5>
-                <p class="text-muted small mb-0">Brief description here.</p>
+              <div class="bg-white rounded-4 shadow-lg p-3">
+                <div style="border: 2px dashed #1C54E4; border-radius: 12px; padding: 10px;">
+                  <img data-gjs-type="image" src="https://via.placeholder.com/350x180/E0F2FE/1C54E4?text=SMALL+2" class="img-fluid rounded-3 w-100" style="object-fit: cover; height: 180px;">
+                  <p class="text-center mt-2 mb-0" style="color: #1C54E4; font-size: 0.75rem;">📷 Upload</p>
+                </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="py-5 bg-white" style="padding-top: 100px !important;">
+        <div class="container">
+          <!-- Additional content -->
+        </div>
+      </section>`
+},
+
+// 5. Single Large Centered Floating Card
+{
+    id: 'image-section-floating-single',
+    label: 'Image Section – Single Large Floating',
+    category: 'Image Sections',
+    content: `
+      <section class="position-relative" style="background: linear-gradient(135deg, #1C54E4 0%, #2A71FE 100%); padding-top: 120px; padding-bottom: 300px;">
+        <div class="container">
+          <div class="text-center text-white">
+            <h2 class="fw-bold display-3 mb-4">Lorem Ipsum Dolor Sit Amet</h2>
+            <p class="lead opacity-75 mx-auto" style="max-width: 800px;">Consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="position-relative" style="margin-top: -250px; z-index: 10;">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-10">
+              <div class="bg-white rounded-4 shadow-lg p-4">
+                <div style="border: 3px dashed #1C54E4; border-radius: 16px; padding: 15px;">
+                  <img data-gjs-type="image" src="https://via.placeholder.com/1000x500/E0F2FE/1C54E4?text=FEATURED+IMAGE" class="img-fluid rounded-3 w-100" style="object-fit: cover; height: 500px;">
+                  <p class="text-center mt-3 mb-0" style="color: #1C54E4; font-size: 1rem;">📷 Click to upload featured image</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="py-5 bg-white" style="padding-top: 100px !important;">
+        <div class="container">
+          <div class="row justify-content-center">
+            <div class="col-lg-8 text-center">
+              <h3 class="fw-bold mb-3" style="color: #1C54E4;">Lorem Ipsum Dolor</h3>
+              <p class="text-muted">Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
             </div>
           </div>
         </div>
       </section>`
 },
 
+// 6. Grid Style with Staggered Floating Cards
+{
+    id: 'image-section-floating-staggered',
+    label: 'Image Section – Staggered Floating',
+    category: 'Image Sections',
+    content: `
+      <section class="position-relative" style="background: linear-gradient(135deg, #1B3B85 0%, #1C54E4 50%, #2A71FE 100%); padding-top: 100px; padding-bottom: 220px;">
+        <div class="container">
+          <div class="text-center text-white">
+            <h2 class="fw-bold display-5 mb-3">Lorem Ipsum Collection</h2>
+            <p class="lead opacity-75">Consectetur adipiscing elit sed do eiusmod</p>
+          </div>
+        </div>
+      </section>
+
+      <section class="position-relative" style="margin-top: -170px; z-index: 10;">
+        <div class="container">
+          <div class="row g-4">
+            <div class="col-md-4">
+              <div class="bg-white rounded-4 shadow-lg p-3" style="margin-top: 0;">
+                <div style="border: 2px dashed #1C54E4; border-radius: 12px; padding: 10px;">
+                  <img data-gjs-type="image" src="https://via.placeholder.com/350x280/E0F2FE/1C54E4?text=IMAGE+1" class="img-fluid rounded-3 w-100" style="object-fit: cover; height: 280px;">
+                  <p class="text-center mt-2 mb-0" style="color: #1C54E4; font-size: 0.8rem;">📷 Upload</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="bg-white rounded-4 shadow-lg p-3" style="margin-top: 40px;">
+                <div style="border: 2px dashed #1C54E4; border-radius: 12px; padding: 10px;">
+                  <img data-gjs-type="image" src="https://via.placeholder.com/350x280/E0F2FE/1C54E4?text=IMAGE+2" class="img-fluid rounded-3 w-100" style="object-fit: cover; height: 280px;">
+                  <p class="text-center mt-2 mb-0" style="color: #1C54E4; font-size: 0.8rem;">📷 Upload</p>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-4">
+              <div class="bg-white rounded-4 shadow-lg p-3" style="margin-top: 0;">
+                <div style="border: 2px dashed #1C54E4; border-radius: 12px; padding: 10px;">
+                  <img data-gjs-type="image" src="https://via.placeholder.com/350x280/E0F2FE/1C54E4?text=IMAGE+3" class="img-fluid rounded-3 w-100" style="object-fit: cover; height: 280px;">
+                  <p class="text-center mt-2 mb-0" style="color: #1C54E4; font-size: 0.8rem;">📷 Upload</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="py-5" style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%); padding-top: 100px !important;">
+        <div class="container">
+          <!-- Additional content -->
+        </div>
+      </section>`
+},
                 /* =========================
                     CALL TO ACTION (CTA)
                  ========================== */
