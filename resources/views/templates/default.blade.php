@@ -317,11 +317,13 @@
                     @endphp
 
                     @foreach($navPages as $navPage)
-                        <li class="nav-item">
-                            <a class="nav-link" href="#" onclick="loadPage('{{ $navPage->slug }}'); return false;">
-                                {{ $navPage->title }}
-                            </a>
-                        </li>
+                        @if(!is_null($navPage->html_content) || $navPage->is_default == 1)
+                            <li class="nav-item">
+                                <a class="nav-link" href="#" onclick="loadPage('{{ $navPage->slug }}'); return false;">
+                                    {{ $navPage->title }}
+                                </a>
+                            </li>
+                        @endif
                     @endforeach
                 </ul>
             </div>
