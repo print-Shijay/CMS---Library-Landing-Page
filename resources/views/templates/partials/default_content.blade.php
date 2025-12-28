@@ -1,0 +1,154 @@
+<!-- Hero Section -->
+<section class="hero-section" id="home">
+    @if(!empty($image))
+        <img src="{{ asset('storage/' . $image) }}" class="hero-bg" alt="Hero">
+    @else
+        <img src="{{ asset('images/defaults/landing-default.png') }}" class="hero-bg" alt="Hero Default">
+    @endif
+
+    <div class="hero-overlay"></div>
+
+    <div class="container">
+        <div class="hero-content">
+            <h1 class="hero-title">{{ $title ?? 'Welcome to Keeper Library' }}</h1>
+            <p class="hero-description">{{ $description ?? 'Discover a world of knowledge and endless possibilities.' }}
+            </p>
+            <a href="#" class="hero-btn">{{ $button ?? 'Explore More' }}</a>
+        </div>
+    </div>
+</section>
+
+<section class="py-5" id="about">
+    <div class="container">
+        <h2 class="section-title text-center">Our Purpose</h2>
+        <p class="section-subtitle text-center">Keeper Library is committed to providing equitable access to information
+            and fostering a culture of continuous learning and discovery.</p>
+
+        <div class="row g-4">
+            <div class="col-lg-6">
+                <div class="card-custom">
+                    <div class="card-icon">
+                        <i class="bi bi-compass"></i>
+                    </div>
+                    <h3 class="card-title">Our Mission</h3>
+                    <p class="card-text">
+                        {{ $mission ?? 'To empower our community through accessible information and resources.' }}
+                    </p>
+                </div>
+            </div>
+            <div class="col-lg-6">
+                <div class="card-custom">
+                    <div class="card-icon">
+                        <i class="bi bi-eye"></i>
+                    </div>
+                    <h3 class="card-title">Our Vision</h3>
+                    <p class="card-text">
+                        {{ $vision ?? 'To be a global leader in digital and physical knowledge preservation.' }}
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5" id="goals" style="background-color: var(--br-50);">
+    <div class="container">
+        <h2 class="section-title text-center">Our Strategic Goals</h2>
+        <p class="section-subtitle text-center">We're working towards measurable objectives that align with our mission
+            and vision for the future of knowledge sharing.</p>
+
+        <div class="row g-4">
+            <div class="col-12 text-center">
+                <p>{{ $goals ?? 'Scaling excellence through strategic alignment and community engagement.' }}</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="py-5" id="resources">
+    <div class="container">
+        <h2 class="section-title text-center">Library Resources</h2>
+        <p class="section-subtitle text-center">Explore our digital tools, research guides, and community resources.</p>
+
+        <div class="row g-4">
+            @php
+                // Handled null check within the decoding logic
+                $links = is_array($related_links ?? []) ? ($related_links ?? []) : json_decode($related_links ?? '[]', true);
+            @endphp
+
+            @forelse($links ?? ['Documentation', 'API Reference', 'Community'] as $link)
+                <div class="col-lg-4 col-md-6">
+                    <a href="#" class="link-preview-card">
+                        <div class="link-thumbnail">
+                            <i class="bi bi-arrow-up-right"></i>
+                        </div>
+                        <div>
+                            <span class="link-title">{{ $link }}</span>
+                            <p class="small text-muted mb-2">Deep dive into our ecosystem and master the workflow.</p>
+                            <span class="link-url">docs.brand.io/{{ Str::slug($link) }}</span>
+                        </div>
+                    </a>
+                </div>
+            @empty
+                <div class="col-12 text-center text-muted">No resources available.</div>
+            @endforelse
+        </div>
+    </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer" id="contact">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-4 mb-4 mb-lg-0">
+                <h3 class="footer-title">
+                    <i class="bi bi-hexagon-fill me-2" style="color: var(--br-400);"></i>Keeper Library
+                </h3>
+                <p>Your trusted partner in knowledge discovery and lifelong learning since 2010.</p>
+                <div class="mt-4">
+                    <a href="#" class="me-3 text-white"><i class="bi bi-twitter fs-5"></i></a>
+                    <a href="#" class="me-3 text-white"><i class="bi bi-facebook fs-5"></i></a>
+                    <a href="#" class="me-3 text-white"><i class="bi bi-instagram fs-5"></i></a>
+                    <a href="#" class="text-white"><i class="bi bi-linkedin fs-5"></i></a>
+                </div>
+            </div>
+            <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+                <h4 class="footer-title">Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#goals">Our Goals</a></li>
+                    <li><a href="#resources">Resources</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-3 col-md-4 mb-4 mb-md-0">
+                <h4 class="footer-title">Services</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Research Help</a></li>
+                    <li><a href="#">Interlibrary Loan</a></li>
+                    <li><a href="#">Digital Archives</a></li>
+                    <li><a href="#">Study Rooms</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-3 col-md-4">
+                <h4 class="footer-title">Contact Us</h4>
+                <ul class="footer-links">
+                    <li><i class="bi bi-geo-alt me-2"></i> 123 Knowledge Ave, EduCity</li>
+                    <li><i class="bi bi-telephone me-2"></i> (555) 123-4567</li>
+                    <li><i class="bi bi-envelope me-2"></i> info@keeperlibrary.org</li>
+                    <li><i class="bi bi-clock me-2"></i> Mon-Fri: 9am-9pm</li>
+                </ul>
+            </div>
+        </div>
+        <div class="row copyright">
+            <div class="col-md-6">
+                <p>&copy; 2023 Keeper Library. All rights reserved.</p>
+            </div>
+            <div class="col-md-6 text-md-end">
+                <p><a href="#" class="text-decoration-none me-3" style="color: var(--br-200);">Privacy Policy</a>
+                    <a href="#" class="text-decoration-none" style="color: var(--br-200);">Terms of Use</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>

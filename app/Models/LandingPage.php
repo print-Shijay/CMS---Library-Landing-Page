@@ -18,6 +18,7 @@ class LandingPage extends Model
         'related_links'
     ];
 
+
     protected $casts = [
         'related_links' => 'array'
     ];

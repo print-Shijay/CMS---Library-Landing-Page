@@ -178,19 +178,32 @@
 
 <body>
 
-    <nav class="navbar navbar-expand-lg fixed-top">
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
         <div class="container">
+
             <a class="navbar-brand fw-bold fs-4" href="#">
-                <i class="bi bi-hexagon-fill text-primary me-2"></i>LIBRARY
+                <i class="bi bi-hexagon-fill text-primary me-2"></i>KEEPER LIBRARY
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navRes">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
             <div class="collapse navbar-collapse" id="navRes">
-                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 fw-semibold">
-                    <li class="nav-item"><a class="nav-link" href="#">Home</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Services</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#">Portfolio</a></li>
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+
+                    @php
+                        $navPages = \App\Models\Page::orderBy('order_index')->get();
+                    @endphp
+
+                    @foreach($navPages as $navPage)
+                        <li class="nav-item">
+                            <a class="nav-link fw-semibold text-dark" href="#"
+                                onclick="loadPage('{{ $navPage->slug }}'); return false;">
+                                {{ $navPage->title }}
+                            </a>
+                        </li>
+                    @endforeach
+
                 </ul>
             </div>
         </div>
@@ -201,6 +214,23 @@
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function loadPage(slug) {
+            const contentArea = document.getElementById('page-content-area');
+            const nav = document.getElementById('navRes');
+
+            fetch(`/api/page/${slug}`)
+                .then(res => res.text())
+                .then(html => {
+                    contentArea.innerHTML = html;
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
+
+                    const bsCollapse = bootstrap.Collapse.getInstance(nav);
+                    if (bsCollapse) bsCollapse.hide();
+                })
+                .catch(err => console.error("Error loading page:", err));
+        }
+    </script>
 </body>
 
 </html>
