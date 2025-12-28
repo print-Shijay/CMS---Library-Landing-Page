@@ -1,34 +1,46 @@
 <section class="hero-section">
     <div class="container">
-        <div class="row justify-content-center">
-            <div class="col-lg-10">
-                <span class="section-tag">Next Generation Platform</span>
-                <h1 class="display-3 mb-4">
-                    {{ $title ?? 'Build something that truly matters' }}
-                </h1>
-                <p class="lead text-muted mb-5 mx-auto" style="max-width: 650px; line-height: 1.6;">
-                    {{ $description ?? 'Our platform provides the tools you need to build, scale, and manage your vision with unprecedented efficiency and style.' }}
+        <div class="row align-items-center">
+            <!-- Left Column -->
+            <div class="col-lg-6 mb-4 mb-lg-0 text-center text-lg-start">
+                <span class="section-tag">{{ $left_tag ?? 'Next Generation Platform' }}</span>
+                <h1 class="display-3 mb-4">{{ $left_title ?? 'Build something that truly matters' }}</h1>
+                <p class="lead text-muted mb-5" style="line-height: 1.6;">
+                    {{ $left_description ?? 'Our platform provides the tools you need to build, scale, and manage your vision efficiently.' }}
                 </p>
-                <div class="d-flex gap-3 justify-content-center align-items-center">
-                    <button class="btn btn-modern">{{ $button ?? 'Start Building' }}</button>
+                <div class="d-flex gap-3 justify-content-center justify-content-lg-start align-items-center">
+                    <button class="btn btn-modern">{{ $left_button ?? 'Start Building' }}</button>
                     <button class="btn btn-link text-dark fw-bold text-decoration-none px-4">
                         View Demo <i class="bi bi-play-circle-fill ms-2"></i>
                     </button>
                 </div>
             </div>
 
-            <div class="col-12">
-                <div class="floating-image">
-                    <div class="hero-img-container">
-                        @if(!empty($image))
-                            <img src="{{ asset('storage/' . $image) }}" class="w-100" alt="Hero">
-                        @else
-                            <div
-                                style="background: var(--primary-gradient); height: 540px; display: flex; align-items: center; justify-content: center;">
-                                <i class="bi bi-layers-half text-white" style="font-size: 10rem; opacity: 0.15;"></i>
-                            </div>
-                        @endif
-                    </div>
+            <!-- Right Column -->
+            <div class="col-lg-6 text-center text-lg-start">
+                <span class="section-tag">{{ $right_tag ?? 'Your Vision, Your Way' }}</span>
+                <h1 class="display-3 mb-4">{{ $right_title ?? 'Collaborate and Create' }}</h1>
+                <p class="lead text-muted mb-5" style="line-height: 1.6;">
+                    {{ $right_description ?? 'Collaborate seamlessly and achieve your goals with our powerful tools and ecosystem.' }}
+                </p>
+                <div class="d-flex gap-3 justify-content-center justify-content-lg-start align-items-center">
+                    <button class="btn btn-modern">{{ $right_button ?? 'Learn More' }}</button>
+                    <button class="btn btn-link text-dark fw-bold text-decoration-none px-4">
+                        Explore <i class="bi bi-play-circle-fill ms-2"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Optional Floating Image -->
+            <div class="col-12 mt-4">
+                <div class="hero-img-container mx-auto" style="max-width: 900px;">
+                    @if(!empty($image))
+                        <img src="{{ asset('storage/' . $image) }}" class="w-100 rounded" alt="Hero">
+                    @else
+                        <div style="background: var(--primary-gradient); height: 540px; display: flex; align-items: center; justify-content: center; border-radius: 32px;">
+                            <i class="bi bi-layers-half text-white" style="font-size: 10rem; opacity: 0.15;"></i>
+                        </div>
+                    @endif
                 </div>
             </div>
         </div>
@@ -89,7 +101,7 @@
 
         <div class="row g-4">
             @php
-                $links = is_array($related_links ?? []) ? ($related_links ?? []) : json_decode($related_links ?? '[]', true);
+                $links = is_array($related_links ?? []) ? $related_links : json_decode($related_links ?? '[]', true);
             @endphp
 
             @forelse($links ?? ['Documentation', 'API Reference', 'Community'] as $link)
