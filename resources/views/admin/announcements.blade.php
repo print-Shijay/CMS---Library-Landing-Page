@@ -119,8 +119,9 @@
             <div class="col-lg-8">
                 <div class="card border-0 shadow-sm overflow-hidden" style="height: calc(100vh - 120px);">
                     <div class="card-header bg-dark text-white d-flex justify-content-between align-items-center">
-                        <span class="small fw-bold"><i class="bi bi-eye me-2"></i>LIVE PREVIEW</span>
-                        <button onclick="manualReload()" class="btn btn-sm btn-outline-light border-0" title="Refresh Preview">
+                        <span class="small fw-bold"><i class="bi bi-eye me-2"></i>PREVIEW MODE</span>
+                        <button id="reloadBtn" onclick="manualReload()" class="btn btn-sm btn-outline-light border-0"
+                            title="Refresh Preview">
                             <i id="reloadIcon" class="bi bi-arrow-clockwise"></i>
                         </button>
                     </div>
@@ -225,7 +226,7 @@
             const params = new URLSearchParams();
             
             // We pass the form data as query params to the preview URL
-            params.append('preview_mode', 'true');
+            params.append('preview', 'true');
             params.append('title', titleInput.value);
             params.append('content', contentInput.value);
             
