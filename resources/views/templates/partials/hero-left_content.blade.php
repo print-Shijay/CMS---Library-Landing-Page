@@ -5,10 +5,10 @@
             <div class="col-lg-6">
                 <span class="section-tag">Digital Library Platform</span>
                 <h1 class="display-3 mb-4">
-                    {{ $title ?? 'Discover, Learn, and Grow with Our Library' }}
+                    Lorem ipsum dolor sit amet consectetur
                 </h1>
                 <p class="lead text-muted mb-5" style="line-height: 1.6;">
-                    {{ $description ?? 'Access thousands of digital resources, curated collections, and learning tools to support your academic and personal growth journey.' }}
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
                 </p>
                 <div class="d-flex gap-3 align-items-center">
                     <!-- ONLY ONE Get Started Button (GREEN gradient) -->
@@ -155,40 +155,42 @@
     color: #10b981; /* Keep success green */
 }
 
-/* ===== Strategic Goals Section - WHITE BACKGROUND ===== */
+/* ===== Strategic Goals Section - DARK BACKGROUND ONLY ===== */
 .goals-section {
-    background: white; /* CHANGED TO WHITE */
-    color: #1f2937;
+    background: #0f172a; /* DARK background */
+    color: #f1f5f9; /* Light text */
     padding: 5rem 0;
+    border-radius: 40px;
+    margin: 40px 20px;
 }
 
 .goals-section .card-feature {
-    background: white;
-    border: 1px solid #e5e7eb;
-    color: #1f2937;
+    background: #1e293b; /* Dark card background */
+    border: 1px solid #334155; /* Dark border */
+    color: #f1f5f9; /* Light text */
 }
 
 .goals-section .card-feature:hover {
-    background: white;
-    border-color: var(--primary);
-    box-shadow: 0 15px 30px rgba(129, 140, 248, 0.15);
+    background: #243049; /* Darker hover */
+    border-color: #818cf8; /* Purple border on hover */
+    box-shadow: 0 15px 30px rgba(129, 140, 248, 0.3);
 }
 
 .goals-section .card-feature h4 {
-    color: #1f2937;
+    color: #f1f5f9; /* Light text */
     font-weight: 600;
 }
 
 .goals-section .card-feature p {
-    color: #6b7280;
+    color: #94a3b8; /* Muted light text */
 }
 
 .goals-section .text-primary {
-    color: var(--primary) !important;
+    color: #818cf8 !important; /* Purple for icons */
 }
 
-/* Goals Section Icons with Different Colors - KEPT COLORS */
-.goals-section .card-feature:nth-child(1) .fs-1 { color: #6366f1; } /* Indigo */
+/* Goals Section Icons with Different Colors - VIBRANT COLORS for contrast */
+.goals-section .card-feature:nth-child(1) .fs-1 { color: #818cf8; } /* Indigo */
 .goals-section .card-feature:nth-child(2) .fs-1 { color: #10b981; } /* Green */
 .goals-section .card-feature:nth-child(3) .fs-1 { color: #f59e0b; } /* Yellow */
 .goals-section .card-feature:nth-child(4) .fs-1 { color: #ef4444; } /* Red */
@@ -276,6 +278,11 @@
     .resource-card {
         padding: 20px;
     }
+    
+    .goals-section {
+        margin: 20px 10px;
+        border-radius: 30px;
+    }
 }
 
 @media (max-width: 576px) {
@@ -286,7 +293,7 @@
 }
 </style>
 
-<!-- REST OF YOUR CODE REMAINS THE SAME -->
+<!-- Mission & Vision Section -->
 <section class="py-5">
     <div class="container">
         <div class="row g-4">
@@ -297,7 +304,7 @@
                     </div>
                     <h3>Our Mission</h3>
                     <p>
-                        {{ $mission ?? 'To provide equitable access to information, foster lifelong learning, and support academic excellence through our comprehensive digital and physical collections.' }}
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
                     </p>
                 </div>
             </div>
@@ -308,7 +315,7 @@
                     </div>
                     <h3>Our Vision</h3>
                     <p>
-                        {{ $vision ?? 'To be the leading knowledge hub that inspires discovery, innovation, and community engagement through accessible and diverse information resources.' }}
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
                     </p>
                 </div>
             </div>
@@ -316,14 +323,14 @@
     </div>
 </section>
 
-<!-- Strategic Goals Section - NOW WHITE BACKGROUND -->
+<!-- Strategic Goals Section - DARK BACKGROUND ONLY -->
 <section class="goals-section py-5">
     <div class="container">
         <div class="row mb-5">
             <div class="col-lg-10 mx-auto text-center">
                 <h2 class="display-5 fw-bold mb-4">Library Strategic Goals</h2>
-                <p class="fs-5 text-muted mx-auto" style="max-width: 800px; line-height: 1.6;">
-                    {{ $goals ?? 'Our library is committed to enhancing accessibility, promoting learning and research excellence, integrating modern technology, encouraging community engagement, preserving knowledge, and continuously improving our collections and services.' }}
+                <p class="fs-5 text-white-50 mx-auto" style="max-width: 800px; line-height: 1.6;">
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
                 </p>
             </div>
         </div>
@@ -333,32 +340,32 @@
                 $goalItems = [
                     [
                         'title' => 'Digital Accessibility',
-                        'description' => 'Expand e-book collections and ensure all resources are accessible to users with disabilities.',
+                        'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod.',
                         'icon' => 'bi-universal-access'
                     ],
                     [
                         'title' => 'Research Support',
-                        'description' => 'Provide specialized research assistance, citation tools, and academic database access.',
+                        'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod.',
                         'icon' => 'bi-search'
                     ],
                     [
                         'title' => 'Tech Integration',
-                        'description' => 'Implement AI-powered search, virtual reality tours, and mobile library apps.',
+                        'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod.',
                         'icon' => 'bi-tablet'
                     ],
                     [
                         'title' => 'Community Programs',
-                        'description' => 'Host author talks, literacy workshops, and cultural events for all age groups.',
+                        'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod.',
                         'icon' => 'bi-calendar-event'
                     ],
                     [
                         'title' => 'Digital Preservation',
-                        'description' => 'Archive local history, rare manuscripts, and special collections in digital format.',
+                        'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod.',
                         'icon' => 'bi-archive'
                     ],
                     [
                         'title' => 'Service Enhancement',
-                        'description' => 'Continuously improve user experience through feedback and new service offerings.',
+                        'description' => 'Lorem ipsum dolor sit amet, consectetur adipiscing elit sed do eiusmod.',
                         'icon' => 'bi-graph-up-arrow'
                     ]
                 ];
@@ -379,13 +386,13 @@
     </div>
 </section>
 
-<!-- Resources -->
+<!-- Resources Section -->
 <section class="resources-section py-5">
     <div class="container">
         <div class="section-title-row mb-5">
             <div>
                 <h2>Library Resources</h2>
-                <p class="text-muted mb-0">Everything you need for research and learning</p>
+                <p class="text-muted mb-0">Lorem ipsum dolor sit amet consectetur</p>
             </div>
             <a href="#" class="btn btn-outline-secondary btn-sm rounded-pill px-4">View All Resources</a>
         </div>
@@ -398,7 +405,7 @@
                     </div>
                     <div>
                         <span class="resource-title">Digital Collections</span>
-                        <p class="resource-desc mb-0">Access e-books and academic journals</p>
+                        <p class="resource-desc mb-0">Lorem ipsum dolor sit amet consectetur adipiscing</p>
                         <span class="resource-url">library.edu/collections</span>
                     </div>
                 </a>
@@ -411,7 +418,7 @@
                     </div>
                     <div>
                         <span class="resource-title">Research Assistance</span>
-                        <p class="resource-desc mb-0">Book appointments with librarians and research experts</p>
+                        <p class="resource-desc mb-0">Lorem ipsum dolor sit amet consectetur adipiscing</p>
                         <span class="resource-url">library.edu/research-help</span>
                     </div>
                 </a>
@@ -424,7 +431,7 @@
                     </div>
                     <div>
                         <span class="resource-title">Study Rooms</span>
-                        <p class="resource-desc mb-0">Reserve group study spaces and quiet reading areas</p>
+                        <p class="resource-desc mb-0">Lorem ipsum dolor sit amet consectetur adipiscing</p>
                         <span class="resource-url">library.edu/study-rooms</span>
                     </div>
                 </a>
@@ -437,7 +444,7 @@
     <div class="container">
         <div class="row align-items-center">
             <div class="col-md-6 text-center text-md-start">
-                <p class="text-muted small mb-0">&copy; 2025 University Library System. Knowledge for All.</p>
+                <p class="text-muted small mb-0">&copy; 2025 University Library System. Lorem Ipsum Dolor.</p>
             </div>
             <div class="col-md-6 text-center text-md-end">
                 <div class="d-flex gap-4 justify-content-center justify-content-md-end mt-3 mt-md-0">
