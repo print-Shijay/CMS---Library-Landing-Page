@@ -76,10 +76,20 @@
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-start mb-2">
                                     <h5 class="card-title mb-0 fw-bold text-dark">{{ $page->title }}</h5>
-                                    <span
-                                        class="badge rounded-pill {{ $page->is_default ? 'bg-light text-secondary border' : 'bg-info-subtle text-info' }} small">
-                                        {{ $page->is_default ? 'System' : 'GrapesJS' }}
-                                    </span>
+                                    <div>
+
+                                        @if (!is_null($page->html_content) || $page->is_default == 1)
+                                            <span class="badge bg-success">Active</span>
+                                        @else
+                                            <span class="badge bg-warning text-dark">Inactive</span>
+                                        @endif
+
+                                        <span
+                                            class="badge rounded-pill {{ $page->is_default ? 'bg-light text-secondary border' : 'bg-info-subtle text-info' }} small">
+                                            {{ $page->is_default ? 'System' : 'GrapesJS' }}
+                                        </span>
+                                    </div>
+
                                 </div>
 
                                 <div class="text-muted small mb-3">
