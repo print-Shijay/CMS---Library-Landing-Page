@@ -72,20 +72,25 @@
 
         <div class="row g-4">
             @php
-                // Handled null check within the decoding logic
-                $links = is_array($related_links ?? []) ? ($related_links ?? []) : json_decode($related_links ?? '[]', true);
+                // Decode the JSON if it's a string, otherwise default to an empty array
+                $links = is_array($related_links) ? $related_links : json_decode($related_links ?? '[]', true);
             @endphp
 
-            @forelse($links ?? ['Documentation', 'API Reference', 'Community'] as $link)
+            @forelse($links as $link)
                 <div class="col-lg-4 col-md-6">
-                    <a href="#" class="link-preview-card">
+                    {{-- Check if link has a protocol; if not, prepend https:// --}}
+                    @php
+                        $url = str_contains($link, '://') ? $link : 'https://' . $link;
+                    @endphp
+
+                    <a href="{{ $url }}" target="_blank" class="link-preview-card">
                         <div class="link-thumbnail">
                             <i class="bi bi-arrow-up-right"></i>
                         </div>
                         <div>
-                            <span class="link-title">{{ $link }}</span>
+                            <span class="link-title">{{ ucfirst(explode('.', $link)[0]) }}</span>
                             <p class="small text-muted mb-2">Deep dive into our ecosystem and master the workflow.</p>
-                            <span class="link-url">docs.brand.io/{{ Str::slug($link) }}</span>
+                            <span class="link-url">{{ $link }}</span>
                         </div>
                     </a>
                 </div>

@@ -46,8 +46,8 @@
                                 </option>
                                 <option value="hero-center" {{ $page->template == 'hero-center' ? 'selected' : '' }}>Hero
                                     Center</option>
-                                <option value="split-layout" {{ $page->template == 'split-layout' ? 'selected' : '' }}>Split
-                                    Layout</option>
+                                <!-- <option value="split-layout" {{ $page->template == 'split-layout' ? 'selected' : '' }}>Split
+                                        Layout</option> -->
                                 <option value="hero-right" {{ $page->template == 'hero-right' ? 'selected' : '' }}>Hero Right
                                 </option>
                                 <option value="stacked" {{ $page->template == 'stacked' ? 'selected' : '' }}>Stacked</option>
@@ -140,11 +140,11 @@
             const div = document.createElement('div');
             div.className = 'input-group mb-2';
             div.innerHTML = `
-                                                        <input type="text" class="form-control related-link" placeholder="e.g. E-Library" value="${value}">
-                                                        <button class="btn btn-outline-danger" type="button" onclick="this.parentElement.remove(); updatePreview();">
-                                                            <i class="bi bi-trash"></i>
-                                                        </button>
-                                                    `;
+                                                            <input type="text" class="form-control related-link" placeholder="e.g. E-Library" value="${value}">
+                                                            <button class="btn btn-outline-danger" type="button" onclick="this.parentElement.remove(); updatePreview();">
+                                                                <i class="bi bi-trash"></i>
+                                                            </button>
+                                                        `;
             relatedLinksWrapper.appendChild(div);
             div.querySelector('input').addEventListener('input', updatePreview);
             updatePreview();
