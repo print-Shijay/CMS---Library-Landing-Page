@@ -118,8 +118,8 @@
                             @if(isset($featured->is_preview)) <span class="badge bg-warning text-dark ms-2">PREVIEW</span> @endif
                         </div>
                         <h3 class="fw-bold mb-3 display-6">{{ $featured->title }}</h3>
-                        <p class="text-muted mb-4 text-break" style="white-space: pre-wrap;">{{ \Illuminate\Support\Str::limit($featured->content, 250) }}</p>
-                        <button class="btn btn-primary align-self-start" data-bs-toggle="modal" data-bs-target="#modal-{{ $featured->id }}">Read Full Story</button>
+                        <p class="text-muted mb-4 text-break">{{ \Illuminate\Support\Str::limit($featured->content, 250) }}</p>
+                        <button class="btn btn-primary align-self-start" data-bs-toggle="modal" data-bs-target="#modal-{{ $featured->id }}">Read More </button>
                     </div>
                 </div>
 
@@ -146,7 +146,7 @@
 
             <!-- Right Column: Recent News List -->
             <div class="col-lg-5">
-                <h4 class="fw-bold mb-4 border-bottom pb-2">Recent News</h4>
+                <h4 class="fw-bold mb-4 border-bottom pb-2">Recent Announcements</h4>
                 <div class="d-flex flex-column gap-3">
                     @foreach($recent as $item)
                         <div class="d-flex gap-3 sidebar-item p-3" data-bs-toggle="modal" data-bs-target="#modal-{{ $item->id }}">
@@ -203,7 +203,7 @@
                             <p class="text-muted small mb-4 flex-grow-1 text-break">{{ \Illuminate\Support\Str::limit($announcement->content, 120) }}</p>
                             <div class="mt-auto pt-3 border-top">
                                 <button class="btn btn-link text-primary p-0 text-decoration-none fw-bold" data-bs-toggle="modal" data-bs-target="#modal-{{ $announcement->id }}">
-                                    Read Full Story <i class="fas fa-arrow-right ms-1"></i>
+                                    Read More <i class="fas fa-arrow-right ms-1"></i>
                                 </button>
                             </div>
                         </div>
