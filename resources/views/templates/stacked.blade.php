@@ -831,7 +831,7 @@
     <nav class="navbar navbar-expand-lg fixed-top">
         <div class="container">
             <a class="navbar-brand" href="#" onclick="loadPage('landing'); return false;">
-                <span>LIBRARY<span class="highlight">.</span>HUB</span>
+                <span>LIBRARY<span class="highlight">
             </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navRes"
