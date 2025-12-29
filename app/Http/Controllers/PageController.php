@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Page;
 use App\Models\LandingPage;
 use App\Models\User;
+use App\Models\Announcement;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
@@ -15,6 +16,7 @@ class PageController extends Controller
         // 1. Find the page in the database
         $page = Page::where('slug', $slug)->first();
         $staff = User::where('role', 'admin')->limit(3)->get();
+        $news = Announcement::latest()->limit(5)->get();
 
         if (!$page) {
             return response()->json(['error' => 'Page not found'], 404);
@@ -24,8 +26,14 @@ class PageController extends Controller
         if ($slug === 'landing') {
             $data = LandingPage::first();
             $template = $data->template ?? 'default';
-            // Return the specific partial based on the chosen template
-            return view("templates.partials.{$template}_content", $data->toArray(), compact('staff'))->render();
+
+            // Merge everything into one array for the view
+            $viewData = array_merge($data->toArray(), [
+                'staff' => $staff,
+                'news' => $news // Passing the new data
+            ]);
+
+            return view("templates.partials.{$template}_content", $viewData)->render();
         }
 
         // 3. If it's a Custom (GrapesJS) Page, return the saved design

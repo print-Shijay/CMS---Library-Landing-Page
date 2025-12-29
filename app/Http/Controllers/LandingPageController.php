@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\LandingPage;
 use App\Models\User;
+use App\Models\Announcement;
 use Illuminate\Support\Facades\Storage;
 
 class LandingPageController extends Controller
@@ -19,6 +20,9 @@ class LandingPageController extends Controller
         // Fetch the 3 admins for the staff section
         $staff = User::where('role', 'admin')->limit(3)->get();
 
+        // Fetch the latest 5 news items (announcements)
+        $news = Announcement::latest()->limit(5)->get();
+
         // Preserve DB image if no new image is provided in preview
         if (empty($inputs['image'])) {
             unset($inputs['image']);
@@ -27,8 +31,9 @@ class LandingPageController extends Controller
         // 1. Merge DB data with user inputs
         $previewData = array_merge($dbData, $inputs);
 
-        // 2. Add the staff to the data array so the view can see it
+        // 2. Add the dynamic data to the array for the view
         $previewData['staff'] = $staff;
+        $previewData['news'] = $news; // Added the news variable here
 
         // Ensure related_links is an array
         if (isset($previewData['related_links'])) {
@@ -79,6 +84,7 @@ class LandingPageController extends Controller
     {
         $page = LandingPage::find(1);
         $staff = User::where('role', 'admin')->limit(3)->get();
+        $news = Announcement::latest()->limit(5)->get();
 
         if (!$page) {
             return response('No page published yet', 404);
@@ -87,7 +93,8 @@ class LandingPageController extends Controller
         return response()
             ->view('templates.' . $page->template, [
                 ...$page->toArray(),
-                'staff' => $staff
+                'staff' => $staff,
+                'news' => $news
             ])
             ->header('Access-Control-Allow-Origin', '*');
     }

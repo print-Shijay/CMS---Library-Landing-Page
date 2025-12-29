@@ -436,6 +436,101 @@
             border-color: var(--br-600);
             color: white !important;
         }
+
+        /* Announcement Section Styles */
+        #announcement {
+            padding: 60px 0;
+            background-color: var(--br-50);
+            overflow: hidden;
+        }
+
+        .announcement-wrapper {
+            display: flex;
+            gap: 20px;
+            overflow-x: auto;
+            padding-bottom: 20px;
+            /* Custom Scrollbar for Chrome/Safari */
+            scrollbar-width: thin;
+            scrollbar-color: var(--br-200) transparent;
+        }
+
+        .announcement-wrapper::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .announcement-wrapper::-webkit-scrollbar-thumb {
+            background: var(--br-200);
+            border-radius: 10px;
+        }
+
+        .announcement-card {
+            flex: 0 0 400px;
+            /* Fixed width for the film frame */
+            height: 30vh;
+            /* Your requested height */
+            min-height: 250px;
+            position: relative;
+            border-radius: 16px;
+            overflow: hidden;
+            background-color: var(--br-950);
+            box-shadow: var(--shadow);
+            transition: transform 0.3s ease;
+        }
+
+        .announcement-card:hover {
+            transform: scale(1.02);
+        }
+
+        .ann-img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            opacity: 0.7;
+            /* Darkens image for text readability */
+            transition: opacity 0.3s ease;
+        }
+
+        .announcement-card:hover .ann-img {
+            opacity: 0.5;
+        }
+
+        .ann-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 20px;
+            background: linear-gradient(transparent, rgba(20, 33, 87, 0.9));
+            /* br-950 gradient */
+            color: white;
+        }
+
+        .ann-title {
+            font-size: 1.1rem;
+            font-weight: 700;
+            margin-bottom: 5px;
+            display: -webkit-box;
+            -webkit-line-clamp: 1;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .ann-content {
+            font-size: 0.85rem;
+            opacity: 0.9;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+            margin-bottom: 8px;
+        }
+
+        .ann-date {
+            font-size: 0.75rem;
+            color: var(--br-400);
+            font-weight: 600;
+            text-transform: uppercase;
+        }
     </style>
 </head>
 
