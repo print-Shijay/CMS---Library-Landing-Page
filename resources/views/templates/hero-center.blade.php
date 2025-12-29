@@ -845,33 +845,34 @@
 
 <body>
 
-    <!-- Navigation -->
-   <nav class="navbar navbar-expand-lg fixed-top">
-    <div class="container">
-        <a class="navbar-brand ripple" href="#" onclick="loadPage('landing'); return false;">
-            <i class="bi bi-grid-3x3-gap-fill me-2"></i>LIBRARY
-        </a>
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top">
+        <div class="container">
 
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navRes"
-            aria-controls="navRes" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+            <a class="navbar-brand fw-bold fs-4" href="#">
+                <i class="bi bi-hexagon-fill text-primary me-2"></i>KEEPER LIBRARY
+            </a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navRes">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        <div class="collapse navbar-collapse" id="navRes">
-            <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
-                @php
-                    $navPages = \App\Models\Page::orderBy('order_index')->get();
-                @endphp
+            <div class="collapse navbar-collapse" id="navRes">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
 
-                @foreach($navPages as $navPage)
-                    <li class="nav-item">
-                        <a class="nav-link ripple @if($loop->first) active @endif" href="#"
-                            onclick="loadPage('{{ $navPage->slug }}'); return false;">
-                            {{ $navPage->title }}
-                        </a>
-                    </li>
-                @endforeach
-            </ul>
+                    @php
+                        $navPages = \App\Models\Page::orderBy('order_index')->get();
+                    @endphp
+
+                    @foreach($navPages as $navPage)
+                        <li class="nav-item">
+                            <a class="nav-link fw-semibold text-dark" href="#"
+                                onclick="loadPage('{{ $navPage->slug }}'); return false;">
+                                {{ $navPage->title }}
+                            </a>
+                        </li>
+                    @endforeach
+
+                </ul>
+            </div>
         </div>
     </div>
 </nav>
@@ -880,52 +881,23 @@
         @include('templates.partials.hero-center_content')
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js">
-        // Add scroll effect to navbar
-    document.addEventListener('DOMContentLoaded', function() {
-        const navbar = document.querySelector('.navbar');
-        
-        window.addEventListener('scroll', function() {
-            if (window.scrollY > 50) {
-                navbar.classList.add('scrolled');
-            } else {
-                navbar.classList.remove('scrolled');
-            }
-        });
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        function loadPage(slug) {
+            const contentArea = document.getElementById('page-content-area');
+            const nav = document.getElementById('navRes');
 
-        // Add ripple effect to all links
-        const rippleLinks = document.querySelectorAll('.ripple');
-        rippleLinks.forEach(link => {
-            link.addEventListener('click', function(e) {
-                // Remove active class from all nav links
-                document.querySelectorAll('.nav-link').forEach(navLink => {
-                    navLink.classList.remove('active');
-                });
-                
-                // Add active class to clicked link
-                this.classList.add('active');
-                
-                // Add click animation
-                this.style.transform = 'scale(0.98)';
-                setTimeout(() => {
-                    this.style.transform = '';
-                }, 150);
-            });
-        });
+            fetch(`/api/page/${slug}`)
+                .then(res => res.text())
+                .then(html => {
+                    contentArea.innerHTML = html;
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
 
-        // Close mobile menu when clicking a link
-        const navLinks = document.querySelectorAll('.nav-link');
-        const navbarCollapse = document.querySelector('.navbar-collapse');
-        
-        navLinks.forEach(link => {
-            link.addEventListener('click', function() {
-                if (window.innerWidth < 992) {
-                    const bsCollapse = new bootstrap.Collapse(navbarCollapse);
-                    bsCollapse.hide();
-                }
-            });
-        });
-    });
+                    const bsCollapse = bootstrap.Collapse.getInstance(nav);
+                    if (bsCollapse) bsCollapse.hide();
+                })
+                .catch(err => console.error("Error loading page:", err));
+        }
     </script>
 </body>
 

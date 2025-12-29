@@ -10,11 +10,9 @@ Route::get('/user', function (Request $request) {
 })->middleware('auth:sanctum');
 
 // Landing Page Routes
-Route::get('/landing', [LandingPageController::class, 'show']);
+Route::get('/landing', [LandingPageController::class, 'show']); // Public landing page
 Route::get('/landing/preview', [LandingPageController::class, 'preview']);
 Route::post('/landing/save', [LandingPageController::class, 'save']);
 
-Route::get('/page/{slug}', [PageController::class, 'getPageContent']);
-
-// Remove the raw closure and just keep this:
+// Page Content Route
 Route::get('/page/{slug}', [PageController::class, 'getPageContent']);

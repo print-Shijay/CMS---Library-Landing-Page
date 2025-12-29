@@ -21,6 +21,7 @@
                     <table class="table table-hover align-middle mb-0">
                         <thead class="bg-light">
                             <tr>
+                                <th>Status</th>
                                 <th class="ps-4">Page Title</th>
                                 <th>Route/Slug</th>
                                 <th>Type</th>
@@ -30,6 +31,13 @@
                         <tbody>
                             @foreach($pages as $page)
                                 <tr>
+                                    <td>
+                                        @if (!is_null($page->html_content) || $page->is_default == 1)
+                                            <span class="badge bg-success">Active</span>
+                                        @else
+                                            <span class="badge bg-warning text-dark">Inactive</span>
+                                        @endif
+                                    </td>
                                     <td class="ps-4 fw-bold">{{ $page->title }}</td>
                                     <td><code>/api/{{ $page->slug }}</code></td>
                                     <td>
@@ -68,10 +76,20 @@
                             <div class="card-body">
                                 <div class="d-flex justify-content-between align-items-start mb-2">
                                     <h5 class="card-title mb-0 fw-bold text-dark">{{ $page->title }}</h5>
-                                    <span
-                                        class="badge rounded-pill {{ $page->is_default ? 'bg-light text-secondary border' : 'bg-info-subtle text-info' }} small">
-                                        {{ $page->is_default ? 'System' : 'GrapesJS' }}
-                                    </span>
+                                    <div>
+
+                                        @if (!is_null($page->html_content) || $page->is_default == 1)
+                                            <span class="badge bg-success">Active</span>
+                                        @else
+                                            <span class="badge bg-warning text-dark">Inactive</span>
+                                        @endif
+
+                                        <span
+                                            class="badge rounded-pill {{ $page->is_default ? 'bg-light text-secondary border' : 'bg-info-subtle text-info' }} small">
+                                            {{ $page->is_default ? 'System' : 'GrapesJS' }}
+                                        </span>
+                                    </div>
+
                                 </div>
 
                                 <div class="text-muted small mb-3">
