@@ -16,10 +16,10 @@ class DashboardController extends Controller
     public function index()
     {
         $pages = Page::orderBy('order_index', 'asc')->get();
-        
+
         // Fetch pending requests for Admin
         $pendingRequests = [];
-        if(auth()->user()->role === 'admin'){
+        if (auth()->user()->role === 'admin') {
             $pendingRequests = PageRequest::where('status', 'pending')->with('user')->get();
         }
 
@@ -207,7 +207,7 @@ class DashboardController extends Controller
 
         // Optional: specific check if you strictly want to prevent deleting 'pending' requests
         if ($req->status === 'pending') {
-             return back()->with('error', 'You cannot delete a pending request.');
+            return back()->with('error', 'You cannot delete a pending request.');
         }
 
         $req->delete();

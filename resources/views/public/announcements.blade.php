@@ -23,7 +23,7 @@
         transition: transform 0.7s ease;
     }
     .featured-card:hover .featured-image { transform: scale(1.05); }
-    
+
     /* Sidebar Recent Items */
     .sidebar-item {
         transition: all 0.2s ease;
@@ -62,7 +62,7 @@
 
 @php
     $allAnnouncements = $announcements ?? \App\Models\Announcement::latest()->get();
-    
+
     $featured = null;
     $recent = collect([]);
     $older = collect([]);
@@ -107,9 +107,9 @@
                             $featImg = asset('storage/' . $featured->image);
                         }
                     @endphp
-                    <img id="{{ isset($featured->is_preview) ? 'preview-img-tag' : '' }}" 
-                         src="{{ $featImg ?: 'https://placehold.co/800x600/f8f9fa/dee2e6?text=Featured+Update' }}" 
-                         class="featured-image {{ ($featImg || isset($featured->is_preview)) ? '' : 'd-none' }}" 
+                    <img id="{{ isset($featured->is_preview) ? 'preview-img-tag' : '' }}"
+                         src="{{ $featImg ?: 'https://placehold.co/800x600/f8f9fa/dee2e6?text=Featured+Update' }}"
+                         class="featured-image {{ ($featImg || isset($featured->is_preview)) ? '' : 'd-none' }}"
                          alt="Featured">
                     </div>
                     <div class="card-body p-4">
@@ -150,9 +150,9 @@
                 <div class="d-flex flex-column gap-3">
                     @foreach($recent as $item)
                         <div class="d-flex gap-3 sidebar-item p-3" data-bs-toggle="modal" data-bs-target="#modal-{{ $item->id }}">
-                            <img src="{{ $item->image ? asset('storage/' . $item->image) : 'https://placehold.co/200x200/f8f9fa/dee2e6?text=News' }}" 
+                            <img src="{{ $item->image ? asset('storage/' . $item->image) : 'https://placehold.co/200x200/f8f9fa/dee2e6?text=News' }}"
                                  class="sidebar-img" alt="Thumbnail">
-                            <div class="flex-grow-1">
+                            <div class="grow">
                                 <h6 class="fw-bold mb-1 text-dark" style="line-height: 1.3;">{{ $item->title }}</h6>
                                 <div class="text-muted small mb-1">{{ $item->created_at->format('M d, Y') }}</div>
                                 <p class="text-muted small mb-0 lh-sm text-break">{{ \Illuminate\Support\Str::limit($item->content, 50) }}</p>
@@ -186,7 +186,7 @@
         @if($older->count() > 0)
         <div class="d-flex align-items-center mb-4">
             <h3 class="fw-bold mb-0 me-3">Older Announcements</h3>
-            <div class="flex-grow-1 border-bottom"></div>
+            <div class="grow border-bottom"></div>
         </div>
 
         <div class="row g-4">
@@ -194,13 +194,13 @@
                 <div class="col-md-6 col-lg-4">
                     <div class="news-card">
                         <div class="position-relative overflow-hidden">
-                            <img src="{{ $announcement->image ? asset('storage/' . $announcement->image) : 'https://placehold.co/600x400/f8f9fa/dee2e6?text=News' }}" 
+                            <img src="{{ $announcement->image ? asset('storage/' . $announcement->image) : 'https://placehold.co/600x400/f8f9fa/dee2e6?text=News' }}"
                                  class="news-card-img-top" alt="{{ $announcement->title }}">
                         </div>
-                        <div class="card-body p-4 d-flex flex-column flex-grow-1">
+                        <div class="card-body p-4 d-flex flex-column grow">
                             <div class="news-meta mb-2">{{ $announcement->created_at->format('M d, Y') }}</div>
                             <h5 class="news-title mb-3">{{ $announcement->title }}</h5>
-                            <p class="text-muted small mb-4 flex-grow-1 text-break">{{ \Illuminate\Support\Str::limit($announcement->content, 120) }}</p>
+                            <p class="text-muted small mb-4 grow text-break">{{ \Illuminate\Support\Str::limit($announcement->content, 120) }}</p>
                             <div class="mt-auto pt-3 border-top">
                                 <button class="btn btn-link text-primary p-0 text-decoration-none fw-bold" data-bs-toggle="modal" data-bs-target="#modal-{{ $announcement->id }}">
                                     Read More <i class="fas fa-arrow-right ms-1"></i>

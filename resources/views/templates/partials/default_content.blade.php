@@ -65,6 +65,68 @@
     </div>
 </section>
 
+<section class="staff-section" id="team">
+    <div class="container">
+        <h2 class="section-title text-center" style="color: var(--text-main);">Meet Our Team</h2>
+        <p class="section-subtitle text-center mb-5" style="color: var(--text-muted);">Dedicated professionals committed
+            to supporting your learning journey.</p>
+
+        <div class="row g-4 justify-content-center">
+            @foreach($staff->where('is_public', true) as $member)
+                <div class="col-lg-4 col-md-6">
+                    <div class="staff-card">
+                        <div class="staff-image-container">
+                            <img src="{{ $member->profile_image ? asset('storage/' . $member->profile_image) : 'https://ui-avatars.com/api/?name=' . urlencode($member->name) . '&size=400' }}"
+                                class="staff-image" alt="{{ $member->name }}">
+                        </div>
+
+                        <div class="staff-info">
+                            <div class="staff-role">{{ $member->role ?? 'Administrator' }}</div>
+                            <h3 class="staff-name">{{ $member->name }}</h3>
+                            <p style="color: var(--text-muted); font-size: 0.9rem;">Driving innovation through expertise and
+                                commitment to quality.</p>
+
+                            <div class="staff-social-links">
+                                @php
+                                    $socialData = is_string($member->social_media) ? json_decode($member->social_media, true) : $member->social_media;
+                                    $iconMap = [
+                                        'facebook' => ['icon' => 'fab fa-facebook-f', 'class' => 'link-facebook'],
+                                        'twitter' => ['icon' => 'fab fa-x-twitter', 'class' => 'link-twitter'],
+                                        'instagram' => ['icon' => 'fab fa-instagram', 'class' => 'link-instagram'],
+                                        'linkedin' => ['icon' => 'fab fa-linkedin-in', 'class' => 'link-linkedin']
+                                    ];
+                                @endphp
+
+                                @if(!empty($socialData) && is_array($socialData))
+                                    @foreach($socialData as $platform => $url)
+                                        @if(!empty($url) && $url !== 'null' && isset($iconMap[$platform]) && filter_var($url, FILTER_VALIDATE_URL))
+                                            @php $config = $iconMap[$platform]; @endphp
+                                            <a href="{{ $url }}" target="_blank" class="social-icon-link {{ $config['class'] }}"
+                                                title="{{ ucfirst($platform) }}" rel="noopener noreferrer">
+                                                <i class="{{ $config['icon'] }}"></i>
+                                            </a>
+                                        @endif
+                                    @endforeach
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+
+        <div class="view-all-container text-center">
+            <a class="btn-view-all" href="#" onclick="loadPage('{{ 'staff-page'}}'); return false;">
+                View All Team Members <i class="fas fa-arrow-right ms-2"></i>
+            </a>
+        </div>
+    </div>
+</section>
+
+<section class="py-5" id="announcement" style="background-color: var(--br-50);">
+
+</section>
+
 <section class="py-5" id="resources">
     <div class="container">
         <h2 class="section-title text-center">Library Resources</h2>

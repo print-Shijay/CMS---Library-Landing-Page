@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Library - Redesign</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap"
@@ -295,6 +296,145 @@
             .hero-description {
                 font-size: 1.1rem;
             }
+        }
+
+        /* Staff Section - Theme Matched */
+        .staff-section {
+            padding: 80px 0;
+            background-color: var(--bg-body);
+            /* Matches your body background */
+        }
+
+        .staff-card {
+            border: 1px solid var(--border-soft);
+            border-radius: 20px;
+            background: var(--bg-card);
+            transition: all 0.4s cubic-bezier(0.165, 0.84, 0.44, 1);
+            box-shadow: var(--shadow);
+            height: 100%;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .staff-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px -10px rgba(25, 51, 143, 0.15);
+            border-color: var(--br-200);
+        }
+
+        .staff-image-container {
+            padding: 15px 15px 0 15px;
+        }
+
+        .staff-image {
+            height: 280px;
+            width: 100%;
+            object-fit: cover;
+            border-radius: 15px;
+            transition: transform 0.7s ease;
+        }
+
+        .staff-card:hover .staff-image {
+            transform: scale(1.05);
+        }
+
+        .staff-info {
+            padding: 1.75rem 1.5rem;
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        .staff-role {
+            color: var(--br-600);
+            font-weight: 600;
+            font-size: 0.75rem;
+            letter-spacing: 1px;
+            display: inline-block;
+            padding: 0.4rem 1.2rem;
+            background: var(--br-50);
+            border: 1px solid var(--br-100);
+            border-radius: 50px;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .staff-name {
+            font-weight: 700;
+            font-size: 1.25rem;
+            margin-bottom: 0.5rem;
+            color: var(--text-main);
+            /* Using your br-950 variable */
+        }
+
+        .staff-social-links {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 15px;
+            min-height: 40px;
+        }
+
+        .social-icon-link {
+            width: 38px;
+            height: 38px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            background: var(--br-50);
+            color: var(--br-600);
+            font-size: 1.1rem;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            border: 1px solid transparent;
+        }
+
+        /* Brand Colors on Hover */
+        .social-icon-link:hover {
+            transform: translateY(-3px);
+            color: white !important;
+            border-color: transparent;
+        }
+
+        .link-facebook:hover {
+            background-color: #1877f2;
+        }
+
+        .link-twitter:hover {
+            background-color: #000000;
+        }
+
+        .link-instagram:hover {
+            background-color: #e4405f;
+        }
+
+        .link-linkedin:hover {
+            background-color: #0a66c2;
+        }
+
+        /* View All Button - Theme Matched */
+        .view-all-container {
+            margin-top: 4rem;
+        }
+
+        .btn-view-all {
+            padding: 12px 35px;
+            border-radius: 50px;
+            border: 2px solid var(--br-500);
+            color: var(--br-600);
+            font-weight: 600;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            background: transparent;
+        }
+
+        .btn-view-all:hover {
+            background: var(--br-600);
+            border-color: var(--br-600);
+            color: white !important;
         }
     </style>
 </head>

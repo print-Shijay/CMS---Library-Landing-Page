@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Page;
 use App\Models\LandingPage;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class PageController extends Controller
@@ -13,6 +14,7 @@ class PageController extends Controller
     {
         // 1. Find the page in the database
         $page = Page::where('slug', $slug)->first();
+        $staff = User::where('role', 'admin')->limit(3)->get();
 
         if (!$page) {
             return response()->json(['error' => 'Page not found'], 404);
@@ -21,9 +23,9 @@ class PageController extends Controller
         // 2. If it's the Landing Page, handle the template logic
         if ($slug === 'landing') {
             $data = LandingPage::first();
-            $template = $data->template ?? 'hero-left';
+            $template = $data->template ?? 'default';
             // Return the specific partial based on the chosen template
-            return view("templates.partials.{$template}_content", $data->toArray())->render();
+            return view("templates.partials.{$template}_content", $data->toArray(), compact('staff'))->render();
         }
 
         // 3. If it's a Custom (GrapesJS) Page, return the saved design
