@@ -163,10 +163,11 @@
             @endif                           
         </div>
     </div>
+</section>
+
     <div class="container-fluid bg-light p-5">                  
         @include('public.testimonials')
     </div>
-</section>
 
 <section class="py-5" id="resources">
     <div class="container">

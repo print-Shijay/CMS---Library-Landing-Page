@@ -1,237 +1,257 @@
- <style> 
-        header h1 {
-            text-align: center;
-            margin-bottom: 30px;
-            color: #2c3e50;
-        }
-        /* Buttons */
-        .btn { padding: 10px 20px; border-radius: 5px; text-decoration: none; cursor: pointer; border: none; font-size: 14px; font-weight: 600; }
-        .btn-google { background-color: #DB4437; color: white; display: inline-flex; align-items: center; gap: 10px; }
-        .btn-google:hover { background-color: #c53929; }
-        .btn-primary { background-color: #3498db; color: white; }
-        .btn-logout { background-color: #95a5a6; color: white; }
-
-        /* Form Section */
-        #post-review-section { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); margin-bottom: 30px; display: none; }
-        textarea { width: 100%; height: 80px; padding: 10px; margin-bottom: 10px; border: 1px solid #ddd; border-radius: 4px; font-family: inherit; }
-        select { padding: 8px; border: 1px solid #ddd; border-radius: 4px; margin-right: 10px; }
-
-        /* Review Cards */
-        .review-card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.05); margin-bottom: 15px; display: flex; gap: 15px; }
-        .user-avatar { width: 45px; height: 45px; border-radius: 50%; object-fit: cover; border: 2px solid #eef2f7; }
-        .review-content { flex: 1; }
-        .review-header { display: flex; justify-content: space-between; margin-bottom: 5px; }
-        .user-name { font-weight: bold; color: #2c3e50; }
-        .rating { color: #f1c40f; }
-        .timestamp { font-size: 0.8em; color: #95a5a6; }
+<section class="py-5" style="background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);">
+    <div class="container">
         
-        /* Loading State */
-        .loading { text-align: center; color: #7f8c8d; padding: 20px; }
-    </style>
-    <header>
-        <h1>Community Reviews</h1>
-        <div id="auth-container">
-            </div>
-    </header>
-
-    <div id="post-review-section">
-        <h3 style="margin-top:0;">Write a Review</h3>
-        <form id="testimonial-form">
-            <textarea id="content" placeholder="Share your experience with Keeper Library..." required></textarea>
-            <div style="display: flex; align-items: center; justify-content: space-between;">
-                <div>
-                    <label style="font-size: 0.9em; color: #666;">Rating:</label>
-                    <select id="rating">
-                        <option value="5">★★★★★ (5 Stars)</option>
-                        <option value="4">★★★★☆ (4 Stars)</option>
-                        <option value="3">★★★☆☆ (3 Stars)</option>
-                        <option value="2">★★☆☆☆ (2 Stars)</option>
-                        <option value="1">★☆☆☆☆ (1 Star)</option>
-                    </select>
+        <div class="text-center mb-5">
+            <h2 class="fw-bold display-5 mb-3">Testimonials</h2>
+            <p class="text-muted lead">See what others are saying about the Keeper Library</p>
+            
+            <div id="auth-buttons" class="mt-4">
                 </div>
-                <button type="submit" class="btn btn-primary">Post Review</button>
+        </div>
+
+        <div id="review-form-container" class="row justify-content-center mb-5" style="display: none;">
+            <div class="col-md-8">
+                <div class="bg-white rounded-4 shadow-sm p-4">
+                    <h5 class="fw-bold mb-3">Write a Review</h5>
+                    <form id="testimonial-form">
+                        <div class="mb-3">
+                            <textarea id="review-content" class="form-control bg-light border-0" rows="3" placeholder="Share your experience..." required></textarea>
+                        </div>
+                        <div class="d-flex align-items-center justify-content-between">
+                            <select id="review-rating" class="form-select w-auto border-0 bg-light" style="font-weight: bold;">
+                                <option value="5">★★★★★ 5 Stars</option>
+                                <option value="4">★★★★☆ 4 Stars</option>
+                                <option value="3">★★★☆☆ 3 Stars</option>
+                                <option value="2">★★☆☆☆ 2 Stars</option>
+                                <option value="1">★☆☆☆☆ 1 Star</option>
+                            </select>
+                            <button type="submit" class="btn text-white px-4 rounded-pill" style="background-color: var(--text-main);">Post Review</button>
+                        </div>
+                    </form>
+                </div>
             </div>
-        </form>
+        </div>
+
+        <div id="testimonialCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+    
+    <div class="carousel-inner" id="testimonials-track">
+        <div class="text-center py-5">
+            <div class="spinner-border text-primary" role="status"></div>
+            <p class="text-muted mt-2">Loading reviews...</p>
+        </div>
     </div>
 
-    <div id="testimonials-list">
-        <div class="loading">Loading reviews...</div>
+    <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev" style="left: -50px;">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next" style="right: -50px;">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+    </button>
+
+</div>
+
     </div>
+</section>
+<style>
+    .carousel-control-prev-icon,
+    .carousel-control-next-icon {
+        background-color: var(--text-main); 
+        border-radius: 50%;
+        background-size: 60%;
+    }
+    .carousel-control-prev,
+    .carousel-control-next {
+        width: 5%;
+        opacity: 0.8;
+    }
+    .carousel-control-prev:hover,
+    .carousel-control-next:hover {
+        opacity: 1;
+    }
+</style>
 
     <script>
-        // CONFIGURATION
-        const BACKEND_URL = 'https://keeper.ccs-octa.com'; 
-        const API_URL = `${BACKEND_URL}/api`;
+    // CONFIGURATION
+    const API_URL = 'https://keeper.ccs-octa.com/api';
+    
+    // STATE
+    let token = localStorage.getItem('api_token');
+    let currentUser = null;
 
-        // STATE
-        let token = localStorage.getItem('api_token');
-        let currentUser = null;
+    document.addEventListener('DOMContentLoaded', async () => {
+        handleAuthRedirect();
+        await checkUserSession();
+        fetchTestimonials();
+    });
 
-        // INITIALIZATION
-        document.addEventListener('DOMContentLoaded', async () => {
-            handleAuthRedirect();
-            await fetchUserProfile(); 
-            updateUI();
-            fetchTestimonials();
-        });
-
-        // 1. Handle Google Redirect (Extract token from URL)
-        function handleAuthRedirect() {
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.has('token')) {
-                token = urlParams.get('token');
-                localStorage.setItem('api_token', token);
-                // Clean URL to remove token
-                window.history.replaceState({}, document.title, window.location.pathname);
-            }
+    // 1. Handle Login Redirect
+    function handleAuthRedirect() {
+        const urlParams = new URLSearchParams(window.location.search);
+        if (urlParams.has('token')) {
+            token = urlParams.get('token');
+            localStorage.setItem('api_token', token);
+            window.history.replaceState({}, document.title, window.location.pathname);
         }
+    }
 
-        // 2. Fetch User Profile (Verify token is valid)
-        async function fetchUserProfile() {
-            if (!token) return;
+    // 2. Check User Session
+    async function checkUserSession() {
+        if (!token) { renderAuthUI(); return; }
 
-            try {
-                const res = await fetch(`${API_URL}/auth/me`, {
-                    headers: { 'Authorization': `Bearer ${token}` }
-                });
-
-                if (res.ok) {
-                    currentUser = await res.json();
-                } else {
-                    // Token invalid/expired
-                    logout(); 
-                }
-            } catch (error) {
-                console.error("Auth check failed:", error);
-            }
-        }
-
-        // 3. Update UI based on Auth State
-        function updateUI() {
-            const authContainer = document.getElementById('auth-container');
-            const postSection = document.getElementById('post-review-section');
-
-            if (currentUser) {
-                // Logged In
-                authContainer.innerHTML = `
-                    <div style="display:flex; align-items:center; gap:10px;">
-                        <img src="${currentUser.avatar || 'https://via.placeholder.com/30'}" style="width:30px; height:30px; border-radius:50%;">
-                        <span style="font-size:0.9em; font-weight:bold;">${currentUser.name}</span>
-                        <button onclick="logout()" class="btn btn-logout" style="padding: 5px 10px; font-size: 0.8em;">Logout</button>
-                    </div>
-                `;
-                postSection.style.display = 'block';
+        try {
+            const res = await fetch(`${API_URL}/auth/me`, {
+                headers: { 'Authorization': `Bearer ${token}` }
+            });
+            if (res.ok) {
+                currentUser = await res.json();
             } else {
-                // Guest
-                authContainer.innerHTML = `
-                    <a href="${API_URL}/auth/google" class="btn btn-google">
-                        <span>Sign in with Google</span>
-                    </a>
-                `;
-                postSection.style.display = 'none';
+                logout(); // Token expired
             }
+        } catch (e) { console.error(e); }
+        renderAuthUI();
+    }
+
+    // 3. Render Buttons based on Login State
+    function renderAuthUI() {
+        const container = document.getElementById('auth-buttons');
+        const formContainer = document.getElementById('review-form-container');
+
+        if (currentUser) {
+            // Logged In
+            container.innerHTML = `
+                <div class="d-flex align-items-center justify-content-center gap-3">
+                    <img src="${currentUser.avatar || 'https://via.placeholder.com/40'}" class="rounded-circle" width="40" height="40">
+                    <span class="fw-bold">Hi, ${currentUser.name.split(' ')[0]}!</span>
+                    <button onclick="document.getElementById('review-form-container').style.display='flex'" class="btn btn-outline-primary rounded-pill btn-sm">Write Review</button>
+                    <button onclick="logout()" class="btn btn-link text-muted btn-sm text-decoration-none">Logout</button>
+                </div>
+            `;
+        } else {
+            // Guest
+            formContainer.style.display = 'none';
+            container.innerHTML = `
+                <a href="${API_URL}/auth/google?redirect_to=${window.location.href}" class="btn px-4 py-2 rounded-pill shadow-sm text-white" style="background-color: #DB4437; font-weight: 500;">
+                    <i class="bi bi-google me-2"></i> Sign in to Review
+                </a>
+            `;
         }
+    }
 
-        // 4. Fetch Public Testimonials
-        async function fetchTestimonials() {
-            const container = document.getElementById('testimonials-list');
-            
-            try {
-                const res = await fetch(`${API_URL}/testimonials`);
-                const data = await res.json();
+    // 4. Fetch and Render Testimonials
+    // 4. Fetch and Render Testimonials (Carousel Version)
+    async function fetchTestimonials() {
+        try {
+            const res = await fetch(`${API_URL}/testimonials`);
+            const data = await res.json();
+            const track = document.getElementById('testimonials-track');
 
-                if (data.length === 0) {
-                    container.innerHTML = '<div class="loading">No reviews yet. Be the first!</div>';
-                    return;
-                }
+            if (data.length === 0) {
+                track.innerHTML = `<div class="text-center text-muted py-5">No reviews yet. Be the first!</div>`;
+                return;
+            }
 
-                container.innerHTML = data.map(t => `
-                    <div class="review-card">
-                        <img src="${t.user.avatar || 'https://ui-avatars.com/api/?name='+t.user.name}" class="user-avatar" alt="${t.user.name}">
-                        <div class="review-content">
-                            <div class="review-header">
-                                <span class="user-name">${t.user.name}</span>
-                                <span class="rating">${'★'.repeat(t.rating)}${'☆'.repeat(5-t.rating)}</span>
-                            </div>
-                            <p style="margin: 5px 0; color: #555;">${t.content}</p>
-                            <span class="timestamp">${new Date(t.created_at).toLocaleDateString()}</span>
+            // Clear loading spinner
+            track.innerHTML = '';
+
+            // LOGIC: Chunk data into groups of 3
+            const chunkSize = 3;
+            for (let i = 0; i < data.length; i += chunkSize) {
+                const chunk = data.slice(i, i + chunkSize);
+                
+                // First item must be active
+                const isActive = (i === 0) ? 'active' : '';
+
+                // Create Slide Item
+                const slideItem = document.createElement('div');
+                slideItem.className = `carousel-item ${isActive}`;
+
+                // Create Row for the 3 Cards
+                let rowHtml = '<div class="row g-4">';
+                
+                // Map the 3 (or fewer) cards inside this slide
+                rowHtml += chunk.map(t => `
+                    <div class="col-md-4">
+                        <div class="bg-white rounded-4 shadow-sm p-4 h-100 position-relative">
+                            
                             ${currentUser && currentUser.id === t.user_id ? 
-                                `<button onclick="deleteReview(${t.id})" style="color:red; background:none; border:none; cursor:pointer; font-size:0.8em; float:right;">Delete</button>` 
+                                `<button onclick="deleteReview(${t.id})" class="btn btn-sm text-danger position-absolute top-0 end-0 m-3" style="z-index:10;" title="Delete Review">✕</button>` 
                                 : ''}
+
+                            <div class="mb-4">
+                                <div class="text-warning mb-2 small">${'★'.repeat(t.rating)}${'☆'.repeat(5-t.rating)}</div>
+                                <p class="text-muted">"${t.content}"</p>
+                            </div>
+
+                            <div class="d-flex align-items-center gap-3 mt-auto">
+                                <div style="border: 2px dashed var(--text-main); border-radius: 50%; padding: 3px; width: 56px; height: 56px; flex-shrink: 0;">
+                                    <img src="${t.user.avatar || 'https://ui-avatars.com/api/?name='+t.user.name}" class="rounded-circle" style="width: 46px; height: 46px; object-fit: cover;">
+                                </div>
+                                <div>
+                                    <h6 class="fw-bold mb-0" style="color: var(--text-main);">${t.user.name}</h6>
+                                    <small class="text-muted" style="font-size: 0.8rem;">${new Date(t.created_at).toLocaleDateString()}</small>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 `).join('');
 
-            } catch (error) {
-                container.innerHTML = '<div class="loading" style="color:red;">Failed to load reviews. Is the backend running?</div>';
-                console.error(error);
+                rowHtml += '</div>'; // Close Row
+                slideItem.innerHTML = rowHtml;
+                track.appendChild(slideItem);
             }
+
+        } catch (error) {
+            console.error(error);
+            document.getElementById('testimonials-track').innerHTML = '<div class="text-center text-danger py-5">Failed to load reviews.</div>';
         }
+    }
 
-        // 5. Post New Review
-        document.getElementById('testimonial-form').addEventListener('submit', async (e) => {
-            e.preventDefault();
-            const btn = e.target.querySelector('button');
-            const originalText = btn.innerText;
-            btn.innerText = "Posting...";
-            btn.disabled = true;
+    // 5. Submit Review
+    document.getElementById('testimonial-form').addEventListener('submit', async (e) => {
+        e.preventDefault();
+        const content = document.getElementById('review-content').value;
+        const rating = document.getElementById('review-rating').value;
+        const btn = e.target.querySelector('button');
 
-            const content = document.getElementById('content').value;
-            const rating = document.getElementById('rating').value;
+        btn.disabled = true;
+        btn.innerText = "Posting...";
 
-            try {
-                const res = await fetch(`${API_URL}/testimonials`, {
-                    method: 'POST',
-                    headers: {
-                        'Content-Type': 'application/json',
-                        'Authorization': `Bearer ${token}`
-                    },
-                    body: JSON.stringify({ content, rating })
-                });
+        try {
+            const res = await fetch(`${API_URL}/testimonials`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${token}` },
+                body: JSON.stringify({ content, rating })
+            });
 
-                if (res.ok) {
-                    document.getElementById('content').value = ''; // Clear form
-                    fetchTestimonials(); // Refresh list
-                    alert('Review posted successfully!');
-                } else {
-                    const err = await res.json();
-                    alert('Error: ' + (err.message || 'Could not post review'));
-                }
-            } catch (error) {
-                alert('Network error occurred.');
-            } finally {
-                btn.innerText = originalText;
-                btn.disabled = false;
+            if (res.ok) {
+                document.getElementById('review-content').value = '';
+                document.getElementById('review-form-container').style.display = 'none'; // Hide form
+                fetchTestimonials(); // Refresh grid
+                alert('Review posted!');
+            } else {
+                alert('Error posting review.');
             }
+        } catch (err) { alert('Network error.'); }
+        
+        btn.disabled = false;
+        btn.innerText = "Post Review";
+    });
+
+    // 6. Logout
+    function logout() {
+        localStorage.removeItem('api_token');
+        window.location.href = 'https://keeperlibrary.online';
+    }
+
+    // 7. Delete
+    async function deleteReview(id) {
+        if(!confirm("Delete this review?")) return;
+        await fetch(`${API_URL}/testimonials/${id}`, {
+            method: 'DELETE',
+            headers: { 'Authorization': `Bearer ${token}` }
         });
-
-        // 6. Delete Review
-        async function deleteReview(id) {
-            if(!confirm("Are you sure you want to delete this review?")) return;
-
-            try {
-                const res = await fetch(`${API_URL}/testimonials/${id}`, {
-                    method: 'DELETE',
-                    headers: { 'Authorization': `Bearer ${token}` }
-                });
-
-                if (res.ok) {
-                    fetchTestimonials();
-                } else {
-                    alert("Could not delete review.");
-                }
-            } catch (error) {
-                alert("Network error.");
-            }
-        }
-
-        // 7. Logout
-        function logout() {
-            localStorage.removeItem('api_token');
-            token = null;
-            currentUser = null;
-            updateUI();
-            // Optional: reload to clear any state
-            // location.reload();
-        }
-    </script>
+        fetchTestimonials();
+    }
+</script>
