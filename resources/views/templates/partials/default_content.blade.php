@@ -126,8 +126,6 @@
     </div>
 </section>
 
-
-
 <section class="py-5" id="announcement" style="background-color: var(--br-50);">
     <div class="container">
         <div class="d-flex justify-content-between align-items-end mb-4">
@@ -160,14 +158,14 @@
                         <p class="text-muted">No announcement available at the moment.</p>
                     </div>
                 @endforelse
-            @endif                           
+            @endif
         </div>
     </div>
 </section>
 
-    <div class="container-fluid bg-light p-5">                  
-        @include('public.testimonials')
-    </div>
+<div class="container-fluid bg-light p-5">
+    @include('public.testimonials')
+</div>
 
 <section class="py-5" id="resources">
     <div class="container">

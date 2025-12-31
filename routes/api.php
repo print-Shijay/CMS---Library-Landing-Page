@@ -32,7 +32,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::get('/auth/me', [AuthController::class, 'me']);
     Route::post('/testimonials', [TestimonialController::class, 'store']);
     Route::delete('/testimonials/{id}', [TestimonialController::class, 'destroy']);
-    
+
     // Existing user route
     Route::get('/user', function (Request $request) {
         return $request->user();

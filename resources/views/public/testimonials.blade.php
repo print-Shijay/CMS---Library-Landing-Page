@@ -15,17 +15,20 @@
                     <h5 class="fw-bold mb-3">Write a Review</h5>
                     <form id="testimonial-form">
                         <div class="mb-3">
-                            <textarea id="review-content" class="form-control bg-light border-0" rows="3" placeholder="Share your experience..." required></textarea>
+                            <textarea id="review-content" class="form-control bg-light border-0" rows="3"
+                                placeholder="Share your experience..." required></textarea>
                         </div>
                         <div class="d-flex align-items-center justify-content-between">
-                            <select id="review-rating" class="form-select w-auto border-0 bg-light" style="font-weight: bold;">
+                            <select id="review-rating" class="form-select w-auto border-0 bg-light"
+                                style="font-weight: bold;">
                                 <option value="5">★★★★★ 5 Stars</option>
                                 <option value="4">★★★★☆ 4 Stars</option>
                                 <option value="3">★★★☆☆ 3 Stars</option>
                                 <option value="2">★★☆☆☆ 2 Stars</option>
                                 <option value="1">★☆☆☆☆ 1 Star</option>
                             </select>
-                            <button type="submit" class="btn text-white px-4 rounded-pill" style="background-color: var(--text-main);">Post Review</button>
+                            <button type="submit" class="btn text-white px-4 rounded-pill"
+                                style="background-color: var(--text-main);">Post Review</button>
                         </div>
                     </form>
                 </div>
@@ -41,11 +44,13 @@
                 </div>
             </div>
 
-            <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev" style="left: -50px;">
+            <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel"
+                data-bs-slide="prev" style="left: -50px;">
                 <span class="carousel-control-prev-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Previous</span>
             </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next" style="right: -50px;">
+            <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel"
+                data-bs-slide="next" style="right: -50px;">
                 <span class="carousel-control-next-icon" aria-hidden="true"></span>
                 <span class="visually-hidden">Next</span>
             </button>
@@ -76,16 +81,21 @@
 
 <script>
     // CONFIGURATION
-    const API_URL = 'https://keeper.ccs-octa.com/api';
-
+    // const API_URL = 'https://keeper.ccs-octa.com/api';
+    const API_URL = 'http://127.0.0.1:8000/api';
     // STATE
     let token = localStorage.getItem('api_token');
     let currentUser = null;
 
-    document.addEventListener('DOMContentLoaded', async () => {
-        handleAuthRedirect();
-        await checkUserSession();
-        fetchTestimonials();
+    // document.addEventListener('DOMContentLoaded', async () => {
+    //     handleAuthRedirect();
+    //     await checkUserSession();
+    //     fetchTestimonials();
+    //     alert('sa');
+    // });
+
+    document.addEventListener('DOMContentLoaded', () => {
+        initTestimonials();
     });
 
     // 1. Handle Login Redirect
@@ -183,19 +193,19 @@
                 rowHtml += chunk.map(t => `
                     <div class="col-md-4">
                         <div class="bg-white rounded-4 shadow-sm p-4 h-100 position-relative">
-                            
-                            ${currentUser && currentUser.id === t.user_id ? 
-                                `<button onclick="deleteReview(${t.id})" class="btn btn-sm text-danger position-absolute top-0 end-0 m-3" style="z-index:10;" title="Delete Review">✕</button>` 
-                                : ''}
+
+                            ${currentUser && currentUser.id === t.user_id ?
+                        `<button onclick="deleteReview(${t.id})" class="btn btn-sm text-danger position-absolute top-0 end-0 m-3" style="z-index:10;" title="Delete Review">✕</button>`
+                        : ''}
 
                             <div class="mb-4">
-                                <div class="text-warning mb-2 small">${'★'.repeat(t.rating)}${'☆'.repeat(5-t.rating)}</div>
+                                <div class="text-warning mb-2 small">${'★'.repeat(t.rating)}${'☆'.repeat(5 - t.rating)}</div>
                                 <p class="text-muted">"${t.content}"</p>
                             </div>
 
                             <div class="d-flex align-items-center gap-3 mt-auto">
                                 <div style="border: 2px dashed var(--text-main); border-radius: 50%; padding: 3px; width: 56px; height: 56px; flex-shrink: 0;">
-                                    <img src="${t.user.avatar || 'https://ui-avatars.com/api/?name='+t.user.name}" class="rounded-circle" style="width: 46px; height: 46px; object-fit: cover;">
+                                    <img src="${t.user.avatar || 'https://ui-avatars.com/api/?name=' + t.user.name}" class="rounded-circle" style="width: 46px; height: 46px; object-fit: cover;">
                                 </div>
                                 <div>
                                     <h6 class="fw-bold mb-0" style="color: var(--text-main);">${t.user.name}</h6>

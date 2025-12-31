@@ -575,7 +575,15 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 
     <script>
+        async function initTestimonials() {
+            handleAuthRedirect();
+            await checkUserSession();
+            fetchTestimonials();
+
+        }
+
         function loadPage(slug) {
+
             const contentArea = document.getElementById('page-content-area');
             const nav = document.getElementById('navRes');
 
@@ -584,6 +592,12 @@
                 .then(html => {
                     contentArea.innerHTML = html;
                     window.scrollTo({ top: 0, behavior: 'smooth' });
+
+                    if (slug == 'landing') {
+                        initTestimonials();
+                    }
+
+
 
                     const bsCollapse = bootstrap.Collapse.getInstance(nav);
                     if (bsCollapse) bsCollapse.hide();
