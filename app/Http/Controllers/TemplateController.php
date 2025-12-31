@@ -9,6 +9,7 @@ use App\Models\Announcement;
 
 class TemplateController extends Controller
 {
+    //used to render the template inside the iframe
     public function renderTemplate($layout)
     {
         // Check if the file exists first to avoid the ugly error

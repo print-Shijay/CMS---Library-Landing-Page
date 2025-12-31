@@ -625,7 +625,7 @@
         ===================================================== */
         window.addEventListener('message', (event) => {
             const allowedOrigins = [
-                'http://127.0.0.1:5500'
+                'http://127.0.0.1:5500' //link of the public website
             ];
 
             if (!allowedOrigins.includes(event.origin)) return;
@@ -724,6 +724,12 @@
         /* =====================================================
            PAGE NAVIGATION (SLUG BASED)
         ===================================================== */
+        async function initTestimonials() {
+            handleAuthRedirect();
+            await checkUserSession();
+            fetchTestimonials();
+
+        }
 
         function loadPage(slug) {
             const contentArea = document.getElementById('page-content-area');
