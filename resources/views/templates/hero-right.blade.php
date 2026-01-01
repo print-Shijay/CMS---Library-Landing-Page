@@ -9,9 +9,20 @@
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
     <style>
-        :root {
-            --primary-gradient: linear-gradient(135deg, #6366f1 0%, #a855f7 100%);
-            --glass-bg: rgba(255, 255, 255, 0.8);
+           :root {
+            --br-50: #eef5ff;
+            --br-100: #d9e8ff;
+            --br-200: #bcd8ff;
+            --br-400: #599dff;
+            --br-500: #2a71fe;
+            --br-600: #1c56f4;
+            --br-950: #142157;
+            --bg-body: #f8faff;
+            --bg-card: #ffffff;
+            --text-main: var(--br-950);
+            --text-muted: #64748b;
+            --border-soft: var(--br-100);
+            --shadow: 0 10px 30px -5px rgba(25, 51, 143, 0.08);
         }
 
         body {
@@ -20,22 +31,27 @@
             background-color: #f8fafc;
         }
 
-        /* Navbar */
-        .navbar {
-            backdrop-filter: blur(10px);
-            background: var(--glass-bg);
-            border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+        /* Navbar styling */
+        nav.navbar {
+            background-color: var(--bg-card);
+            box-shadow: var(--shadow);
             padding: 1rem 0;
         }
 
-        .navbar-toggler {
-            border: none;
+        .navbar-brand {
+            color: var(--br-950) !important;
+            font-size: 1.75rem;
         }
 
-        .navbar-light .navbar-toggler-icon {
-            filter: invert(0.3);
+        .navbar-nav .nav-link {
+            color: var(--text-muted);
+            margin: 0 0.5rem;
+            transition: color 0.2s;
         }
 
+        .navbar-nav .nav-link:hover {
+            color: var(--br-600);
+        }
 
         .hero-section {
             padding: 160px 0 100px;
@@ -169,7 +185,7 @@
             -webkit-box-orient: vertical;
             overflow: hidden;
         }
-
+        
         .floating-image {
             animation: floating 6s ease-in-out infinite;
         }
@@ -688,6 +704,47 @@
             color: var(--br-400);
             font-weight: 600;
             text-transform: uppercase;
+        }
+
+             /* Footer */
+        .footer {
+            background-color: var(--br-950);
+            color: white;
+            padding: 4rem 0 2rem;
+            margin-top: 6rem;
+        }
+
+        .footer-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.75rem;
+        }
+
+        .footer-links a {
+            color: var(--br-100);
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .copyright {
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            padding-top: 2rem;
+            margin-top: 3rem;
+            color: var(--br-200);
+            font-size: 0.9rem;
         }
     </style>
 </head>

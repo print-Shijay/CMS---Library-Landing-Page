@@ -101,7 +101,7 @@
                     Learn More <i class="bi bi-arrow-up-right ms-1"></i>
                 </a>
             </div>
-
+                    
             <div class="col-lg-8">
                 <div class="bg-white rounded-4 p-4 p-md-5">
                     <div class="row">
@@ -131,26 +131,51 @@
         </div>
     </div>
 </section>
-
-<section class="section-padding bg-white" id="team">
+<section class="section-padding" id="team" style="background-color: #e6f0ff;"> <!-- Light blue background -->
     <div class="container">
+        <!-- Section Header -->
         <div class="text-center mb-5">
-            <h2 class="fw-bold">Our Professional Librarians</h2>
+            <h2 class="fw-bold">Meet our Team</h2>
             <p class="text-muted">Experts dedicated to organizing and preserving knowledge.</p>
         </div>
+
+        <!-- Team Grid -->
         <div class="row g-4" id="staff-container">
             @isset($staff)
                 @foreach($staff->where('is_public', true) as $member)
                     <div class="col-lg-3 col-md-6">
-                        <div class="stat-card text-center p-4">
+                        <div class="stat-card text-center p-4 rounded-4 shadow-sm position-relative"
+                             style="transition: transform 0.3s, box-shadow 0.3s; background-color: #ffffff;">
+                            
+                            <!-- Profile Image -->
                             <img src="{{ $member->profile_image ? asset('storage/'.$member->profile_image) : 'https://ui-avatars.com/api/?name='.urlencode($member->name).'&size=200' }}"
-                                 class="rounded-circle mb-3" style="width: 100px; height: 100px; object-fit: cover; border: 3px solid #f6f9ff;">
+                                 class="rounded-circle mb-3" 
+                                 style="width: 100px; height: 100px; object-fit: cover; border: 3px solid #f6f9ff;">
+
+                            <!-- Member Info -->
                             <h5 class="fw-bold mb-1">{{ $member->name }}</h5>
                             <small class="text-primary fw-semibold">{{ $member->role ?? 'Librarian' }}</small>
+
+                            <!-- Hover Overlay -->
+                            <div class="team-overlay position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center align-items-center"
+                                 style="background: rgba(42,113,254,0.85); color: #fff; opacity: 0; border-radius: 1rem; transition: opacity 0.3s; padding: 1rem;">
+                                <p class="text-center small mb-2">
+                                    {{ $member->bio ?? 'Dedicated to empowering library users and managing resources effectively.' }}
+                                </p>
+                                <a href="#" class="btn btn-light btn-sm">View Profile</a>
+                            </div>
                         </div>
                     </div>
                 @endforeach
             @endisset
+        </div>
+
+        <!-- View All Members Button -->
+        <div class="text-center mt-5">
+            <a href="#" class="btn btn-outline-primary btn-lg rounded-pill"
+               style="transition: all 0.3s;">
+               View All Members <i class="bi bi-arrow-right ms-2"></i>
+            </a>
         </div>
     </div>
 </section>
@@ -187,7 +212,7 @@
 <section class="section-padding bg-light" id="resources">
     <div class="container">
         <div class="text-center mb-5">
-            <h3 class="fw-bold mb-3">Library Resources</h3>
+            <h1 class="fw-bold mb-3">Library Resources</h1>
             <p class="text-muted mb-0">Explore our curated collection of digital resources and references</p>
         </div>
 
@@ -221,32 +246,57 @@
     </div>
 </section>
 
-<footer class="py-5 border-top" style="background: white;">
+<footer class="footer" id="contact">
     <div class="container">
-        <div class="row align-items-center">
-            <div class="col-md-6 mb-3 mb-md-0">
-                <div class="d-flex align-items-center">
-                    <div class="icon-container me-3" style="width: 40px; height: 40px; background: rgba(42, 113, 254, 0.1); border-radius: 10px; display: flex; align-items: center; justify-content: center;">
-                        <i class="bi bi-book" style="color: #2A71FE;"></i>
-                    </div>
-                    <span class="fw-bold fs-5">Digital<span class="text-primary">Library</span></span>
+        <div class="row">
+            <div class="col-lg-4 mb-4 mb-lg-0">
+                <h3 class="footer-title">
+                    <i class="bi bi-hexagon-fill me-2" style="color: var(--br-400);"></i>Keeper Library
+                </h3>
+                <p>Your trusted partner in knowledge discovery and lifelong learning since 2010.</p>
+                <div class="mt-4">
+                    <a href="#" class="me-3 text-white"><i class="bi bi-twitter fs-5"></i></a>
+                    <a href="#" class="me-3 text-white"><i class="bi bi-facebook fs-5"></i></a>
+                    <a href="#" class="me-3 text-white"><i class="bi bi-instagram fs-5"></i></a>
+                    <a href="#" class="text-white"><i class="bi bi-linkedin fs-5"></i></a>
                 </div>
-                <p class="text-muted small mt-3 mb-0">
-                    &copy; 2025 Digital Library Platform. All rights reserved.<br>
-                    Empowering minds through accessible knowledge.
-                </p>
+            </div>
+            <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
+                <h4 class="footer-title">Quick Links</h4>
+                <ul class="footer-links">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#about">About Us</a></li>
+                    <li><a href="#goals">Our Goals</a></li>
+                    <li><a href="#resources">Resources</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-3 col-md-4 mb-4 mb-md-0">
+                <h4 class="footer-title">Services</h4>
+                <ul class="footer-links">
+                    <li><a href="#">Research Help</a></li>
+                    <li><a href="#">Interlibrary Loan</a></li>
+                    <li><a href="#">Digital Archives</a></li>
+                    <li><a href="#">Study Rooms</a></li>
+                </ul>
+            </div>
+            <div class="col-lg-3 col-md-4">
+                <h4 class="footer-title">Contact Us</h4>
+                <ul class="footer-links">
+                    <li><i class="bi bi-geo-alt me-2"></i> 123 Knowledge Ave, EduCity</li>
+                    <li><i class="bi bi-telephone me-2"></i> (555) 123-4567</li>
+                    <li><i class="bi bi-envelope me-2"></i> info@keeperlibrary.org</li>
+                    <li><i class="bi bi-clock me-2"></i> Mon-Fri: 9am-9pm</li>
+                </ul>
+            </div>
+        </div>
+        <div class="row copyright">
+            <div class="col-md-6">
+                <p>&copy; 2023 Keeper Library. All rights reserved.</p>
             </div>
             <div class="col-md-6 text-md-end">
-                <div class="d-flex justify-content-md-end gap-3">
-                    <a href="#" class="text-decoration-none text-muted small">Library Policies</a>
-                    <a href="#" class="text-decoration-none text-muted small">Terms of Use</a>
-                </div>
-                <div class="mt-3">
-                    <a href="#" class="text-decoration-none me-3"><i class="bi bi-twitter" style="color: #2A71FE;"></i></a>
-                    <a href="#" class="text-decoration-none me-3"><i class="bi bi-linkedin" style="color: #2A71FE;"></i></a>
-                    <a href="#" class="text-decoration-none me-3"><i class="bi bi-facebook" style="color: #2A71FE;"></i></a>
-                    <a href="#" class="text-decoration-none"><i class="bi bi-envelope" style="color: #2A71FE;"></i></a>
-                </div>
+                <p><a href="#" class="text-decoration-none me-3" style="color: var(--br-200);">Privacy Policy</a>
+                    <a href="#" class="text-decoration-none" style="color: var(--br-200);">Terms of Use</a>
+                </p>
             </div>
         </div>
     </div>
