@@ -14,7 +14,6 @@ use App\Http\Controllers\TemplateController;
 // })->middleware('auth:sanctum');
 
 // The route the Public Site fetches to get the JSON
-Route::get('/public/page-data', [TemplateController::class, 'getPageData']);
 Route::get('/page/landingPage', [PageDataController::class, 'landingPageData']);
 
 // Landing Page Routes
