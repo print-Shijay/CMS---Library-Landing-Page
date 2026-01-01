@@ -166,10 +166,9 @@
                 </h3>
                 <p>Your trusted partner in knowledge discovery and lifelong learning since 2010.</p>
                 <div class="mt-4">
-                    <a href="#" class="me-3 text-white"><i class="bi bi-twitter fs-5"></i></a>
-                    <a href="#" class="me-3 text-white"><i class="bi bi-facebook fs-5"></i></a>
-                    <a href="#" class="me-3 text-white"><i class="bi bi-instagram fs-5"></i></a>
-                    <a href="#" class="text-white"><i class="bi bi-linkedin fs-5"></i></a>
+                    <a href="{{ route('coming-soon') }}" class="me-3 text-white"><i class="bi bi-twitter fs-5"></i></a>
+                    <a href="{{ route('coming-soon') }}" class="me-3 text-white"><i class="bi bi-facebook fs-5"></i></a>
+                    <a href="{{ route('coming-soon') }}" class="me-3 text-white"><i class="bi bi-instagram fs-5"></i></a>
                 </div>
             </div>
             <div class="col-lg-2 col-md-4 mb-4 mb-md-0">
@@ -184,16 +183,16 @@
             <div class="col-lg-3 col-md-4 mb-4 mb-md-0">
                 <h4 class="footer-title">Services</h4>
                 <ul class="footer-links">
-                    <li><a href="#">Research Help</a></li>
-                    <li><a href="#">Interlibrary Loan</a></li>
-                    <li><a href="#">Digital Archives</a></li>
-                    <li><a href="#">Study Rooms</a></li>
+                    <li><a href="{{ route('coming-soon') }}">Research Help</a></li>
+                    <li><a href="{{ route('coming-soon') }}">Interlibrary Loan</a></li>
+                    <li><a href="{{ route('coming-soon') }}">Digital Archives</a></li>
+                    <li><a href="{{ route('coming-soon') }}">Study Rooms</a></li>
                 </ul>
             </div>
             <div class="col-lg-3 col-md-4">
                 <h4 class="footer-title">Contact Us</h4>
                 <ul class="footer-links">
-                    <li><i class="bi bi-geo-alt me-2"></i> 123 Knowledge Ave, EduCity</li>
+                    <li><i class="bi bi-geo-alt me-2"></i> 123 Knowledge Ave, San Pablo City</li>
                     <li><i class="bi bi-telephone me-2"></i> (555) 123-4567</li>
                     <li><i class="bi bi-envelope me-2"></i> info@keeperlibrary.org</li>
                     <li><i class="bi bi-clock me-2"></i> Mon-Fri: 9am-9pm</li>

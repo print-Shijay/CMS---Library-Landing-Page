@@ -10,12 +10,12 @@ use App\Http\Middleware\EnsureProfileSetup;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\TemplateController;
 
-// The route the Public Site will put into the <iframe src="...">
-// Route::get('/templates/{layout}', [TemplateController::class, 'renderTemplate'])
-//     ->middleware('allow.iframe')
-//     ->name('templates.render');
 
-// Remove the middleware temporarily to test
+
+Route::get('/coming-soon', function () {
+    return view('public.comingSoon');
+})->name('coming-soon');
+
 Route::get('/templates/{layout}', [TemplateController::class, 'renderTemplate'])
     ->name('templates.render');
 
