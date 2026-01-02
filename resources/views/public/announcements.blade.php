@@ -1,4 +1,7 @@
 <style>
+
+
+
     /* Featured Card */
     .featured-card {
         border: none;
@@ -58,6 +61,9 @@
     .news-card-img-top { height: 220px; object-fit: cover; width: 100%; }
     .news-meta { font-size: 0.75rem; color: #6c757d; text-transform: uppercase; letter-spacing: 1px; font-weight: 700; }
     .news-title { font-weight: 700; font-size: 1.2rem; line-height: 1.4; color: #212529; }
+
+
+
 </style>
 
 @php
@@ -119,11 +125,12 @@
                         </div>
                         <h3 class="fw-bold mb-3 display-6">{{ $featured->title }}</h3>
                         <p class="text-muted mb-4 text-break">{{ \Illuminate\Support\Str::limit($featured->content, 250) }}</p>
-                        <button class="btn btn-primary align-self-start" data-bs-toggle="modal" data-bs-target="#modal-{{ $featured->id }}">Read More </button>
+                        <button class="btn btn-primary align-self-start"data-bs-toggle="modal"data-bs-target="#modal-{{ $featured->id }}"data-bs-container="body"> Read More</button>
                     </div>
                 </div>
 
                 <!-- Modal for Featured -->
+
                 <div class="modal fade" id="modal-{{ $featured->id }}" tabindex="-1" aria-hidden="true">
                     <div class="modal-dialog modal-dialog-centered modal-lg">
                         <div class="modal-content border-0 shadow">
@@ -202,7 +209,7 @@
                             <h5 class="news-title mb-3">{{ $announcement->title }}</h5>
                             <p class="text-muted small mb-4 grow text-break">{{ \Illuminate\Support\Str::limit($announcement->content, 120) }}</p>
                             <div class="mt-auto pt-3 border-top">
-                                <button class="btn btn-link text-primary p-0 text-decoration-none fw-bold" data-bs-toggle="modal" data-bs-target="#modal-{{ $announcement->id }}">
+                                <button class="btn btn-link text-primary p-0 text-decoration-none fw-bold" data-bs-toggle="modal" data-bs-target="#modal-{{ $announcement->id }}" data-bs-container="body">
                                     Read More <i class="fas fa-arrow-right ms-1"></i>
                                 </button>
                             </div>
