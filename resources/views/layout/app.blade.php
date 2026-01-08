@@ -142,6 +142,12 @@
                     </a>
                 </li>
 
+                <li class="{{ request()->routeIs('admin.analytics') ? 'active' : '' }}">
+                    <a href="{{ route('admin.analytics') }}">
+                        <span><i class="bi bi-graph-up-arrow nav-icon"></i> Web Traffic Analytics</span>
+                    </a>
+                </li>
+
                 <hr class="mx-3 my-2" style="border-color: rgba(255,255,255,0.1);">
 
                 <li class="{{ request()->routeIs('admin.landing-page') ? 'active' : '' }}">

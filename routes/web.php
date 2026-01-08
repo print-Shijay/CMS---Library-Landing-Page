@@ -66,6 +66,9 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
         Route::delete('/page-request/{id}', [DashboardController::class, 'destroyPageRequest'])
             ->name('page_requests.destroy');
 
+        // Analytics Dashboard
+        Route::get('/analytics', [App\Http\Controllers\Admin\AnalyticsController::class, 'index'])->name('admin.analytics');
+
         // ADMIN ONLY
         Route::middleware(['role:admin'])->group(function () {
 
@@ -85,6 +88,7 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
             // Page Requests
             Route::post('/page-request/{id}/approve', [DashboardController::class, 'approveRequest'])->name('page_requests.approve');
             Route::post('/page-request/{id}/reject', [DashboardController::class, 'rejectRequest'])->name('page_requests.reject');
+
         });
 
         // ADMIN & MODERATOR ONLY
