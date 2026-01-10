@@ -130,7 +130,7 @@
         <p class="section-subtitle text-center">Explore our digital tools, research guides, and community resources.</p>
 
         <div class="row g-4" id="related-links">
-           @php
+            @php
                 // Use ?? [] to ensure that if the variable is missing, it defaults to an empty array
                 $currentLinks = $related_links ?? [];
                 $links = is_array($currentLinks) ? $currentLinks : json_decode($currentLinks, true);
@@ -141,13 +141,32 @@
 
             @foreach($links as $link)
                 <div class="col-lg-4 col-md-6">
-                    @php $url = str_contains($link, '://') ? $link : 'https://' . $link; @endphp
-                    <a href="{{ $url }}" target="_blank" class="link-preview-card">
+                    @php
+                        // Detect if data is New Format (Array) or Old Format (String)
+                        if (is_array($link)) {
+                            $rawUrl = $link['url'] ?? '#';
+                            // Use stored title, or fallback to parsing the URL if title is missing
+                            $titleText = !empty($link['title']) ? $link['title'] : ucfirst(explode('.', $rawUrl)[0]);
+                        } else {
+                            // Legacy Format handling
+                            $rawUrl = $link;
+                            $titleText = ucfirst(explode('.', $link)[0]);
+                        }
+
+                        // Ensure URL has protocol (http/https) for the clickable href
+                        $href = str_contains($rawUrl, '://') ? $rawUrl : 'https://' . $rawUrl;
+                    @endphp
+
+                    <a href="{{ $href }}" target="_blank" class="link-preview-card">
                         <div class="link-thumbnail"><i class="bi bi-arrow-up-right"></i></div>
                         <div>
-                            <span class="link-title">{{ ucfirst(explode('.', $link)[0]) }}</span>
-                            <p class="small text-muted mb-2">Deep dive into our ecosystem and master the workflow.</p>
-                            <span class="link-url">{{ $link }}</span>
+                            {{-- Display the Title (Fetched or Extracted) --}}
+                            <span class="link-title">{{ str_replace(['http://', 'https://'], '', $rawUrl) }}</span>
+                            
+                            <p class="small text-muted mb-2">{{ $titleText }}</p>
+                            
+                            {{-- Display the raw URL text --}}
+                            <span class="link-url">{{ $rawUrl }}</span>
                         </div>
                     </a>
                 </div>

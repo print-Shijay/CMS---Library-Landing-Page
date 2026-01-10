@@ -193,23 +193,40 @@
 
         <div class="row g-4" id="related-links">
             @php
+                // Use ?? [] to ensure that if the variable is missing, it defaults to an empty array
                 $currentLinks = $related_links ?? [];
                 $links = is_array($currentLinks) ? $currentLinks : json_decode($currentLinks, true);
-                $links = $links ?? ['Digital Books', 'Academic Journals', 'Research Databases'];
+
+                // Ensure $links is an array so the @foreach doesn't crash either
+                $links = $links ?? [];
                 $icons = ['bi-book', 'bi-journal-text', 'bi-database', 'bi-play-btn', 'bi-journal-bookmark', 'bi-archive'];
             @endphp
 
             @foreach($links as $index => $link)
                 <div class="col-lg-4 col-md-6">
-                    @php $url = str_contains($link, '://') ? $link : '#'; @endphp
-                    <a href="{{ $url }}" class="resource-card d-block text-decoration-none bg-white p-4 rounded-4 shadow-sm h-100">
+                    @php
+                        // Detect if data is New Format (Array) or Old Format (String)
+                        if (is_array($link)) {
+                            $rawUrl = $link['url'] ?? '#';
+                            // Use stored title, or fallback to parsing the URL if title is missing
+                            $titleText = !empty($link['title']) ? $link['title'] : ucfirst(explode('.', $rawUrl)[0]);
+                        } else {
+                            // Legacy Format handling
+                            $rawUrl = $link;
+                            $titleText = ucfirst(explode('.', $link)[0]);
+                        }
+
+                        // Ensure URL has protocol (http/https) for the clickable href
+                        $href = str_contains($rawUrl, '://') ? $rawUrl : 'https://' . $rawUrl;
+                    @endphp
+                    <a href="{{ $href }}" class="resource-card d-block text-decoration-none bg-white p-4 rounded-4 shadow-sm h-100">
                         <div class="d-flex align-items-center mb-4">
                             <div class="icon-container me-3" style="width: 50px; height: 50px; background: rgba(42, 113, 254, 0.05); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
                                 <i class="bi {{ $icons[$index % 6] }} fs-5" style="color: #2A71FE;"></i>
                             </div>
-                            <h6 class="fw-bold text-dark mb-0 text-truncate">{{ $link }}</h6>
+                            <h6 class="fw-bold text-dark mb-0 text-truncate">{{ str_replace(['http://', 'https://'], '', $rawUrl) }}</h6>
                         </div>
-                        <p class="text-muted small mb-3">Access comprehensive resources for academic research and learning purposes.</p>
+                        <p class="text-muted small mb-3">{{ $titleText }}</p>
                         <div class="d-flex justify-content-between align-items-center">
                             <small class="text-muted">Updated regularly</small>
                             <i class="bi bi-arrow-right-circle" style="color: #2A71FE;"></i>

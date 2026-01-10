@@ -168,22 +168,39 @@
 
         <div class="row g-4" id="related-links">
             @php
+                // Use ?? [] to ensure that if the variable is missing, it defaults to an empty array
                 $currentLinks = $related_links ?? [];
                 $links = is_array($currentLinks) ? $currentLinks : json_decode($currentLinks, true);
+
+                // Ensure $links is an array so the @foreach doesn't crash either
                 $links = $links ?? [];
             @endphp
 
             @foreach($links as $link)
                 <div class="col-lg-4 col-md-6">
-                    @php $url = str_contains($link, '://') ? $link : 'https://' . $link; @endphp
-                    <a href="{{ $url }}" target="_blank" class="resource-card">
+                   @php
+                        // Detect if data is New Format (Array) or Old Format (String)
+                        if (is_array($link)) {
+                            $rawUrl = $link['url'] ?? '#';
+                            // Use stored title, or fallback to parsing the URL if title is missing
+                            $titleText = !empty($link['title']) ? $link['title'] : ucfirst(explode('.', $rawUrl)[0]);
+                        } else {
+                            // Legacy Format handling
+                            $rawUrl = $link;
+                            $titleText = ucfirst(explode('.', $link)[0]);
+                        }
+
+                        // Ensure URL has protocol (http/https) for the clickable href
+                        $href = str_contains($rawUrl, '://') ? $rawUrl : 'https://' . $rawUrl;
+                    @endphp
+                    <a href="{{ $href }}" target="_blank" class="resource-card">
                         <div class="resource-icon-circle">
                             <i class="bi bi-arrow-up-right"></i>
                         </div>
                         <div class="resource-content">
-                            <span class="link-title">{{ ucfirst(explode('.', $link)[0]) }}</span>
-                            <p class="small text-muted mb-2">Explore the tools and workflow integration.</p>
-                            <span class="link-url">{{ $link }}</span>
+                            <span class="link-title">{{ str_replace(['http://', 'https://'], '', $rawUrl) }}</span>
+                            <p class="small text-muted mb-2">{{ $titleText }}</p>
+                            <span class="link-url">{{ $rawUrl }}</span>
                         </div>
                     </a>
                 </div>

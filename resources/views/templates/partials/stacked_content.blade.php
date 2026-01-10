@@ -163,17 +163,33 @@
 
         <div class="resources-grid" id="related-links">
             @php
-                $links = is_array($related_links ?? null) ? ($related_links ?? []) : json_decode($related_links ?? '[]', true);
-                if (empty($links)) {
-                    $links = ['Digital Collections', 'Research Databases', 'Online Learning', 'Special Archives'];
-                }
+                // Use ?? [] to ensure that if the variable is missing, it defaults to an empty array
+                $currentLinks = $related_links ?? [];
+                $links = is_array($currentLinks) ? $currentLinks : json_decode($currentLinks, true);
+
+                // Ensure $links is an array so the @foreach doesn't crash either
+                $links = $links ?? [];
             @endphp
 
             @foreach($links as $link)
-                @php $url = str_contains($link, '://') ? $link : '#'; @endphp
-                <a href="{{ $url }}" class="resource-card">
+                @php
+                        // Detect if data is New Format (Array) or Old Format (String)
+                        if (is_array($link)) {
+                            $rawUrl = $link['url'] ?? '#';
+                            // Use stored title, or fallback to parsing the URL if title is missing
+                            $titleText = !empty($link['title']) ? $link['title'] : ucfirst(explode('.', $rawUrl)[0]);
+                        } else {
+                            // Legacy Format handling
+                            $rawUrl = $link;
+                            $titleText = ucfirst(explode('.', $link)[0]);
+                        }
+
+                        // Ensure URL has protocol (http/https) for the clickable href
+                        $href = str_contains($rawUrl, '://') ? $rawUrl : 'https://' . $rawUrl;
+                @endphp
+                <a href="{{ $href }}" class="resource-card">
                     <div class="resource-card-inner">
-                        <span class="resource-text">{{ $link }}</span>
+                        <span class="resource-text">{{ str_replace(['http://', 'https://'], '', $rawUrl) }}</span>
                     </div>
                 </a>
             @endforeach

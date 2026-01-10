@@ -99,6 +99,7 @@
                         <div class="mb-4">
                             <label class="form-label fw-bold small text-uppercase">Related Links</label>
                             <div id="relatedLinksWrapper"></div>
+                            
                             <button type="button" class="btn btn-sm btn-outline-primary mt-2" onclick="addLinkField()">
                                 <i class="bi bi-plus"></i> Add Link
                             </button>
@@ -131,27 +132,183 @@
     <script>
         const baseUrl = "{{ url('/') }}";
         const frame = document.getElementById('previewFrame');
+        // Standard text fields
         const fields = ['template', 'title', 'description', 'button', 'mission', 'vision', 'goals'];
 
-        /* ================= RELATED LINKS ================= */
+        /* ================= RELATED LINKS LOGIC ================= */
         const relatedLinksWrapper = document.getElementById('relatedLinksWrapper');
 
-        function addLinkField(value = '') {
+        /**
+         * Adds a row with Title and URL inputs.
+         * Accepts an object {title, url} or defaults to empty.
+         */
+        function addLinkField(data = { title: '', url: '' }) {
             const div = document.createElement('div');
-            div.className = 'input-group mb-2';
-            div.innerHTML = ` <input type="text" class="form-control related-link" placeholder="e.g. E-Library" value="${value}"> <button class="btn btn-outline-danger" type="button" onclick="this.parentElement.remove(); updatePreview();"> <i class="bi bi-trash"></i> </button>`;
+            div.className = 'card p-2 mb-2 bg-light border';
+            div.innerHTML = `
+                <div class="row g-2 align-items-center">
+                    <div class="col-12">
+                        <div class="input-group input-group-sm">
+                            <span class="input-group-text"><i class="bi bi-link-45deg"></i></span>
+                            <input type="text" class="form-control link-url" 
+                                placeholder="example.com" 
+                                value="${data.url || ''}" 
+                                onblur="autoFetchTitle(this)">
+                        </div>
+                    </div>
+                    <div class="col-10">
+                        <input type="text" class="form-control form-control-sm link-title" 
+                            placeholder="Link Title (Auto-filled)" 
+                            value="${data.title || ''}">
+                    </div>
+                    <div class="col-2 text-end">
+                        <button class="btn btn-sm btn-outline-danger w-100" type="button" onclick="removeLinkField(this)">
+                            <i class="bi bi-trash"></i>
+                        </button>
+                    </div>
+                </div>
+            `;
             relatedLinksWrapper.appendChild(div);
-            div.querySelector('input').addEventListener('input', updatePreview);
+
+            // Add listeners for realtime preview updates
+            div.querySelectorAll('input').forEach(input => {
+                input.addEventListener('input', updatePreview);
+            });
+        }
+
+        function removeLinkField(btn) {
+            btn.closest('.card').remove();
             updatePreview();
         }
 
+        // Collects all link data into an array of objects
         function getRelatedLinks() {
-            return Array.from(document.querySelectorAll('.related-link'))
-                .map(el => el.value.trim())
-                .filter(Boolean);
+            const rows = document.querySelectorAll('#relatedLinksWrapper .card');
+            return Array.from(rows).map(row => ({
+                url: row.querySelector('.link-url').value.trim(),
+                title: row.querySelector('.link-title').value.trim()
+            })).filter(link => link.url !== ''); // Only keep if URL exists
         }
 
-        /* ================= IMAGE PREVIEW LOGIC ================= */
+        /* ================= AUTO-FETCH TITLE (UPDATED) ================= */
+        function autoFetchTitle(urlInput) {
+            let url = urlInput.value.trim();
+            const row = urlInput.closest('.row');
+            const titleInput = row.querySelector('.link-title');
+
+            // 1. Basic Validation: Don't run if empty
+            if (!url) return;
+
+            // 2. Auto-fix URL: Prepend https:// if missing
+            if (!/^https?:\/\//i.test(url)) {
+                url = 'https://' + url;
+                urlInput.value = url; // Update the input box for the user
+            }
+
+            // 3. Status Update: Let the user know we are working
+            const originalPlaceholder = titleInput.placeholder;
+            titleInput.placeholder = "Fetching title...";
+            titleInput.value = ""; // Clear current value to show loading state
+            titleInput.disabled = true;
+
+            console.log("Requesting metadata for:", url); // Debug log
+
+            fetch(`${baseUrl}/api/landing/fetch-metadata`, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRF-TOKEN': '{{ csrf_token() }}'
+                },
+                body: JSON.stringify({ url: url })
+            })
+            .then(res => {
+                if (!res.ok) throw new Error(`Server returned ${res.status}`);
+                return res.json();
+            })
+            .then(data => {
+                console.log("Data received:", data); // Debug log
+                if (data.title) {
+                    titleInput.value = data.title;
+                    updatePreview(); // Refresh the iframe
+                } else {
+                    titleInput.placeholder = "Could not find title";
+                }
+            })
+            .catch(err => {
+                console.error('Metadata fetch failed:', err);
+                titleInput.placeholder = "Error fetching title";
+            })
+            .finally(() => {
+                titleInput.disabled = false;
+                // Restore placeholder if still empty
+                if (!titleInput.value) titleInput.placeholder = "Link Title"; 
+            });
+        }
+
+        /* ================= PREVIEW LOGIC ================= */
+        function updatePreview() {
+            const params = new URLSearchParams();
+            
+            // Append standard fields
+            fields.forEach(f => {
+                params.append(f, document.getElementById(f).value);
+            });
+
+            // Append Links: We send them as a JSON string to keep the structure intact
+            // The backend/preview endpoint must decode this JSON string.
+            params.append('related_links', JSON.stringify(getRelatedLinks()));
+
+            params.append('t', new Date().getTime()); // Cache busting
+
+            frame.classList.add('loading-iframe');
+            frame.src = `${baseUrl}/api/landing/preview?${params.toString()}`;
+
+            frame.onload = () => {
+                frame.classList.remove('loading-iframe');
+            };
+        }
+
+        /* ================= SAVE LOGIC ================= */
+        function savePage(btn) {
+            const originalText = btn.innerHTML;
+                btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> Saving...';
+                btn.disabled = true;
+
+                const formData = new FormData();
+                fields.forEach(f => {
+                    formData.append(f, document.getElementById(f).value);
+                });
+
+                // Send links as JSON string
+                formData.append('related_links', JSON.stringify(getRelatedLinks()));
+
+                const imageFile = document.getElementById('image').files[0];
+                if (imageFile) {
+                    formData.append('image', imageFile);
+                }
+
+                fetch(`${baseUrl}/api/landing/save`, {
+                    method: 'POST',
+                    headers: {
+                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        'Accept': 'application/json'
+                    },
+                    body: formData
+                })
+                .then(res => res.json())
+                .then(data => {
+                    alert('Landing page updated!');
+                    updatePreview();
+                })
+                .catch(() => alert('Save failed'))
+                .finally(() => {
+                    btn.innerHTML = originalText;
+                    btn.disabled = false;
+                });
+            }
+
+        /* ================= INITIALIZATION ================= */
+        // Image preview listener
         document.getElementById('image').addEventListener('change', function (e) {
             const file = e.target.files[0];
             if (file) {
@@ -165,90 +322,26 @@
             }
         });
 
-        /* ================= PREVIEW LOGIC ================= */
-        function updatePreview() {
-            const params = new URLSearchParams();
-            fields.forEach(f => {
-                params.append(f, document.getElementById(f).value);
-            });
-
-            getRelatedLinks().forEach(link => {
-                params.append('related_links[]', link);
-            });
-
-            // Cache busting: ensure the iframe refreshes even if the URL looks similar
-            params.append('t', new Date().getTime());
-
-            frame.classList.add('loading-iframe');
-            frame.src = `${baseUrl}/api/landing/preview?${params.toString()}`;
-
-            frame.onload = () => {
-                frame.classList.remove('loading-iframe');
-            };
-        }
-
-        // Manual reload triggered by the button
-        function manualReload() {
-            const icon = document.getElementById('reloadIcon');
-            icon.classList.add('spin-loader');
-
-            updatePreview();
-
-            setTimeout(() => {
-                icon.classList.remove('spin-loader');
-            }, 800);
-        }
-
+        // Input listeners
         fields.forEach(f => {
             document.getElementById(f).addEventListener('input', updatePreview);
         });
 
-        /* ================= SAVE (USING FORMDATA) ================= */
-        function savePage(btn) {
-            const originalText = btn.innerHTML;
-            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-2"></span> Saving...';
-            btn.disabled = true;
-
-            const formData = new FormData();
-            fields.forEach(f => {
-                formData.append(f, document.getElementById(f).value);
-            });
-
-            getRelatedLinks().forEach(link => {
-                formData.append('related_links[]', link);
-            });
-
-            const imageFile = document.getElementById('image').files[0];
-            if (imageFile) {
-                formData.append('image', imageFile);
-            }
-
-            fetch(`${baseUrl}/api/landing/save`, {
-                method: 'POST',
-                headers: {
-                    'X-CSRF-TOKEN': '{{ csrf_token() }}',
-                    'Accept': 'application/json'
-                },
-                body: formData
-            })
-                .then(res => res.json())
-                .then(data => {
-                    alert('Landing page updated!');
-                    updatePreview();
-                })
-                .catch(() => alert('Save failed'))
-                .finally(() => {
-                    btn.innerHTML = originalText;
-                    btn.disabled = false;
-                });
-        }
-
-        /* ================= INIT ================= */
+        // Load existing data
+        // Note: Ensure your backend casts 'related_links' to an array/object before sending to view
         const existingLinks = @json($page->related_links ?? []);
-        if (existingLinks.length) {
-            existingLinks.forEach(link => addLinkField(link));
+        
+        if (Array.isArray(existingLinks) && existingLinks.length) {
+            existingLinks.forEach(link => {
+                // Handle legacy data (string) vs new data (object)
+                if (typeof link === 'string') {
+                    addLinkField({ title: '', url: link });
+                } else {
+                    addLinkField(link);
+                }
+            });
         } else {
-            addLinkField();
+            addLinkField(); // Add one empty row by default
         }
 
         window.onload = updatePreview;

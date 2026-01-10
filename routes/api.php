@@ -36,6 +36,9 @@ Route::get('/testimonials', [TestimonialController::class, 'index']);
 // Public FAQ Endpoint for AI Chatbot
 Route::get('/faqs', [FaqController::class, 'index']);
 
+// Fetch Metadata Route
+Route::post('/landing/fetch-metadata', [LandingPageController::class, 'fetchMetadata']);
+
 // 3. Protected Routes (Require Login)
 Route::middleware('auth:sanctum')->group(function () {
     Route::get('/auth/me', [AuthController::class, 'me']);

@@ -135,22 +135,39 @@
         <h2 class="fw-bold text-center mb-4">Library Resources</h2>
         <div class="row g-4" id="related-links">
             @php
+                // Use ?? [] to ensure that if the variable is missing, it defaults to an empty array
                 $currentLinks = $related_links ?? [];
                 $links = is_array($currentLinks) ? $currentLinks : json_decode($currentLinks, true);
+
+                // Ensure $links is an array so the @foreach doesn't crash either
                 $links = $links ?? [];
             @endphp
             @foreach($links as $link)
                 <div class="col-lg-4 col-md-6">
-                    @php $url = str_contains($link, '://') ? $link : 'https://' . $link; @endphp
-                    <a href="{{ $url }}" target="_blank" class="text-decoration-none card border-0 shadow-sm p-3 h-100"
+                    @php
+                        // Detect if data is New Format (Array) or Old Format (String)
+                        if (is_array($link)) {
+                            $rawUrl = $link['url'] ?? '#';
+                            // Use stored title, or fallback to parsing the URL if title is missing
+                            $titleText = !empty($link['title']) ? $link['title'] : ucfirst(explode('.', $rawUrl)[0]);
+                        } else {
+                            // Legacy Format handling
+                            $rawUrl = $link;
+                            $titleText = ucfirst(explode('.', $link)[0]);
+                        }
+
+                        // Ensure URL has protocol (http/https) for the clickable href
+                        $href = str_contains($rawUrl, '://') ? $rawUrl : 'https://' . $rawUrl;
+                    @endphp
+                    <a href="{{ $href }}" target="_blank" class="text-decoration-none card border-0 shadow-sm p-3 h-100"
                         style="border-radius: 15px; transition: transform 0.2s;">
                         <div class="d-flex align-items-center gap-3">
                             <div class="bg-primary bg-opacity-10 text-primary p-2 rounded">
                                 <i class="bi bi-link-45deg fs-4"></i>
                             </div>
                             <div>
-                                <h6 class="mb-0 fw-bold text-dark">{{ ucfirst(explode('.', $link)[0]) }}</h6>
-                                <span class="small text-muted">{{ $link }}</span>
+                                <h6 class="mb-0 fw-bold text-dark">{{ $titleText }}</h6>
+                                <span class="small text-muted">{{ str_replace(['http://', 'https://'], '', $rawUrl) }}</span>
                             </div>
                         </div>
                     </a>
