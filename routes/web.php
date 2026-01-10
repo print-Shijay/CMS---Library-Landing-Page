@@ -9,7 +9,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\EnsureProfileSetup;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\TemplateController;
-
+use App\Http\Controllers\Admin\FaqController as AdminFaqController;
 
 
 Route::get('/coming-soon', function () {
@@ -68,6 +68,11 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
 
         // Analytics Dashboard
         Route::get('/analytics', [App\Http\Controllers\Admin\AnalyticsController::class, 'index'])->name('admin.analytics');
+
+        Route::get('/faq', [AdminFaqController::class, 'index'])->name('admin.faq.index');
+        Route::post('/faq', [AdminFaqController::class, 'store'])->name('admin.faq.store');
+        Route::put('/faq/{id}', [AdminFaqController::class, 'update'])->name('admin.faq.update');
+        Route::delete('/faq/{id}', [AdminFaqController::class, 'destroy'])->name('admin.faq.destroy');
 
         // ADMIN ONLY
         Route::middleware(['role:admin'])->group(function () {

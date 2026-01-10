@@ -8,6 +8,7 @@ use App\Http\Controllers\Api\AuthController;
 use App\Http\Controllers\Api\TestimonialController;
 use App\Http\Controllers\Api\PageDataController;
 use App\Http\Controllers\TemplateController;
+use App\Http\Controllers\Api\FaqController;
 
 // Route::get('/user', function (Request $request) {
 //     return $request->user();
@@ -31,6 +32,9 @@ Route::get('/auth/google/callback', [AuthController::class, 'handleGoogleCallbac
 
 // 2. Public Testimonials
 Route::get('/testimonials', [TestimonialController::class, 'index']);
+
+// Public FAQ Endpoint for AI Chatbot
+Route::get('/faqs', [FaqController::class, 'index']);
 
 // 3. Protected Routes (Require Login)
 Route::middleware('auth:sanctum')->group(function () {

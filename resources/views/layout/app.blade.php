@@ -176,6 +176,12 @@
                         <i class="bi bi-pencil-square edit-badge"></i>
                     </a>
                 </li>
+                <li class="{{ request()->routeIs('admin.faq.index') ? 'active' : '' }}">
+                    <a href="{{ route('admin.faq.index') }}">
+                        <span><i class="bi bi-question-circle nav-icon"></i> FAQ</span>
+                        <i class="bi bi-pencil-square edit-badge"></i>
+                    </a>
+                </li>
 
             </ul>
         </nav>
