@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap"
         rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             /* Blue Ribbon Palette */
@@ -1240,6 +1240,42 @@
             });
         }
 
+        function extractLinksFromDOM() {
+            const container = document.getElementById('related-links');
+            if (!container) return [];
+
+            const links = [];
+            const linkElements = container.querySelectorAll('.resource-card');
+            
+            linkElements.forEach(linkElement => {
+                const href = linkElement.getAttribute('href');
+                const titleElement = linkElement.querySelector('.link-title');
+                const descriptionElement = linkElement.querySelector('.small.text-muted.mb-2');
+                const urlElement = linkElement.querySelector('.link-url');
+                
+                if (href) {
+                    // Convert href to raw URL (remove protocol if added)
+                    let rawUrl = urlElement ? urlElement.textContent.trim() : href;
+                    
+                    // If rawUrl still has protocol, check if href is the same or has protocol added
+                    if (!rawUrl.includes('://') && href.includes('://')) {
+                        // Extract from href by removing protocol
+                        const urlObj = new URL(href);
+                        rawUrl = urlObj.hostname + (urlObj.pathname !== '/' ? urlObj.pathname : '');
+                    }
+                    
+                    links.push({
+                        url: rawUrl,
+                        title: descriptionElement ? descriptionElement.textContent.trim() : '',
+                        // The display title is in link-title, but we want the actual URL for storage
+                        rawUrl: rawUrl
+                    });
+                }
+            });
+            
+            return links;
+        }
+
         function renderLinks(links) {
             const container = document.getElementById('related-links');
             if (!container) return;
@@ -1247,22 +1283,43 @@
             container.innerHTML = '';
 
             links.forEach(link => {
-                // Use either link.url/link.label or just the string depending on your API format
-                const url = typeof link === 'string' ? (link.includes('://') ? link : 'https://' + link) : link.url;
-                const label = typeof link === 'string' ? link.split('.')[0] : link.label;
+                // Detect if data is New Format (Array) or Old Format (String)
+                let rawUrl, titleText;
+                
+                if (typeof link === 'string') {
+                    // Legacy Format handling
+                    rawUrl = link;
+                    titleText = rawUrl.split('.')[0].charAt(0).toUpperCase() + rawUrl.split('.')[0].slice(1);
+                } else {
+                    // New Format (Array/Object) handling
+                    rawUrl = link.url || link.href || '#';
+                    // Use stored title, or fallback to parsing the URL if title is missing
+                    titleText = link.title || link.label || '';
+                    if (!titleText) {
+                        titleText = rawUrl.split('.')[0].charAt(0).toUpperCase() + rawUrl.split('.')[0].slice(1);
+                    }
+                }
+
+                // Ensure URL has protocol (http/https) for the clickable href
+                const href = rawUrl.includes('://') ? rawUrl : 'https://' + rawUrl;
+                
+                // Remove protocol for display title
+                const displayTitle = rawUrl.replace(/^https?:\/\//, '');
 
                 container.innerHTML += `
-            <div class="col-lg-4 col-md-6">
-                <a href="${url}" target="_blank" class="link-preview-card">
-                    <div class="link-thumbnail"><i class="bi bi-arrow-up-right"></i></div>
-                    <div>
-                        <span class="link-title" style="text-transform: capitalize;">${label}</span>
-                        <p class="small text-muted mb-2">Deep dive into our ecosystem and master the workflow.</p>
-                        <span class="link-url">${url}</span>
+                    <div class="col-lg-4 col-md-6">
+                        <a href="${href}" target="_blank" class="resource-card">
+                            <div class="resource-icon-circle">
+                                <i class="bi bi-arrow-up-right"></i>
+                            </div>
+                            <div class="resource-content">
+                                <span class="link-title">${displayTitle}</span>
+                                <p class="small text-muted mb-2">${titleText}</p>
+                                <span class="link-url">${rawUrl}</span>
+                            </div>
+                        </a>
                     </div>
-                </a>
-            </div>
-        `;
+                `;
             });
         }
 

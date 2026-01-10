@@ -7,6 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 
     <style>
         :root {
@@ -856,24 +857,105 @@
 
             container.innerHTML = '';
 
-            links.forEach(link => {
-                // Use either link.url/link.label or just the string depending on your API format
-                const url = typeof link === 'string' ? (link.includes('://') ? link : 'https://' + link) : link.url;
-                const label = typeof link === 'string' ? link.split('.')[0] : link.label;
+            // Icons array matching the PHP template
+            const icons = ['bi-book', 'bi-journal-text', 'bi-database', 'bi-play-btn', 'bi-journal-bookmark', 'bi-archive'];
+
+            links.forEach((link, index) => {
+                // Detect if data is New Format (Array) or Old Format (String)
+                let rawUrl, titleText;
+                
+                if (typeof link === 'string') {
+                    // Legacy Format handling
+                    rawUrl = link;
+                    // Capitalize first letter of the first part of the domain
+                    const domainPart = rawUrl.split('.')[0] || '';
+                    titleText = domainPart.charAt(0).toUpperCase() + domainPart.slice(1);
+                } else {
+                    // New Format (Array/Object) handling
+                    rawUrl = link.url || link.href || '#';
+                    // Use stored title, or fallback to parsing the URL if title is missing
+                    titleText = link.title || link.label || '';
+                    if (!titleText) {
+                        const domainPart = rawUrl.split('.')[0] || '';
+                        titleText = domainPart.charAt(0).toUpperCase() + domainPart.slice(1);
+                    }
+                }
+
+                // Ensure URL has protocol (http/https) for the clickable href
+                const href = rawUrl.includes('://') ? rawUrl : 'https://' + rawUrl;
+                
+                // Remove protocol for display in the title
+                const displayTitle = rawUrl.replace(/^https?:\/\//, '');
+                
+                // Get icon for this card (cycle through icons array)
+                const iconClass = icons[index % icons.length];
 
                 container.innerHTML += `
-            <div class="col-lg-4 col-md-6">
-                <a href="${url}" target="_blank" class="link-preview-card">
-                    <div class="link-thumbnail"><i class="bi bi-arrow-up-right"></i></div>
-                    <div>
-                        <span class="link-title" style="text-transform: capitalize;">${label}</span>
-                        <p class="small text-muted mb-2">Deep dive into our ecosystem and master the workflow.</p>
-                        <span class="link-url">${url}</span>
+                    <div class="col-lg-4 col-md-6">
+                        <a href="${href}" class="resource-card d-block text-decoration-none bg-white p-4 rounded-4 shadow-sm h-100">
+                            <div class="d-flex align-items-center mb-4">
+                                <div class="icon-container me-3" style="width: 50px; height: 50px; background: rgba(42, 113, 254, 0.05); border-radius: 12px; display: flex; align-items: center; justify-content: center;">
+                                    <i class="bi ${iconClass} fs-5" style="color: #2A71FE;"></i>
+                                </div>
+                                <h6 class="fw-bold text-dark mb-0 text-truncate">${displayTitle}</h6>
+                            </div>
+                            <p class="text-muted small mb-3">${titleText}</p>
+                            <div class="d-flex justify-content-between align-items-center">
+                                <small class="text-muted">Updated regularly</small>
+                                <i class="bi bi-arrow-right-circle" style="color: #2A71FE;"></i>
+                            </div>
+                        </a>
                     </div>
-                </a>
-            </div>
-        `;
+                `;
             });
+        }
+
+        // Function to extract links from existing DOM structure
+        function getLinksFromDOM() {
+            const container = document.getElementById('related-links');
+            if (!container) return [];
+
+            const links = [];
+            const resourceCards = container.querySelectorAll('a.resource-card');
+            
+            resourceCards.forEach((card, index) => {
+                const href = card.getAttribute('href');
+                if (!href || href === '#') return;
+
+                // Get the title from h6 element
+                const titleElement = card.querySelector('h6.fw-bold.text-dark.mb-0.text-truncate');
+                // Get the description from p element
+                const descriptionElement = card.querySelector('p.text-muted.small.mb-3');
+                
+                // Extract raw URL from href (remove protocol)
+                let rawUrl = href;
+                if (href.startsWith('https://')) {
+                    rawUrl = href.substring(8);
+                } else if (href.startsWith('http://')) {
+                    rawUrl = href.substring(7);
+                }
+                
+                // If we have a display title that might be different
+                const displayTitle = titleElement ? titleElement.textContent.trim() : rawUrl;
+                
+                // Use display title as raw URL (it should match)
+                if (displayTitle && displayTitle !== rawUrl) {
+                    // Check if displayTitle is just the raw URL without protocol
+                    if (href.includes(displayTitle)) {
+                        rawUrl = displayTitle;
+                    }
+                }
+                
+                // Get the title text from description
+                const titleText = descriptionElement ? descriptionElement.textContent.trim() : '';
+                
+                links.push({
+                    url: rawUrl,
+                    title: titleText || displayTitle.split('.')[0].charAt(0).toUpperCase() + displayTitle.split('.')[0].slice(1)
+                });
+            });
+            
+            return links;
         }
 
         /* =====================================================

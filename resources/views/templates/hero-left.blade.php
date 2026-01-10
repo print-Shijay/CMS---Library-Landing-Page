@@ -11,7 +11,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.0/font/bootstrap-icons.css">
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;600;700;800&display=swap"
         rel="stylesheet">
-
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --br-50: #eef5ff;
@@ -948,30 +948,101 @@
             });
         }
 
-        function renderLinks(links) {
-            const container = document.getElementById('related-links');
-            if (!container) return;
+        // Function to render links with the new card layout
+    function renderLinks(links) {
+        const container = document.getElementById('related-links');
+        if (!container) return;
 
-            container.innerHTML = '';
+        container.innerHTML = '';
 
-            links.forEach(link => {
-                const url = typeof link === 'string' ? (link.includes('://') ? link : 'https://' + link) : link.url;
-                const label = typeof link === 'string' ? link.split('.')[0] : link.label;
+        links.forEach(link => {
+            // Detect if data is New Format (Array) or Old Format (String)
+            let rawUrl, titleText;
+            
+            if (typeof link === 'string') {
+                // Legacy Format handling
+                rawUrl = link;
+                // Capitalize first letter of the first part of the domain
+                const domainPart = rawUrl.split('.')[0] || '';
+                titleText = domainPart.charAt(0).toUpperCase() + domainPart.slice(1);
+            } else {
+                // New Format (Array/Object) handling
+                rawUrl = link.url || link.href || '#';
+                // Use stored title, or fallback to parsing the URL if title is missing
+                titleText = link.title || link.label || '';
+                if (!titleText) {
+                    const domainPart = rawUrl.split('.')[0] || '';
+                    titleText = domainPart.charAt(0).toUpperCase() + domainPart.slice(1);
+                }
+            }
 
-                container.innerHTML += `
-            <div class="col-lg-4 col-md-6">
-                <a href="${url}" target="_blank" class="link-preview-card">
-                    <div class="link-thumbnail"><i class="bi bi-arrow-up-right"></i></div>
-                    <div>
-                        <span class="link-title" style="text-transform: capitalize;">${label}</span>
-                        <p class="small text-muted mb-2">Deep dive into our ecosystem and master the workflow.</p>
-                        <span class="link-url">${url}</span>
-                    </div>
-                </a>
-            </div>
-        `;
-            });
-        }
+            // Ensure URL has protocol (http/https) for the clickable href
+            const href = rawUrl.includes('://') ? rawUrl : 'https://' + rawUrl;
+            
+            // Remove protocol for display
+            const displayUrl = rawUrl.replace(/^https?:\/\//, '');
+
+            container.innerHTML += `
+                <div class="col-lg-4 col-md-6">
+                    <a href="${href}" target="_blank" class="text-decoration-none card border-0 shadow-sm p-3 h-100"
+                        style="border-radius: 15px; transition: transform 0.2s;">
+                        <div class="d-flex align-items-center gap-3">
+                            <div class="bg-primary bg-opacity-10 text-primary p-2 rounded">
+                                <i class="bi bi-link-45deg fs-4"></i>
+                            </div>
+                            <div>
+                                <h6 class="mb-0 fw-bold text-dark">${titleText}</h6>
+                                <span class="small text-muted">${displayUrl}</span>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            `;
+        });
+    }
+
+    // Function to retrieve links from existing DOM
+    function getLinksFromDOM() {
+        const container = document.getElementById('related-links');
+        if (!container) return [];
+
+        const links = [];
+        const linkCards = container.querySelectorAll('a.text-decoration-none.card');
+        
+        linkCards.forEach(card => {
+            const href = card.getAttribute('href');
+            const titleElement = card.querySelector('h6.mb-0.fw-bold.text-dark');
+            const urlElement = card.querySelector('span.small.text-muted');
+            
+            if (href) {
+                // Extract raw URL from href (remove https:// if present)
+                let rawUrl = href;
+                if (href.startsWith('https://')) {
+                    rawUrl = href.substring(8);
+                } else if (href.startsWith('http://')) {
+                    rawUrl = href.substring(7);
+                }
+                
+                // Get the title text
+                const titleText = titleElement ? titleElement.textContent.trim() : '';
+                
+                // Get display URL
+                const displayUrl = urlElement ? urlElement.textContent.trim() : rawUrl;
+                
+                // Use display URL as raw URL if it differs
+                if (displayUrl && displayUrl !== rawUrl) {
+                    rawUrl = displayUrl;
+                }
+                
+                links.push({
+                    url: rawUrl,
+                    title: titleText
+                });
+            }
+        });
+        
+        return links;
+    }
 
         async function initTestimonials() {
             handleAuthRedirect();

@@ -699,6 +699,34 @@
             });
         }
 
+        function renderLinksFromDOM() {
+            const container = document.getElementById('related-links');
+            if (!container) return;
+
+            // Collect data from existing links in the DOM
+            const links = [];
+            const linkElements = container.querySelectorAll('.link-preview-card');
+            
+            linkElements.forEach(linkElement => {
+                // Extract data from DOM structure
+                const url = linkElement.getAttribute('href');
+                const titleElement = linkElement.querySelector('.link-title');
+                const descriptionElement = linkElement.querySelector('.small.text-muted.mb-2');
+                const urlDisplayElement = linkElement.querySelector('.link-url');
+                
+                if (url) {
+                    links.push({
+                        url: url,
+                        label: titleElement ? titleElement.textContent.trim() : '',
+                        title: descriptionElement ? descriptionElement.textContent.trim() : '',
+                        rawUrl: urlDisplayElement ? urlDisplayElement.textContent.trim() : url
+                    });
+                }
+            });
+            
+            return links;
+        }
+
         function renderLinks(links) {
             const container = document.getElementById('related-links');
             if (!container) return;
@@ -707,21 +735,38 @@
 
             links.forEach(link => {
                 // Use either link.url/link.label or just the string depending on your API format
-                const url = typeof link === 'string' ? (link.includes('://') ? link : 'https://' + link) : link.url;
-                const label = typeof link === 'string' ? link.split('.')[0] : link.label;
+                const url = typeof link === 'string' ? (link.includes('://') ? link : 'https://' + link) : (link.url || link.href);
+                let label = typeof link === 'string' ? link.split('.')[0] : link.label;
+                const title = link.title || link.description || '';
+                
+                // Extract label from URL if not provided
+                if (!label && url) {
+                    try {
+                        const urlObj = new URL(url);
+                        label = urlObj.hostname.split('.')[0];
+                    } catch (e) {
+                        label = url.split('.')[0] || url;
+                    }
+                }
+                
+                // Use title as fallback for description or default text
+                const description = title || 'Deep dive into our ecosystem and master the workflow.';
+                
+                // Use display URL (rawUrl) if available, otherwise use the actual URL
+                const displayUrl = link.rawUrl || url;
 
                 container.innerHTML += `
-            <div class="col-lg-4 col-md-6">
-                <a href="${url}" target="_blank" class="link-preview-card">
-                    <div class="link-thumbnail"><i class="bi bi-arrow-up-right"></i></div>
-                    <div>
-                        <span class="link-title" style="text-transform: capitalize;">${label}</span>
-                        <p class="small text-muted mb-2">Deep dive into our ecosystem and master the workflow.</p>
-                        <span class="link-url">${url}</span>
+                    <div class="col-lg-4 col-md-6">
+                        <a href="${url}" target="_blank" class="link-preview-card">
+                            <div class="link-thumbnail"><i class="bi bi-arrow-up-right"></i></div>
+                            <div>
+                                <span class="link-title" style="text-transform: capitalize;">${label}</span>
+                                <p class="small text-muted mb-2">${description}</p>
+                                <span class="link-url">${displayUrl}</span>
+                            </div>
+                        </a>
                     </div>
-                </a>
-            </div>
-        `;
+                `;
             });
         }
 

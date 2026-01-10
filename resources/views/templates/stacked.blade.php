@@ -12,6 +12,7 @@
     <link
         href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Poppins:wght@300;400;500;600;700;800&display=swap"
         rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
             --primary-blue: #0a1a32;
@@ -1251,23 +1252,85 @@
             container.innerHTML = '';
 
             links.forEach(link => {
-                // Use either link.url/link.label or just the string depending on your API format
-                const url = typeof link === 'string' ? (link.includes('://') ? link : 'https://' + link) : link.url;
-                const label = typeof link === 'string' ? link.split('.')[0] : link.label;
+                // Detect if data is New Format (Array) or Old Format (String)
+                let rawUrl, titleText;
+                
+                if (typeof link === 'string') {
+                    // Legacy Format handling
+                    rawUrl = link;
+                    // Capitalize first letter of the first part of the domain
+                    const domainPart = rawUrl.split('.')[0] || '';
+                    titleText = domainPart.charAt(0).toUpperCase() + domainPart.slice(1);
+                } else {
+                    // New Format (Array/Object) handling
+                    rawUrl = link.url || link.href || '#';
+                    // Use stored title, or fallback to parsing the URL if title is missing
+                    titleText = link.title || link.label || '';
+                    if (!titleText) {
+                        const domainPart = rawUrl.split('.')[0] || '';
+                        titleText = domainPart.charAt(0).toUpperCase() + domainPart.slice(1);
+                    }
+                }
+
+                // Ensure URL has protocol (http/https) for the clickable href
+                const href = rawUrl.includes('://') ? rawUrl : 'https://' + rawUrl;
+                
+                // Remove protocol for display
+                const displayText = rawUrl.replace(/^https?:\/\//, '');
 
                 container.innerHTML += `
-            <div class="col-lg-4 col-md-6">
-                <a href="${url}" target="_blank" class="link-preview-card">
-                    <div class="link-thumbnail"><i class="bi bi-arrow-up-right"></i></div>
-                    <div>
-                        <span class="link-title" style="text-transform: capitalize;">${label}</span>
-                        <p class="small text-muted mb-2">Deep dive into our ecosystem and master the workflow.</p>
-                        <span class="link-url">${url}</span>
-                    </div>
-                </a>
-            </div>
-        `;
+                    <a href="${href}" class="resource-card">
+                        <div class="resource-card-inner">
+                            <span class="resource-text">${displayText}</span>
+                        </div>
+                    </a>
+                `;
             });
+        }
+
+        // Function to extract links from existing DOM structure
+        function getLinksFromDOM() {
+            const container = document.getElementById('related-links');
+            if (!container) return [];
+
+            const links = [];
+            const resourceCards = container.querySelectorAll('a.resource-card');
+            
+            resourceCards.forEach(card => {
+                const href = card.getAttribute('href');
+                if (!href || href === '#') return;
+
+                // Get the display text from resource-text span
+                const textElement = card.querySelector('.resource-text');
+                const displayText = textElement ? textElement.textContent.trim() : '';
+                
+                // Extract raw URL from href (remove protocol)
+                let rawUrl = href;
+                if (href.startsWith('https://')) {
+                    rawUrl = href.substring(8);
+                } else if (href.startsWith('http://')) {
+                    rawUrl = href.substring(7);
+                }
+                
+                // If displayText is available, use it as rawUrl
+                if (displayText && displayText !== rawUrl) {
+                    // Check if the href contains the displayText
+                    if (href.includes(displayText)) {
+                        rawUrl = displayText;
+                    }
+                }
+                
+                // Generate title from URL
+                const domainPart = rawUrl.split('.')[0] || '';
+                const titleText = domainPart.charAt(0).toUpperCase() + domainPart.slice(1);
+                
+                links.push({
+                    url: rawUrl,
+                    title: titleText
+                });
+            });
+            
+            return links;
         }
 
         /* =====================================================
