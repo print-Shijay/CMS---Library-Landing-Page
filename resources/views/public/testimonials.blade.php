@@ -23,6 +23,9 @@
                         <div class="mb-3">
                             <textarea id="review-content" class="form-control bg-light border-0" rows="3"
                                 placeholder="Share your experience..." required></textarea>
+                            <div class="form-text text-muted small mt-1">
+                                <i class="bi bi-info-circle"></i> Reviews require approval before they appear publicly.
+                            </div>
                         </div>
                         <div class="d-flex align-items-center justify-content-between gap-2">
                             <select id="review-rating" class="form-select w-auto border-0 bg-light"
@@ -86,8 +89,6 @@
 </section>
 
 <style>
-    /* Styling for the Edit/Delete buttons on the card */
-
     .card-actions {
         position: absolute;
         top: 15px;
@@ -117,14 +118,20 @@
 </style>
 
 <script>
-    // CONFIGURATION
-    // const API_URL = 'https://keeper.ccs-octa.com/api'; // Or your production URL
-    const API_URL = 'http://127.0.0.1:8000/api'; // Local Development
+    // Check app environment
+    @php
+        $apiUrl = config('app.env') === 'production' 
+            ? 'https://keeper.ccs-octa.com/api'
+            : 'http://127.0.0.1:8000/api';
+    @endphp
+
+    const API_URL = "{{ $apiUrl }}";
+    
     // STATE
     let token = localStorage.getItem('api_token');
     let currentUser = null;
 
-    // Initialization Logic (Compatible with landing page fetch)
+    // Initialization Logic
     window.initTestimonials = async function () {
         console.log("Initializing Testimonials System...");
         handleAuthRedirect();
@@ -189,11 +196,13 @@
     // 2. Fetching Data
     async function fetchTestimonials() {
         try {
-            // Get the current sort value (default to 'latest' if element missing)
             const sortValue = document.getElementById('sort-testimonials')?.value || 'latest';
             
-            // Append sort param to URL
-            const res = await fetch(`${API_URL}/testimonials?sort=${sortValue}`);
+            // Pass the token in headers if available so the API returns my pending reviews too
+            const headers = {};
+            if(token) headers['Authorization'] = `Bearer ${token}`;
+
+            const res = await fetch(`${API_URL}/testimonials?sort=${sortValue}`, { headers });
             const data = await res.json();
             const track = document.getElementById('testimonials-track');
 
@@ -202,15 +211,11 @@
                 return;
             }
 
-            // Clear loading spinner
             track.innerHTML = '';
 
-            // LOGIC: Chunk data into groups of 3
             const chunkSize = 3;
             for (let i = 0; i < data.length; i += chunkSize) {
                 const chunk = data.slice(i, i + chunkSize);
-                
-                // First item must be active
                 const isActive = (i === 0) ? 'active' : '';
 
                 const slideItem = document.createElement('div');
@@ -219,27 +224,46 @@
                 let rowHtml = '<div class="row g-4">';
                 
                 rowHtml += chunk.map(t => {
-                    // Escape content for JS
                     const safeContent = t.content.replace(/'/g, "\\'").replace(/"/g, '&quot;');
+                    
+                    let actionsHtml = '';
+                    let statusBadge = '';
 
-                    // Action Buttons (Edit/Delete)
-                    const actionsHtml = (currentUser && currentUser.id === t.user_id) ? `
-                        <div class="card-actions">
+                    // Check if current user owns this review
+                    if (currentUser && currentUser.id === t.user_id) {
+                        
+                        // 1. Determine Badge (Pending or Approved)
+                        if (t.is_approved) {
+                             // Optional: Approved badge
+                        } else {
+                            statusBadge = `<span class="position-absolute top-0 start-0 m-3 badge bg-warning text-dark shadow-sm" style="z-index:10;">Pending Approval</span>`;
+                        }
+
+                        // 2. Determine Buttons
+                        // If Pending: Show Edit & Delete
+                        // If Approved: Show Delete ONLY (Edit blocked by API)
+                        const editBtn = (!t.is_approved) ? `
                              <button onclick="editReview(${t.id}, '${safeContent}', ${t.rating})" 
                                     class="btn btn-sm btn-light border text-primary rounded-circle shadow-sm" 
                                     style="width:32px; height:32px; padding:0;" title="Edit">
                                 <i class="bi bi-pencil-fill" style="font-size: 0.8rem;"></i>
-                            </button>
+                            </button>` : '';
+
+                        actionsHtml = `
+                        <div class="card-actions">
+                            ${editBtn}
                             <button onclick="deleteReview(${t.id})" 
                                     class="btn btn-sm btn-light border text-danger rounded-circle shadow-sm" 
                                     style="width:32px; height:32px; padding:0;" title="Delete">
                                 <i class="bi bi-trash-fill" style="font-size: 0.8rem;"></i>
                             </button>
-                        </div>` : '';
+                        </div>`;
+                    }
 
                     return `
                     <div class="col-md-4">
                         <div class="bg-white rounded-4 shadow-sm p-4 h-100 position-relative">
+                            ${statusBadge}
                             ${actionsHtml}
                             <div class="mb-4">
                                 <div class="text-warning mb-2 small">${'★'.repeat(t.rating)}${'☆'.repeat(5 - t.rating)}</div>
@@ -258,7 +282,7 @@
                     </div>`;
                 }).join('');
 
-                rowHtml += '</div>'; // Close Row
+                rowHtml += '</div>';
                 slideItem.innerHTML = rowHtml;
                 track.appendChild(slideItem);
             }
@@ -274,7 +298,7 @@
     document.getElementById('testimonial-form').addEventListener('submit', async (e) => {
         e.preventDefault();
 
-        const id = document.getElementById('edit-id').value; // Check if editing
+        const id = document.getElementById('edit-id').value;
         const content = document.getElementById('review-content').value;
         const rating = document.getElementById('review-rating').value;
         const btn = document.getElementById('btn-submit');
@@ -282,7 +306,6 @@
         btn.disabled = true;
         btn.innerText = id ? "Updating..." : "Posting...";
 
-        // Determine URL and Method
         const url = id ? `${API_URL}/testimonials/${id}` : `${API_URL}/testimonials`;
         const method = id ? 'PUT' : 'POST';
 
@@ -300,7 +323,7 @@
                 resetForm();
                 closeForm();
                 await fetchTestimonials();
-                alert(id ? 'Review updated!' : 'Review posted!');
+                alert(id ? 'Review updated!' : 'Review posted! It will appear once approved.');
             } else {
                 const errData = await res.json();
                 alert('Error: ' + (errData.message || 'Something went wrong'));
@@ -317,7 +340,6 @@
     window.openCreateForm = function () {
         resetForm();
         document.getElementById('review-form-container').style.display = 'flex';
-        // Scroll to form
         document.getElementById('review-form-container').scrollIntoView({ behavior: 'smooth' });
     }
 
@@ -326,21 +348,16 @@
         resetForm();
     }
 
-    // Triggered by the Pencil Icon
     window.editReview = function (id, content, rating) {
         document.getElementById('review-form-container').style.display = 'flex';
-
-        // Populate fields
         document.getElementById('edit-id').value = id;
         document.getElementById('review-content').value = content;
         document.getElementById('review-rating').value = rating;
-
-        // Change UI to Edit Mode
+        
         document.getElementById('form-title').innerText = "Edit Your Review";
         document.getElementById('btn-submit').innerText = "Update Review";
         document.getElementById('btn-cancel-edit').style.display = 'block';
 
-        // Scroll to form
         document.getElementById('review-form-container').scrollIntoView({ behavior: 'smooth' });
     }
 
@@ -349,7 +366,6 @@
         document.getElementById('review-content').value = '';
         document.getElementById('review-rating').value = '5';
 
-        // Reset UI to Create Mode
         document.getElementById('form-title').innerText = "Write a Review";
         document.getElementById('btn-submit').innerText = "Post Review";
         document.getElementById('btn-cancel-edit').style.display = 'none';

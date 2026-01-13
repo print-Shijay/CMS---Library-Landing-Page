@@ -10,6 +10,7 @@ use App\Http\Middleware\EnsureProfileSetup;
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\TemplateController;
 use App\Http\Controllers\Admin\FaqController as AdminFaqController;
+use App\Http\Controllers\Admin\TestimonialController as AdminTestimonialController;
 
 
 Route::get('/coming-soon', function () {
@@ -68,11 +69,17 @@ Route::middleware(['auth'])->prefix('admin')->group(function () {
 
         // Analytics Dashboard
         Route::get('/analytics', [App\Http\Controllers\Admin\AnalyticsController::class, 'index'])->name('admin.analytics');
-
+        
+        // FAQ Management
         Route::get('/faq', [AdminFaqController::class, 'index'])->name('admin.faq.index');
         Route::post('/faq', [AdminFaqController::class, 'store'])->name('admin.faq.store');
         Route::put('/faq/{id}', [AdminFaqController::class, 'update'])->name('admin.faq.update');
         Route::delete('/faq/{id}', [AdminFaqController::class, 'destroy'])->name('admin.faq.destroy');
+
+        // Testimonial Management
+        Route::get('/testimonials', [AdminTestimonialController::class, 'index'])->name('admin.testimonials.index');
+        Route::post('/testimonials/{id}/approve', [AdminTestimonialController::class, 'approve'])->name('admin.testimonials.approve');
+        Route::delete('/testimonials/{id}', [AdminTestimonialController::class, 'destroy'])->name('admin.testimonials.destroy');
 
         // ADMIN ONLY
         Route::middleware(['role:admin'])->group(function () {

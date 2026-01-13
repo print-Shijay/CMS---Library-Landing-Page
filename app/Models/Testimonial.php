@@ -10,11 +10,7 @@ class Testimonial extends Model
     use HasFactory;
 
     // This allows these fields to be saved to the database
-    protected $fillable = [
-        'user_id', 
-        'content', 
-        'rating'
-    ];
+    protected $fillable = ['content', 'rating', 'user_id', 'is_approved'];
 
     // Link back to the user
     public function user()
