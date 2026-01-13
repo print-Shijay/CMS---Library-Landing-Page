@@ -1051,10 +1051,15 @@
 
         }
 
+        @php
+            $adminUrl = config('app.env') === 'production' 
+            ? 'https://keeper.ccs-octa.com'
+            : 'http://127.0.0.1:8000';
+        @endphp
+
         function loadPage(slug) {
             const contentArea = document.getElementById('page-content-area');
-            const ADMIN_URL = "http://127.0.0.1:8000";
-
+            const ADMIN_URL = "{{ $adminUrl }}";
             fetch(`${ADMIN_URL}/api/page/${slug}`)
                 .then(res => {
                     if (!res.ok) throw new Error(`Server responded with ${res.status}`);
